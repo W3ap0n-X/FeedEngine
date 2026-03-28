@@ -1,11 +1,13 @@
 <?php
 namespace Qck\FeedEngine;
 
+use Qck\FeedEngine\Manifest;
+
 class Autoloader {
     public static function register() {
         spl_autoload_register(function ($class) {
             $prefix = __NAMESPACE__ . '\\';
-            $base_dir = Manifest::__DIR__. 'src/';
+            $base_dir = Manifest::path(). 'src/';
 
             $len = strlen($prefix);
             if (strncmp($prefix, $class, $len) !== 0) return;
