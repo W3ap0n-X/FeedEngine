@@ -22,15 +22,6 @@ class SettingsController extends BaseController {
             'callback'            => [$this, 'save_settings'],
             'permission_callback' => [$this, 'check_permission'],
         ]);
-        foreach ( Manifest::ROUTES as $config ) {
-            register_rest_route( Manifest::SLUG . '/v1', $config['path'], [
-                'methods'             => $config['method'],
-                'callback'            => $config['callback'], 
-                'permission_callback' => function() use ($config) {
-                    return current_user_can( $config['cap'] );
-                },
-            ]);
-        }
     }
 
     public function check_permission() {

@@ -30,7 +30,7 @@ final class Manifest {
     /**
      * @var array Default options.
      */
-    public const DEFAULT_OPTIONS = array(
+    public static const DEFAULT_OPTIONS = array(
 		// >>> Acts as junk drawer
 		'general_options' => array(
             'debug' => false,
@@ -40,17 +40,27 @@ final class Manifest {
 
 
     public const ROUTES = [
-    'settings' => [
-        'path'     => '/settings',
-        'callback' => 'save_settings', // Method in the Controller
-        'method'    => 'POST',
-        'cap'      => 'manage_options'
-    ],
-    'purge' => [
-        'path'     => '/cache-purge',
-        'callback' => [ \Qck\FeedEngine\Core\Cache\Manager::class, 'purge' ], 
-        'method'    => 'POST',
-        'cap'      => 'edit_posts'
-    ],
-];
+        'settings' => [
+            'path'     => '/settings',
+            'callback' => 'save_settings', // Method in the Controller
+            'method'    => 'POST',
+            'cap'      => 'manage_options'
+        ],
+        'purge' => [
+            'path'     => '/cache-purge',
+            'callback' => [ \Qck\FeedEngine\Core\Cache\Manager::class, 'purge' ], 
+            'method'    => 'POST',
+            'cap'      => 'edit_posts'
+        ],
+    ];
+
+    public static function details(){
+        $details = array(
+            'Name' => self::NAME , 
+            'Slug' => self::SLUG , 
+            'Version' => self::VERSION , 
+            'Prefix' => self::PREFIX , 
+        );
+        return $details;
+    }
 }

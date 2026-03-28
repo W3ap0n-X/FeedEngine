@@ -10,7 +10,7 @@ abstract class BaseController implements Actions {
      * The API Namespace (e.g., qck-feed-engine/v1)
      */
     protected function get_namespace(): string {
-        return Manifest::SLUG . '/v1';
+        return Manifest::PREFIX . '/v1';
     }
 
     /**

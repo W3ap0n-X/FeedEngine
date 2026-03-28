@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 abstract class Admin implements Actions {
 
+    
     /**
      * @var Section[] Page section objects.
      */
@@ -31,8 +32,9 @@ abstract class Admin implements Actions {
      *
      * @param Options $options An instance of `Options`.
      */
-    public function __construct( $options ) {
+    public function __construct($options , $hooks ) {
         $this->options = $options;
+        $this->hooks = $hooks;
     }
 
     /**
@@ -207,11 +209,12 @@ abstract class Admin implements Actions {
 
     /**
      * Return the URL to the icon to be used for this menu.
+     * * @link https://developer.wordpress.org/resource/dashicons/
      *
      * @return string
      */
     protected function get_icon_url() {
-        return '';
+        return 'dashicons-admin-generic';
     }
 
     /**

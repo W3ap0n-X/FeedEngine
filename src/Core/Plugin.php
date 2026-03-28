@@ -1,21 +1,23 @@
 <?php
-namespace Qck\FeedEngine\Core;
+namespace Qck\FeedEngine;
 use Qck\FeedEngine\Manifest;
-use Qck\FeedEngine\Core\Loader;
-use Qck\FeedEngine\Core\Hooks\HooksManager;
-use Qck\FeedEngine\Core\Options\Options;
+
 use Qck\FeedEngine\Core\Options\WP_Options;
-use Qck\FeedEngine\Admin\SettingsPage;
+use Qck\FeedEngine\Core\Hooks\HooksManager;
+use Qck\FeedEngine\Core\Shortcodes\ShortcodeManager;
+use Qck\FeedEngine\Core\API\ApiManager;
+
+use Qck\FeedEngine\Pages\SettingsPage;
 use Qck\FeedEngine\Public\FeedController;
 
 class Plugin {
 
     /**
-	 * Glave Options
+	 * Options
 	 * 
 	 * @since    1.0.0
 	 * @access   public
-     * @var 	 Options An instance of the `Options` class.
+     * @var 	 WP_Options An instance of the `Options` class.
      */
     public $options;
 
@@ -26,7 +28,25 @@ class Plugin {
 	 * @access   protected
 	 * @var      HooksManager    >>> $loader    Maintains and registers all hooks for the plugin.
 	 */
-	protected $loader;
+	protected $hooks;
+
+	/**
+	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      ShortcodeManager    >>> $loader    Maintains and registers all hooks for the plugin.
+	 */
+	protected $shortcodes;
+
+	/**
+	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      ApiManager    >>> $loader    Maintains and registers all hooks for the plugin.
+	 */
+	protected $rest_routes;
 
     /**
 	 * plugin_name
@@ -48,13 +68,13 @@ class Plugin {
 
 
 
+
+
     private static $instance = null;
 
     public function __construct() {
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
-
-        
 	}
 
 	public static function instance() {
@@ -69,57 +89,51 @@ class Plugin {
      */
     public function init() {
         $this->options = new WP_Options();
-		$this->loader = new HooksManager();
-		$settings_page = new SettingsPage( $this->options );
+		$this->rest_routes = new ApiManager();
+		$this->hooks = new HooksManager();
+		$this->shortcodes = new ShortcodeManager();
 
-
-		$this->loader->register( $settings_page );
+		$this->rest_routes->register_endpoints();
+		$this->hooks->register($this);
+		register_api_routes();
+		$this->register_pages();
+		$this->shortcodes->register_all();
 
         
     }
 
-    public function ed_setup(){
-		add_action( 'easydump', array( $this, 'easydump' ) , 10, 2);
-		
-	}
-
-	public function easydump( $var, $label = null) {
-		echo (isset($label) ? '<h4>' . $label . '</h4>' : '') . '<pre>' . print_r($var, true) . '</pre>';
-	}
-
-
-
-    // public function run() {
-    //     new SettingsPage();
-    //     new FeedController();
-    // }
 
 	private function get_actions() {
 		$actions = [
 			 'plugins_loaded' => array( 'init' ) ,
-			 'wp_after_admin_bar_render' => array( 'ed_setup' ) 
+			 /* New actions go here */
+			//  'action' => array( 'method' ) ,
 
 		];
 		return $actions;
 	}
 
-	private function get_filters() {
-		$filters = [
-
-		
-		];
-		return $filters;
+	private function register_shortcodes() {
+		$this->shortcodes->add(new Shortcodes\Debug()),
 	}
 
-	private function get_options() {
-		$filters = [
-
-		
+	private function register_pages() {
+		$pages = [
+			new Pages\SettingsPage( $this->options, $this->hooks ),
 		];
-		return $filters;
+
+		foreach ( $pages as $page ) {
+			$this->hooks->register( $page );
+		}
 	}
 
-	public function get_hooks(){
-		return $this->loader;
+	private function register_api_routes() {
+		$routes = [
+			new Core\API\SettingsController( $this->options ),
+		];
+
+		foreach ( $routes as $routes ) {
+			$this->hooks->register( $routes );
+		}
 	}
 }

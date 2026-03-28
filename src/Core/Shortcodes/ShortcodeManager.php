@@ -4,17 +4,27 @@ if ( ! defined( 'WPINC' ) ) { die; }
 
 namespace Qck\FeedEngine\Core\Shortcodes;
 
+use Qck\FeedEngine\Manifest;
+
 class ShortcodeManager {
     
-    private $shortcodes = [];
+    public function register_all() {
+        // Scan the Shortcodes directory
+        $dir = Manifest::path() . 'src/Shortcodes/';
+        $files = glob( $dir . '*.php' );
 
-    public function add( Shortcode $shortcode ) {
-        $this->shortcodes[] = $shortcode;
-    }
+        foreach ( $files as $file ) {
+            $class_name = basename( $file, '.php' );
+            $full_class = "\\Qck\\FeedEngine\\Shortcodes\\" . $class_name;
 
-    public function register() {
-        foreach ( $this->shortcodes as $shortcode ) {
-            add_shortcode( $shortcode->get_tag(), [ $shortcode, 'render' ] );
+            if ( class_exists( $full_class ) ) {
+                $instance = new $full_class();
+                
+                // Ensure it implements our Interface
+                if ( $instance instanceof Shortcode ) {
+                    add_shortcode( $instance->get_tag(), [ $instance, 'render' ] );
+                }
+            }
         }
     }
 }

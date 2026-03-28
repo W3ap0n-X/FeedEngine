@@ -1,11 +1,9 @@
 <?php
-namespace Qck\FeedEngine\Core\Pages;
+namespace Qck\FeedEngine\Pages;
+
 use Qck\FeedEngine\Manifest;
-use Qck\FeedEngine\Core\Hooks\Actions;
-use Qck\FeedEngine\Core\Hooks\HooksManager;
+
 use Qck\FeedEngine\Core\Pages\Components\Page\TopPage;
-use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
-use Qck\FeedEngine\Core\Pages\Components\Standalone\AdminNotice;
 use Qck\FeedEngine\Core\Options\Options;
 use Qck\FeedEngine\Plugin;
 
@@ -15,10 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class SettingsPage extends Top_Page implements Actions {
 
+    
 
-
-    public function __construct( $options) {
-        parent::__construct( $options );
+    public function __construct( $options , $hooks) {
+        
+        parent::__construct( $options , $hooks );
     }
 
     /**
@@ -27,7 +26,9 @@ class SettingsPage extends Top_Page implements Actions {
      * @return array
      */
     public function get_actions() {
-        $actions = parent::get_actions();
+        $actions = array(
+
+        );
 
         return $actions;
     }
@@ -40,7 +41,7 @@ class SettingsPage extends Top_Page implements Actions {
      * @return string
      */
     protected function get_menu_title() {
-        return __( 'Glave', Manifest::SLUG );
+        return __( Manifest::NAME, Manifest::SLUG );
     }
 
     /**
@@ -49,7 +50,7 @@ class SettingsPage extends Top_Page implements Actions {
      * @return string
      */
     protected function get_page_title() {
-        return __( 'Glave Settings', Manifest::SLUG );
+        return __( Manifest::NAME . ' Settings', Manifest::SLUG );
     }
 
     /**
@@ -59,9 +60,9 @@ class SettingsPage extends Top_Page implements Actions {
      *
      * @return string
      */
-    protected function get_icon_url() {
-        return 'dashicons-shield-alt';
-    }
+    // protected function get_icon_url() {
+    //     return 'dashicons-shield-alt';
+    // }
 
     /**
      * Return page slug.
@@ -76,22 +77,7 @@ class SettingsPage extends Top_Page implements Actions {
      * Register the General Options section.
      */
     private function register_general_options() {
-        $general_options_section = $this->register_section(
-            'general_options',
-            array( 'title' => __( 'General Options', 'glave' ) )
-        );
-
-        $glave_engine = $general_options_section->add_field(
-            array( 'label'  => __( 'Glave Engine', 'glave' ) )
-        );
-
-        $glave_engine->add_element(
-            Element::CHECKBOX_ELEMENT,
-            array(
-                'label' => __( 'Run Glave Engine', 'glave' ),
-                'name'  => 'engine_active'
-            )
-        );
+        
     }
 
     /**
