@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) { die; }
 
 
 // Load the Autoloader
+require_once plugin_dir_path( __FILE__ ) . 'src/Manifest.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/Autoloader.php';
 Autoloader::register();
 
