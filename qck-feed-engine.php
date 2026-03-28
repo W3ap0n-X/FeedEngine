@@ -3,7 +3,7 @@
  * Plugin Name: Feed Engine
  * Description: Feeds for days
  * Version: 0.0.1.3
- * Author: Yme
+ * Author: Me
  */
 
 
@@ -27,5 +27,5 @@ register_uninstall_hook( __FILE__, [ \Core\Install\Uninstall::class, 'cleanup' ]
 
 // Ignition
 add_action( 'plugins_loaded', function() {
-    Core\Plugin::instance()->run();
+    Plugin::instance();
 });
