@@ -113,10 +113,6 @@ class Plugin {
 		return $actions;
 	}
 
-	private function register_shortcodes() {
-		$this->shortcodes->add(new Shortcodes\Debug()),
-	}
-
 	private function register_pages() {
 		$pages = [
 			new Pages\SettingsPage( $this->options, $this->hooks ),
