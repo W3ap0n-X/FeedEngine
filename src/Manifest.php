@@ -1,8 +1,8 @@
 <?php
-
+namespace Qck\FeedEngine;
 if ( ! defined( 'WPINC' ) ) { die; }
 
-namespace Qck\FeedEngine;
+
 
 
 
