@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Retail Hub Feed Engine
- * Description: High-performance, cached MVC-style feed generator for Retail Hub.
- * Version: 1.0.0
- * Author: Your Name
+ * Plugin Name: Feed Engine
+ * Description: Feeds for days
+ * Version: 0.0.1.3
+ * Author: Yme
  */
 
 

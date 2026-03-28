@@ -12,7 +12,7 @@ namespace Qck\FeedEngine;
  */
 final class Manifest {
     // Static meta
-    public const VERSION = '0.0.1';
+    public const VERSION = '0.0.1.3';
     public const PREFIX  = 'qckfe';
     public const NAME    = 'FeedEngine';
     public const SLUG    = 'qck-feed-engine';
@@ -30,29 +30,13 @@ final class Manifest {
     /**
      * @var array Default options.
      */
-    public static const DEFAULT_OPTIONS = array(
+    public const DEFAULT_OPTIONS = array(
 		// >>> Acts as junk drawer
 		'general_options' => array(
             'debug' => false,
 
 		), 
 	);
-
-
-    public const ROUTES = [
-        'settings' => [
-            'path'     => '/settings',
-            'callback' => 'save_settings', // Method in the Controller
-            'method'    => 'POST',
-            'cap'      => 'manage_options'
-        ],
-        'purge' => [
-            'path'     => '/cache-purge',
-            'callback' => [ \Qck\FeedEngine\Core\Cache\Manager::class, 'purge' ], 
-            'method'    => 'POST',
-            'cap'      => 'edit_posts'
-        ],
-    ];
 
     public static function details(){
         $details = array(
