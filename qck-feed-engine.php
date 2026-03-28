@@ -26,6 +26,6 @@ register_deactivation_hook( __FILE__, [Core\Activator::class, 'deactivate'] );
 register_uninstall_hook( __FILE__, [ \Core\Install\Uninstall::class, 'cleanup' ] );
 
 // Ignition
-add_action( 'plugins_loaded', function() {
-    Plugin::instance();
-});
+require plugin_dir_path( __FILE__ ) . 'inc/Core/Plugin.php';
+
+new Plugin();
