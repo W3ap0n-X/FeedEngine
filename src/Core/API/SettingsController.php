@@ -24,7 +24,7 @@ class SettingsController extends BaseController {
         ]);
     }
 
-    public function check_permission() {
+    public function check_permission(): bool  {
         return current_user_can('manage_options');
     }
 

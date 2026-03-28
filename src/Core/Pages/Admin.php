@@ -1,14 +1,16 @@
 <?php
-namespace Qck\FeedEngine\Core\Pages\Components\Page;
+namespace Qck\FeedEngine\Core\Pages;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Hooks\Actions;
 
-use Qck\FeedEngine\Core\Pages\Components\Standalone\Admin_Notice;
-use Qck\FeedEngine\Core\Pages\Components\Standalone\SubmitButton;
+use Qck\FeedEngine\Core\Pages\Components\Utility\AdminNotice;
+use Qck\FeedEngine\Core\Pages\Components\Utility\SubmitButton;
 use Qck\FeedEngine\Core\Pages\Components\Sections\SettingsSection;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Section;
+use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
 use Qck\FeedEngine\Core\Options\Options;
-use Qck\FeedEngine\Plugin;
+// use Qck\FeedEngine\Plugin;
+use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -67,7 +69,7 @@ abstract class Admin implements Actions {
                 <?php
                 settings_fields( $this->get_slug() );
                 do_settings_sections( $this->get_slug() );
-                $submit = new Submit_Button( $this->get_slug() );
+                $submit = new SubmitButton( $this->get_slug() );
                 ?>
             </form>
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
@@ -114,13 +116,13 @@ abstract class Admin implements Actions {
                 if ( $_GET['action_result'] === 'success' ) {
                     $this->render_admin_notice(
                         esc_html( __( 'Action was performed successfully.', Manifest::SLUG ) ),
-                        Admin_Notice::SUCCESS
+                        AdminNotice::SUCCESS
                     );
                 } else {
                     /** @noinspection SpellCheckingInspection */
                     $this->render_admin_notice(
                         esc_html( __( 'An error occurred. Couldn\'t perform action.', Manifest::SLUG ) ),
-                        Admin_Notice::ERROR
+                        AdminNotice::ERROR
                     );
                 }
             }
@@ -241,10 +243,11 @@ abstract class Admin implements Actions {
      * @param string $section_id Section ID.
      * @param array  $properties Section properties.
      *
-     * @return Settings_Section
+     * @return SettingsSection
      */
     protected function register_section( $section_id, $properties = array() ) {
-        $section = new Settings_Section( $section_id, $this->get_slug(), $this->options, $properties );
+        Debug::logDump($properties, 'FE > Pages > Admin: register_section');
+        $section = new SettingsSection( $section_id, $this->get_slug(), $this->options, $properties );
 
         $this->sections[] = $section;
 

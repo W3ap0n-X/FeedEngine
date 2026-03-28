@@ -1,11 +1,11 @@
 <?php
-namespace Qck\FeedEngine\Core\Pages\Components\Standalone;
+namespace Qck\FeedEngine\Core\Pages\Components\Utility;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Submit_Button {
+class SubmitButton {
 
 	public $slug;
 	public $text;

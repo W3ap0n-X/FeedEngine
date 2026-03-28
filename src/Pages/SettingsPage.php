@@ -2,16 +2,18 @@
 namespace Qck\FeedEngine\Pages;
 
 use Qck\FeedEngine\Manifest;
-
-use Qck\FeedEngine\Core\Pages\Components\Page\TopPage;
+use Qck\FeedEngine\Core\Debug;
+use Qck\FeedEngine\Core\Hooks\Actions;
+use Qck\FeedEngine\Core\Pages\TopPage;
 use Qck\FeedEngine\Core\Options\Options;
+use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
 use Qck\FeedEngine\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class SettingsPage extends Top_Page implements Actions {
+class SettingsPage extends TopPage implements Actions {
 
     
 
@@ -26,9 +28,7 @@ class SettingsPage extends Top_Page implements Actions {
      * @return array
      */
     public function get_actions() {
-        $actions = array(
-
-        );
+        $actions = parent::get_actions();
 
         return $actions;
     }
@@ -77,7 +77,22 @@ class SettingsPage extends Top_Page implements Actions {
      * Register the General Options section.
      */
     private function register_general_options() {
-        
+        $general_options_section = $this->register_section(
+            'general_options',
+            array( 'title' => __( 'General Options', Manifest::PREFIX ) )
+        );
+
+        $section_debug = $general_options_section->add_field(
+            array( 'label'  => __( 'Debug', Manifest::PREFIX ) )
+        );
+
+        $section_debug->add_element(
+            Element::CHECKBOX_ELEMENT,
+            array(
+                'label' => __( 'Debug Mode', Manifest::PREFIX ),
+                'name'  => 'engine_active'
+            )
+        );
     }
 
     /**

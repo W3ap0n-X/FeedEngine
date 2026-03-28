@@ -6,11 +6,13 @@ use Qck\FeedEngine\Core\Options\WP_Options;
 use Qck\FeedEngine\Core\Hooks\HooksManager;
 use Qck\FeedEngine\Core\Shortcodes\ShortcodeManager;
 use Qck\FeedEngine\Core\API\ApiManager;
+use Qck\FeedEngine\Core\Debug;
+use Qck\FeedEngine\Core\Hooks\Actions;
 
 use Qck\FeedEngine\Pages\SettingsPage;
 use Qck\FeedEngine\Public\FeedController;
 
-class Plugin {
+class Plugin implements Actions {
 
     /**
 	 * Options
@@ -73,8 +75,10 @@ class Plugin {
     private static $instance = null;
 
     public function __construct() {
+		Debug::logDump("__constructing");
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
 	}
 
 	public static function instance() {
@@ -88,14 +92,15 @@ class Plugin {
      * Initialize the plugin once activated plugins have been loaded.
      */
     public function init() {
+		Debug::logDump("initializing");
         $this->options = new WP_Options();
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
 		$this->shortcodes = new ShortcodeManager();
-
+        $this->hooks->register($this);
 		$this->rest_routes->register_endpoints();
-		$this->hooks->register($this);
-		register_api_routes();
+		
+		$this->register_api_routes();
 		$this->register_pages();
 		$this->shortcodes->register_all();
 
@@ -103,9 +108,9 @@ class Plugin {
     }
 
 
-	private function get_actions() {
+	public function get_actions() {
 		$actions = [
-			 'plugins_loaded' => array( 'init' ) ,
+			 //'plugins_loaded' => array( 'init' ) ,
 			 /* New actions go here */
 			//  'action' => array( 'method' ) ,
 
@@ -114,6 +119,7 @@ class Plugin {
 	}
 
 	private function register_pages() {
+		Debug::logDump("register pages");
 		$pages = [
 			new Pages\SettingsPage( $this->options, $this->hooks ),
 		];
@@ -124,6 +130,7 @@ class Plugin {
 	}
 
 	private function register_api_routes() {
+		Debug::logDump("register routes");
 		$routes = [
 			new Core\API\SettingsController( $this->options ),
 		];

@@ -1,5 +1,5 @@
 <?php
-namespace Qck\FeedEngine\Core\Pages\Components\Page;
+namespace Qck\FeedEngine\Core\Pages;
 
 abstract class SubPage extends Admin {
 

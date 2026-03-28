@@ -3,6 +3,7 @@ namespace Qck\FeedEngine\Core\Pages\Components\Sections;
 
 use Qck\FeedEngine\Core\Options\Options;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Field;
+use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -87,6 +88,7 @@ class Section {
      * @param array $properties Field properties.
      */
     public function add_field( $properties ) {
+        Debug::logDump($properties, 'FE > Pages > Components > Section: add_field');
         $field = new Field( $this->id, $this->page, $this->options, $properties );
 
         $this->fields[] = $field;

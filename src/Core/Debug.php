@@ -5,20 +5,28 @@ namespace Qck\FeedEngine\Core;
  * 
  * @since     1.0.0
  */
-class Debug implements Actions {
+class Debug {
+// class Debug implements Actions {
 
-    public function __construct($options) {
-
+    private $options;
+    private $hooks;
+    public function __construct($options, $hooks) {
+        $this->options = $options;
+        $this->hooks = $hooks;
     }
 
-    private function get_actions() {
-		$actions = [
+    // private function get_actions() {
+	// 	$actions = [
 
-		];
-		return $actions;
-	}
+	// 	];
+	// 	return $actions;
+	// }
 
 	public static function easydump( $var, $label = null) {
 		return (isset($label) ? '<h4>' . $label . '</h4>' : '') . '<pre>' . print_r($var, true) . '</pre>';
 	}
+
+    public static function logDump($var, $label = 'FeedEngine') {
+        error_log( $label . "\n" . print_r($var, true));
+    }
 }

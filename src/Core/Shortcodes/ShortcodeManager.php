@@ -1,11 +1,12 @@
 <?php
 
-if ( ! defined( 'WPINC' ) ) { die; }
+
 
 namespace Qck\FeedEngine\Core\Shortcodes;
 
 use Qck\FeedEngine\Manifest;
 
+if ( ! defined( 'WPINC' ) ) { die; }
 class ShortcodeManager {
     
     public function register_all() {

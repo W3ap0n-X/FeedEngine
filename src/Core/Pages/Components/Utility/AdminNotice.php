@@ -1,5 +1,5 @@
 <?php
-namespace Qck\FeedEngine\Core\Pages\Components\Standalone;
+namespace Qck\FeedEngine\Core\Pages\Components\Utility;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
