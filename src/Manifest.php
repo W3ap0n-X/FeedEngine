@@ -37,4 +37,20 @@ final class Manifest {
 
 		), 
 	);
+
+
+    public const ROUTES = [
+    'settings' => [
+        'path'     => '/settings',
+        'callback' => 'save_settings', // Method in the Controller
+        'method'    => 'POST',
+        'cap'      => 'manage_options'
+    ],
+    'purge' => [
+        'path'     => '/cache-purge',
+        'callback' => [ \Qck\FeedEngine\Core\Cache\Manager::class, 'purge' ], 
+        'method'    => 'POST',
+        'cap'      => 'edit_posts'
+    ],
+];
 }

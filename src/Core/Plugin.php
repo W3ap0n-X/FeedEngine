@@ -53,10 +53,30 @@ class Plugin {
     public function __construct() {
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
-        $this->require_files();
-        add_action( 'plugins_loaded', array( $this, 'init' ) );
-		add_action( 'wp_after_admin_bar_render', array( $this, 'ed_setup' ) );
+
+        
 	}
+
+	public static function instance() {
+        if ( is_null( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+	/**
+     * Initialize the plugin once activated plugins have been loaded.
+     */
+    public function init() {
+        $this->options = new WP_Options();
+		$this->loader = new HooksManager();
+		$settings_page = new SettingsPage( $this->options );
+
+
+		$this->loader->register( $settings_page );
+
+        
+    }
 
     public function ed_setup(){
 		add_action( 'easydump', array( $this, 'easydump' ) , 10, 2);
@@ -67,12 +87,7 @@ class Plugin {
 		echo (isset($label) ? '<h4>' . $label . '</h4>' : '') . '<pre>' . print_r($var, true) . '</pre>';
 	}
 
-    public static function instance() {
-        if ( is_null( self::$instance ) ) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+
 
     // public function run() {
     //     new SettingsPage();
@@ -80,21 +95,31 @@ class Plugin {
     // }
 
 	private function get_actions() {
-		$actions = [];
+		$actions = [
+			 'plugins_loaded' => array( 'init' ) ,
+			 'wp_after_admin_bar_render' => array( 'ed_setup' ) 
+
+		];
 		return $actions;
 	}
 
-	    /**
-     * Initialize the plugin once activated plugins have been loaded.
-     */
-    public function init() {
-        $this->options = new WP_Options();
-		$this->loader = new HooksManager();
-		$settings_page = new SettingsPage( $this->options, $this->hooks_manager );
+	private function get_filters() {
+		$filters = [
 
+		
+		];
+		return $filters;
+	}
 
-		$this->loader->register( $settings_page );
+	private function get_options() {
+		$filters = [
 
-        
-    }
+		
+		];
+		return $filters;
+	}
+
+	public function get_hooks(){
+		return $this->loader;
+	}
 }
