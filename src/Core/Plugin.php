@@ -132,7 +132,7 @@ class Plugin implements Actions {
 	private function register_api_routes() {
 		\Qck\FeedEngine\Core\Debug::logDump('register routes', __METHOD__);
 		$routes = [
-			new Core\API\SettingsController( $this->options ),
+			new API\SettingsController( $this->options ),
 		];
 
 		foreach ( $routes as $routes ) {
