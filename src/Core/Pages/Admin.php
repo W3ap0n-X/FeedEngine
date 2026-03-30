@@ -161,7 +161,7 @@ abstract class Admin implements Actions {
 
         wp_enqueue_script( 
             $js_handle,
-            Manifest::url('assets/js/admin.js'), 
+            Manifest::url('src/assets/js/admin.js'), 
             ['jquery'], // Added jquery as a dependency since your script uses it
             Manifest::VERSION, 
             true // Move to footer for better performance
