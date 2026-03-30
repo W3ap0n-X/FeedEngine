@@ -104,7 +104,7 @@ class Field {
      * @param array  $properties
      */
     public function add_element( $element_type, $properties ) {
-        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
+        \Qck\FeedEngine\Core\Debug::logDump([$element_type,$properties], __METHOD__);
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
         if ( ! class_exists( $element_type ) ) {
@@ -112,7 +112,7 @@ class Field {
         }
 
         $element = new $element_type( $this->section_id, $this->options, $properties );
-
+        \Qck\FeedEngine\Core\Debug::logDump($element, __METHOD__ . ':: Element check');
         if ( ! ( $element instanceof Element ) ) {
             return;
         }
