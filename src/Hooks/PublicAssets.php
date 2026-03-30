@@ -1,6 +1,7 @@
 <?php
 namespace Qck\FeedEngine\Hooks;
 use Qck\FeedEngine\Manifest;
+use Qck\FeedEngine\Core\Hooks\HookInterface;
 
 class PublicAssets implements HookInterface {
     public function get_hook(): string { return 'wp_enqueue_scripts'; }
