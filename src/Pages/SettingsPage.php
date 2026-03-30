@@ -18,7 +18,7 @@ class SettingsPage extends TopPage implements Actions {
     
 
     public function __construct( $options , $hooks) {
-        
+        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         parent::__construct( $options , $hooks );
     }
 
@@ -77,6 +77,7 @@ class SettingsPage extends TopPage implements Actions {
      * Register the General Options section.
      */
     private function register_general_options() {
+        \Qck\FeedEngine\Core\Debug::logDump('registering options', __METHOD__);
         $general_options_section = $this->register_section(
             'general_options',
             array( 'title' => __( 'General Options', Manifest::PREFIX ) )
@@ -93,6 +94,7 @@ class SettingsPage extends TopPage implements Actions {
                 'name'  => 'engine_active'
             )
         );
+        \Qck\FeedEngine\Core\Debug::logDump($general_options_section, __METHOD__);
     }
 
     /**

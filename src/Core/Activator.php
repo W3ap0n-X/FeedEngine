@@ -15,6 +15,7 @@ class Activator {
      * @since    1.0.0
      */
     public static function activate() {
+		\Qck\FeedEngine\Core\Debug::logDump('activating', __METHOD__);
 		// update_option( 'rewrite_rules', '' );
     }
 
@@ -26,6 +27,7 @@ class Activator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+		\Qck\FeedEngine\Core\Debug::logDump('deactivating', __METHOD__);
 		// flush_rewrite_rules();
         // unregister_post_type( 'glave-post' );
 	}

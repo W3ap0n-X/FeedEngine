@@ -39,6 +39,7 @@ class Field {
      * Render the field.
      */
     public function render() {
+        \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
         if ( ! empty( $this->description ) ) {
             printf(
                 '<p class="description">%s</p>',
@@ -60,6 +61,7 @@ class Field {
      * @param array   $properties       Field properties.
      */
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
+        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         self::$number_of_fields++;
 
         $properties = wp_parse_args(
@@ -96,6 +98,7 @@ class Field {
      * @param array  $properties
      */
     public function add_element( $element_type, $properties ) {
+        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
         if ( ! class_exists( $element_type ) ) {

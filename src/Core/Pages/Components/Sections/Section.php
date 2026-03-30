@@ -50,8 +50,9 @@ class Section {
      * @param array   $properties       Properties.
      */
     public function __construct( $id, $page, $options_instance, $properties = array() ) {
-        $dump_me = [$id, $page,$properties];
         
+        $dump_me = [$id, $page,$properties];
+        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         $properties = wp_parse_args(
             $properties,
             array(
@@ -88,7 +89,7 @@ class Section {
      * @param array $properties Field properties.
      */
     public function add_field( $properties ) {
-        Debug::logDump($properties, 'FE > Pages > Components > Section: add_field');
+        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         $field = new Field( $this->id, $this->page, $this->options, $properties );
 
         $this->fields[] = $field;

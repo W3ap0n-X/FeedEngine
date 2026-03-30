@@ -75,7 +75,7 @@ class Plugin implements Actions {
     private static $instance = null;
 
     public function __construct() {
-		Debug::logDump("__constructing");
+		\Qck\FeedEngine\Core\Debug::logDump('__constructing', __METHOD__);
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
@@ -92,7 +92,7 @@ class Plugin implements Actions {
      * Initialize the plugin once activated plugins have been loaded.
      */
     public function init() {
-		Debug::logDump("initializing");
+		\Qck\FeedEngine\Core\Debug::logDump('initializing', __METHOD__);
         $this->options = new WP_Options();
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
@@ -119,7 +119,7 @@ class Plugin implements Actions {
 	}
 
 	private function register_pages() {
-		Debug::logDump("register pages");
+		\Qck\FeedEngine\Core\Debug::logDump('register pages', __METHOD__);
 		$pages = [
 			new Pages\SettingsPage( $this->options, $this->hooks ),
 		];
@@ -130,7 +130,7 @@ class Plugin implements Actions {
 	}
 
 	private function register_api_routes() {
-		Debug::logDump("register routes");
+		\Qck\FeedEngine\Core\Debug::logDump('register routes', __METHOD__);
 		$routes = [
 			new Core\API\SettingsController( $this->options ),
 		];

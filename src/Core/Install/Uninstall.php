@@ -10,6 +10,7 @@ class Uninstall {
      * Fired when the "Delete" link is clicked in the WP Admin.
      */
     public static function cleanup() {
+        \Qck\FeedEngine\Core\Debug::logDump('attempting uninstall', __METHOD__);
         // 1. Security check: Ensure WP is actually the one calling this
         if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
             exit;

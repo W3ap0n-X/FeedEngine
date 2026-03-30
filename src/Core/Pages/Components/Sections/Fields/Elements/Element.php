@@ -61,7 +61,7 @@ abstract class Element implements UI {
      */
     public function __construct( $section_id, $options_instance, $properties = array() ) {
         self::$number_of_elements++;
-        Debug::logDump($properties,'Element Constructor: Properties');
+        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         if ( $this instanceof SettingsInterface ) {
             $properties = wp_parse_args(
                 $properties,

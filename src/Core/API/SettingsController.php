@@ -12,11 +12,13 @@ class SettingsController extends BaseController {
     private $options;
 
     public function __construct(WP_Options $options) {
+        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         $this->options = $options;
     }
 
 
     public function register_routes() {
+        \Qck\FeedEngine\Core\Debug::logDump('registering routes', __METHOD__);
         register_rest_route($this->get_namespace(), '/settings', [
             'methods'             => 'POST',
             'callback'            => [$this, 'save_settings'],
@@ -29,6 +31,7 @@ class SettingsController extends BaseController {
     }
 
     public function save_settings($request) {
+        \Qck\FeedEngine\Core\Debug::logDump($request, __METHOD__);
         $params = $request->get_params();
         $updated = false;
 

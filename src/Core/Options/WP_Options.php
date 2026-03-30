@@ -28,6 +28,7 @@ class WP_Options implements Options {
      * Options constructor.
      */
     public function __construct() {
+        \Qck\FeedEngine\Core\Debug::logDump('__constructing', __METHOD__);
         $all_options = array();
 
         foreach ( Manifest::DEFAULT_OPTIONS as $section_id => $section_default_options ) {
