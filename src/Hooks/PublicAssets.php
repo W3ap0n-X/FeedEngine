@@ -10,10 +10,10 @@ class PublicAssets implements HookInterface {
 
     public function get_callback(): callable {
         return function() {
-            wp_enqueue_style( Manifest::PREFIX . '-main', Manifest::url() . 'assets/css/public.css' );
+            wp_enqueue_style( Manifest::PREFIX . '-main', Manifest::url() . 'src/assets/css/public.css' );
             wp_enqueue_script( 
                 Manifest::PREFIX . '-main',
-                Manifest::url('assets/js/public.js'), 
+                Manifest::url('src/assets/js/public.js'), 
                 ['jquery'], // Added jquery as a dependency since your script uses it
                 Manifest::VERSION, 
                 true // Move to footer for better performance
