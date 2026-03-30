@@ -260,8 +260,8 @@ abstract class Admin implements Actions {
 
         register_setting(
             $this->get_slug(),
-            // Manifest::PREFIX . '_' . $section_id,
-            'qckfe_general_options',
+            Manifest::PREFIX . '_' . $section_id,
+            // 'qckfe_general_options',
             array( 'sanitize_callback' => array( $section, 'sanitize' ) )
         );
 
