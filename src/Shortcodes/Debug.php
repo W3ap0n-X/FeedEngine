@@ -25,7 +25,7 @@ class Debug implements Shortcode {
         $a = shortcode_atts( $this->atts, $atts );
         $output = '';
         if($a['plugin_info'] !== false){
-            $output .= \Qck\FeedEngine\Core\Debug::easydump('Plugin Details', \Qck\FeedEngine\Core\Debug::details());
+            $output .= \Qck\FeedEngine\Core\Debug::easydump('Plugin Details', Manifest::details());
         }
         if(isset($a['message'])){
             $output .= \Qck\FeedEngine\Core\Debug::easydump($a['label'], $a['message']);
