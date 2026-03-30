@@ -79,7 +79,7 @@ class SettingsPage extends TopPage implements Actions {
         // $current_data = $this->options->get('general_options');
         // \Qck\FeedEngine\Core\Debug::logDump($current_data, 'UI Data Check');
         $general_options_section = $this->register_section(
-            'qckfe_settings',
+            'qckfe_general_options',
             array( 'title' => __( 'General Options', Manifest::PREFIX ) )
         );
 
