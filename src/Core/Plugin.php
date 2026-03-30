@@ -3,6 +3,7 @@ namespace Qck\FeedEngine\Core;
 use Qck\FeedEngine\Manifest;
 
 use Qck\FeedEngine\Core\Options\WP_Options;
+// use Qck\FeedEngine\Core\Options\OptionsManager;
 use Qck\FeedEngine\Core\Hooks\HooksManager;
 use Qck\FeedEngine\Core\Shortcodes\ShortcodeManager;
 use Qck\FeedEngine\Core\API\ApiManager;
@@ -23,6 +24,8 @@ class Plugin implements Actions {
      * @var 	 WP_Options An instance of the `Options` class.
      */
     public $options;
+
+	// public $settings;
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
@@ -76,7 +79,6 @@ class Plugin implements Actions {
     private static $instance = null;
 
     public function __construct() {
-		\Qck\FeedEngine\Core\Debug::logDump('__constructing', __METHOD__);
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
@@ -93,7 +95,6 @@ class Plugin implements Actions {
      * Initialize the plugin once activated plugins have been loaded.
      */
     public function init() {
-		\Qck\FeedEngine\Core\Debug::logDump('initializing', __METHOD__);
         $this->options = new WP_Options();
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
@@ -121,7 +122,6 @@ class Plugin implements Actions {
 	}
 
 	private function register_pages() {
-		\Qck\FeedEngine\Core\Debug::logDump('register pages', __METHOD__);
 		$pages = [
 			new \Qck\FeedEngine\Pages\SettingsPage( $this->options, $this->hooks ),
 		];
@@ -132,7 +132,7 @@ class Plugin implements Actions {
 	}
 
 	private function register_api_routes() {
-		\Qck\FeedEngine\Core\Debug::logDump('register routes', __METHOD__);
+		// \Qck\FeedEngine\Core\Debug::logDump('register routes', __METHOD__);
 		$routes = [
 			new API\SettingsController( $this->options ),
 		];

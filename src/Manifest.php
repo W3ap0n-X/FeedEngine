@@ -33,7 +33,7 @@ final class Manifest {
     public const DEFAULT_OPTIONS = array(
 		// >>> Acts as junk drawer
 		'general_options' => array(
-            'debug' => false,
+            'debug' => true,
 
 		), 
 	);
