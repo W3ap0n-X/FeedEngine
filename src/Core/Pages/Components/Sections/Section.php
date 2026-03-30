@@ -49,14 +49,14 @@ class Section {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Properties.
      */
-    public function __construct( $id, $page, $options_instance, $properties = array() ) {
+    public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
         
-        $dump_me = ['id'=>$id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
-        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+        $dump_me = ['section_id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
+        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         $properties = wp_parse_args(
             $properties,
             array(
-                'title'       => __( $id, $page ),
+                'title'       => __( $section_id, $page ),
                 'description' => ''
             )
         );
@@ -66,10 +66,10 @@ class Section {
         $this->title       = $properties['title'];
         $this->description = $properties['description'];
         $this->page        = $page;
-        $this->id          = $id;
-        \Qck\FeedEngine\Core\Debug::logDump($this, __METHOD__ . "FIELD CHECK");
+        $this->id          = $section_id;
+        // \Qck\FeedEngine\Core\Debug::logDump($this, __METHOD__ . "FIELD CHECK");
         add_settings_section(
-            $id,
+            $section_id,
             $this->title,
             array( $this, 'print_description' ),
             $page

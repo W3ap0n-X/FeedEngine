@@ -69,13 +69,14 @@ abstract class Admin implements Actions {
                 <?php echo $this->content_top(); ?>
             </div>
 
-            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form"method="post">
+            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
                 <?php
                 settings_fields( $this->get_slug() );
                 do_settings_sections( $this->get_slug() );
                 $submit = new SubmitButton( $this->get_slug() );
                 ?>
             </form>
+
 
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
                 <?php echo $this->content_bottom(); ?>
@@ -151,7 +152,7 @@ abstract class Admin implements Actions {
         // 1. CSS
         wp_enqueue_style(
             Manifest::PREFIX . '_admin_page',
-            Manifest::url('assets/css/admin-page.css'), // Using the url() method we built
+            Manifest::url('src/assets/css/admin.css'), // Using the url() method we built
             [],
             Manifest::VERSION
         );
@@ -259,7 +260,8 @@ abstract class Admin implements Actions {
 
         register_setting(
             $this->get_slug(),
-            Manifest::PREFIX . '_' . $section_id,
+            // Manifest::PREFIX . '_' . $section_id,
+            'qckfe_general_options',
             array( 'sanitize_callback' => array( $section, 'sanitize' ) )
         );
 
