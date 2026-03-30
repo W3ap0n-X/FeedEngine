@@ -34,4 +34,14 @@ class Debug implements Shortcode {
 
 
     }
+
+    public function get_name(): string {
+        return "Debug";
+    }
+    public function get_description(): string {
+        return "Testing"
+    }
+    public function get_example(): string {
+        return "Testing"
+    }
 }
