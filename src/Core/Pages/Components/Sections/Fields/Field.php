@@ -41,8 +41,7 @@ class Field {
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
 
-        $dump_me = ['id'=>$id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
-        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+        
 
         if ( ! empty( $this->description ) ) {
             printf(
@@ -66,6 +65,9 @@ class Field {
      */
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
         \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
+
+        $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
+        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         self::$number_of_fields++;
 
         $properties = wp_parse_args(
