@@ -13,12 +13,12 @@ class Field {
     /**
      * @var int Number of fields instantiated.
      */
-    private static $number_of_fields = 0;
+    protected static $number_of_fields = 0;
 
     /**
      * @var Element[] Field elements.
      */
-    private $elements = array();
+    protected $elements = array();
 
     /**
      * @var Options An instance of `Options`.
@@ -28,12 +28,12 @@ class Field {
     /**
      * @var string ID of the section this field belongs to.
      */
-    private $section_id;
+    protected $section_id;
 
     /**
      * @var array Field description.
      */
-    private $description;
+    protected $description;
 
     /**
      * Render the field.
@@ -118,6 +118,7 @@ class Field {
         }
 
         $this->elements[ $element->get_option_name() ] = $element;
+        return $this;
     }
 
     /**
