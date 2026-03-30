@@ -69,7 +69,7 @@ abstract class Admin implements Actions {
                 <?php echo $this->content_top(); ?>
             </div>
 
-            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form">
+            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form"method="post">
                 <?php
                 settings_fields( $this->get_slug() );
                 do_settings_sections( $this->get_slug() );
