@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 abstract class Element implements UI {
 
-    const NUMBER_ELEMENT = 'Number_Element';
+    const NUMBER_ELEMENT = 'Number';
     const RADIO_ELEMENT = 'Radio_Element';
-    const CHECKBOX_ELEMENT = 'Checkbox_Element';
-    const CUSTOM_ELEMENT = 'Custom_Element';
+    const CHECKBOX_ELEMENT = 'Checkbox';
+    const CUSTOM_ELEMENT = 'Custom';
 
     /**
      * @var int Number of elements instantiated.
