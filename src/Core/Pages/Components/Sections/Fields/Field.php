@@ -108,6 +108,7 @@ class Field {
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
         if ( ! class_exists( $element_type ) ) {
+            \Qck\FeedEngine\Core\Debug::logDump($element_type . " NOT FOUND", __METHOD__);
             return;
         }
 
