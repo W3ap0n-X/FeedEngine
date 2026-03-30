@@ -22,16 +22,16 @@ class SettingsPage extends TopPage implements Actions {
         parent::__construct( $options , $hooks );
     }
 
-    /**
-     * Return the actions to register.
-     *
-     * @return array
-     */
-    public function get_actions() {
-        $actions = parent::get_actions();
+    // /**
+    //  * Return the actions to register.
+    //  *
+    //  * @return array
+    //  */
+    // public function get_actions() {
+    //     $actions = parent::get_actions();
 
-        return $actions;
-    }
+    //     return $actions;
+    // }
 
 
 
