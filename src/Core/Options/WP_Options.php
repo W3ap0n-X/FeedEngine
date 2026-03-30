@@ -28,7 +28,7 @@ class WP_Options implements Options {
      * Options constructor.
      */
     public function __construct() {
-        \Qck\FeedEngine\Core\Debug::logDump('__constructing', __METHOD__);
+        
         $all_options = array();
 
         foreach ( Manifest::DEFAULT_OPTIONS as $section_id => $section_default_options ) {
@@ -43,7 +43,7 @@ class WP_Options implements Options {
             $all_options = array_merge( $all_options, $section_options );
         }
         // var_dump($all_options);
-
+        \Qck\FeedEngine\Core\Debug::logDump($all_options, __METHOD__);
         $this->options = $all_options;
     }
 

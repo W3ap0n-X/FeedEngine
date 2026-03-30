@@ -5,7 +5,7 @@ use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Debug;
 use Qck\FeedEngine\Core\Hooks\Actions;
 use Qck\FeedEngine\Core\Pages\TopPage;
-use Qck\FeedEngine\Core\Options\Options;
+use Qck\FeedEngine\Core\Options\WP_Options;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
 use Qck\FeedEngine\Plugin;
 
@@ -18,7 +18,6 @@ class SettingsPage extends TopPage implements Actions {
     
 
     public function __construct( $options , $hooks) {
-        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         parent::__construct( $options , $hooks );
     }
 
@@ -79,7 +78,6 @@ class SettingsPage extends TopPage implements Actions {
     private function register_general_options() {
         $current_data = $this->options->get_all_data();
         \Qck\FeedEngine\Core\Debug::logDump($current_data, 'UI Data Check');
-        \Qck\FeedEngine\Core\Debug::logDump('registering options', __METHOD__);
         $general_options_section = $this->register_section(
             'general_options',
             array( 'title' => __( 'General Options', Manifest::PREFIX ) )
