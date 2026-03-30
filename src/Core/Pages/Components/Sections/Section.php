@@ -51,12 +51,12 @@ class Section {
      */
     public function __construct( $id, $page, $options_instance, $properties = array() ) {
         
-        $dump_me = [$id, $page,$properties];
+        $dump_me = ['id'=>$id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
         \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         $properties = wp_parse_args(
             $properties,
             array(
-                'title'       => __( 'Section', 'glave' ),
+                'title'       => __( $id, $page ),
                 'description' => ''
             )
         );
