@@ -8,6 +8,7 @@ use Qck\FeedEngine\Core\Shortcodes\ShortcodeManager;
 use Qck\FeedEngine\Core\API\ApiManager;
 use Qck\FeedEngine\Core\Debug;
 use Qck\FeedEngine\Core\Hooks\Actions;
+use Qck\FeedEngine\Core\Diagnostics\SiteHealth;
 
 use Qck\FeedEngine\Pages\SettingsPage;
 use Qck\FeedEngine\Public\FeedController;
@@ -104,11 +105,11 @@ class Plugin implements Actions {
 		$this->register_pages();
 		$this->shortcodes->register_all();
 
-        
+        new SiteHealth();
     }
 
 
-	public function get_actions() {
+	public function get_actions():array {
 		$actions = [
 			 //'plugins_loaded' => array( 'init' ) ,
 			 /* New actions go here */
