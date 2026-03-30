@@ -62,17 +62,21 @@ abstract class Admin implements Actions {
         
         <div class="wrap" data-prefix="<?php echo Manifest::PREFIX; ?>">
             <h1><?php echo esc_html( $this->get_page_title() ); ?></h1>
+
             <div id="<?php echo Manifest::PREFIX; ?>_notices"></div>
+
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-top">
                 <?php echo $this->content_top(); ?>
             </div>
-            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
+
+            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form">
                 <?php
                 settings_fields( $this->get_slug() );
                 do_settings_sections( $this->get_slug() );
                 $submit = new SubmitButton( $this->get_slug() );
                 ?>
             </form>
+            
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
                 <?php echo $this->content_bottom(); ?>
             </div>

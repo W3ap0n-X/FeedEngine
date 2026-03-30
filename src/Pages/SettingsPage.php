@@ -77,6 +77,8 @@ class SettingsPage extends TopPage implements Actions {
      * Register the General Options section.
      */
     private function register_general_options() {
+        $current_data = $this->options->get_all_data();
+        \Qck\FeedEngine\Core\Debug::logDump($current_data, 'UI Data Check');
         \Qck\FeedEngine\Core\Debug::logDump('registering options', __METHOD__);
         $general_options_section = $this->register_section(
             'general_options',
