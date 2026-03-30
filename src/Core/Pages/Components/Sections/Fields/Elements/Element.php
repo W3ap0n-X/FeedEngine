@@ -1,9 +1,8 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements;
-
+use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Pages\Components\Interfaces\UI;
 use Qck\FeedEngine\Core\Options\Options;
-use Qck\FeedEngine\Plugin;
 use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -80,7 +79,7 @@ abstract class Element implements UI {
 
             $this->label       = $properties['label'];
             $this->option_name = $properties['name'];
-            $this->name        = sprintf( '%s_%s[%s]', Plugin::PREFIX, $section_id, $this->option_name );
+            $this->name        = sprintf( '%s_%s[%s]', Manifest::PREFIX, $section_id, $this->option_name );
             $this->validate    = $properties['validate'];
             $this->pre_write   = $properties['pre_write'];
             $this->value       = $options_instance->get( $this->option_name );
