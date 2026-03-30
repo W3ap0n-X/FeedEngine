@@ -107,6 +107,9 @@ class WP_Options implements Options {
         return array_keys( Manifest::DEFAULT_OPTIONS );
     }
 
+    public function get_all_data() {
+        return $this->options; // Or whatever your private property is named
+    }
 
 
 
