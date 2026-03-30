@@ -98,7 +98,8 @@ class Plugin implements Actions {
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
 		$this->shortcodes = new ShortcodeManager();
-        $this->hooks->register($this);
+        
+		$this->hooks->load();
 		$this->rest_routes->register_endpoints();
 		
 		$this->register_api_routes();
