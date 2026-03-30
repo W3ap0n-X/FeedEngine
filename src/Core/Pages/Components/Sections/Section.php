@@ -67,7 +67,7 @@ class Section {
         $this->description = $properties['description'];
         $this->page        = $page;
         $this->id          = $id;
-
+        \Qck\FeedEngine\Core\Debug::logDump($this, __METHOD__ . "FIELD CHECK");
         add_settings_section(
             $id,
             $this->title,
