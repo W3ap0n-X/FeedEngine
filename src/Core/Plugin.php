@@ -1,5 +1,5 @@
 <?php
-namespace Qck\FeedEngine;
+namespace Qck\FeedEngine\Core;
 use Qck\FeedEngine\Manifest;
 
 use Qck\FeedEngine\Core\Options\WP_Options;
