@@ -76,7 +76,7 @@ abstract class Admin implements Actions {
                 $submit = new SubmitButton( $this->get_slug() );
                 ?>
             </form>
-            
+
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
                 <?php echo $this->content_bottom(); ?>
             </div>
@@ -161,7 +161,7 @@ abstract class Admin implements Actions {
 
         wp_enqueue_script( 
             $js_handle,
-            Manifest::url('assets/js/admin-page.js'), 
+            Manifest::url('assets/js/admin.js'), 
             ['jquery'], // Added jquery as a dependency since your script uses it
             Manifest::VERSION, 
             true // Move to footer for better performance
