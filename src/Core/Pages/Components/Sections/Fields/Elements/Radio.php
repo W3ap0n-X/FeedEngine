@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Radio_Element extends Element implements SettingsInterface {
+class Radio extends Element implements SettingsInterface {
 
     /**
      * @var array Radio values.

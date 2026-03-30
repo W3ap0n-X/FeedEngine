@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Checkbox_Element extends Element implements SettingsInterface {
+class Checkbox extends Element implements SettingsInterface {
 
     /**
      * Render the element.

@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Element implements UI {
 
     const NUMBER_ELEMENT = 'Number';
-    const RADIO_ELEMENT = 'Radio_Element';
+    const RADIO_ELEMENT = 'Radio';
     const CHECKBOX_ELEMENT = 'Checkbox';
     const CUSTOM_ELEMENT = 'Custom';
 
@@ -61,7 +61,7 @@ abstract class Element implements UI {
      */
     public function __construct( $section_id, $options_instance, $properties = array() ) {
         self::$number_of_elements++;
-        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         if ( $this instanceof SettingsInterface ) {
             $properties = wp_parse_args(
                 $properties,
