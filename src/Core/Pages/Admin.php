@@ -45,7 +45,7 @@ abstract class Admin implements Actions {
      *
      * @return array
      */
-    public function get_actions() {
+    public function get_actions(): array {
         return array(
             'admin_menu'            => array( 'add_page' ),
             'admin_init'            => array( 'register_sections' ),
