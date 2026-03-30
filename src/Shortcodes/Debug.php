@@ -39,9 +39,9 @@ class Debug implements Shortcode {
         return "Debug";
     }
     public function get_description(): string {
-        return "Testing"
+        return "Testing";
     }
     public function get_example(): string {
-        return "Testing"
+        return "Testing";
     }
 }
