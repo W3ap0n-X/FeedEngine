@@ -121,7 +121,7 @@ class Plugin implements Actions {
 	private function register_pages() {
 		\Qck\FeedEngine\Core\Debug::logDump('register pages', __METHOD__);
 		$pages = [
-			new Pages\SettingsPage( $this->options, $this->hooks ),
+			new \Qck\FeedEngine\Pages\SettingsPage( $this->options, $this->hooks ),
 		];
 
 		foreach ( $pages as $page ) {
