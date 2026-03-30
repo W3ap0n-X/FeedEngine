@@ -12,7 +12,7 @@ class SettingsController extends BaseController {
     private $options;
 
     public function __construct(WP_Options $options) {
-        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         $this->options = $options;
     }
 

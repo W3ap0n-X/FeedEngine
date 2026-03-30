@@ -5,7 +5,7 @@ use Qck\FeedEngine\Manifest;
 
 class ApiManager {
     public function register_endpoints() {
-        \Qck\FeedEngine\Core\Debug::logDump('registering routes', __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump('registering routes', __METHOD__);
         $dir = Manifest::path() . 'Plugin/API/';
         if ( ! is_dir( $dir ) ) return;
 

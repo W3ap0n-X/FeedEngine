@@ -1,5 +1,5 @@
 
-
+console.log("FEEDENGINE JS LOADED");
 (function($) {
     'use strict';
 
