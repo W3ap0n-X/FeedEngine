@@ -6,8 +6,29 @@ namespace Qck\FeedEngine\Core\Hooks;
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+use Qck\FeedEngine\Manifest;
 
 class HooksManager {
+
+    /**
+     * Discovery: Automatically scans the /Hooks folder and registers classes.
+     */
+    public function load() {
+        $dir = Manifest::path() . 'src/Hooks/';
+        if ( ! is_dir( $dir ) ) return;
+
+        $files = glob( $dir . '*.php' );
+
+        foreach ( $files as $file ) {
+            $class_name = basename( $file, '.php' );
+            $full_class = "\\Qck\\FeedEngine\\Hooks\\" . $class_name;
+
+            if ( class_exists( $full_class ) ) {
+                // Instantiate and hand off to your existing register logic
+                $this->register( new $full_class() );
+            }
+        }
+    }
 
     /**
      * Register an object.
@@ -15,6 +36,7 @@ class HooksManager {
      * @param object $object
      */
     public function register( $object ) {
+        \Qck\FeedEngine\Core\Debug::logDump($object, __METHOD__);
         if ( $object instanceof Actions ) {
             $this->register_actions( $object );
         }
