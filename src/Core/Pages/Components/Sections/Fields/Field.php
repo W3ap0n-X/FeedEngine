@@ -39,7 +39,11 @@ class Field {
      * Render the field.
      */
     public function render() {
-        \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
+
+        $dump_me = ['id'=>$id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
+        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+
         if ( ! empty( $this->description ) ) {
             printf(
                 '<p class="description">%s</p>',

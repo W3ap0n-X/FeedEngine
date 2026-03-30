@@ -18,7 +18,7 @@ class SettingsController extends BaseController {
 
 
     public function register_routes() {
-        \Qck\FeedEngine\Core\Debug::logDump('registering routes', __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump('registering routes', __METHOD__);
         register_rest_route($this->get_namespace(), '/settings', [
             'methods'             => 'POST',
             'callback'            => [$this, 'save_settings'],

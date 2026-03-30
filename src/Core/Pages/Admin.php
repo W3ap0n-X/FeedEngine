@@ -35,7 +35,7 @@ abstract class Admin implements Actions {
      * @param Options $options An instance of `Options`.
      */
     public function __construct($options , $hooks ) {
-        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         $this->options = $options;
         $this->hooks = $hooks;
     }
@@ -251,7 +251,7 @@ abstract class Admin implements Actions {
      * @return SettingsSection
      */
     protected function register_section( $section_id, $properties = array() ) {
-        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         $section = new SettingsSection( $section_id, $this->get_slug(), $this->options, $properties );
 
         $this->sections[] = $section;
