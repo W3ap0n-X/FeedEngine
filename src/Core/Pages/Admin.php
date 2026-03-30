@@ -22,7 +22,7 @@ abstract class Admin implements Actions {
     /**
      * @var Section[] Page section objects.
      */
-    private $sections = array();
+    protected $sections = array();
 
     /**
      * @var Options An instance of `Options`.
