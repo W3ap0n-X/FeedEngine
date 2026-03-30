@@ -91,7 +91,7 @@ class SettingsPage extends TopPage implements Actions {
             Element::CHECKBOX_ELEMENT,
             array(
                 'label' => __( 'Debug Mode', Manifest::PREFIX ),
-                'name'  => 'engine_active'
+                'name'  => 'debug'
             )
         );
         \Qck\FeedEngine\Core\Debug::logDump($general_options_section, __METHOD__);
