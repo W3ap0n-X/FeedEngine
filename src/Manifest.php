@@ -34,6 +34,7 @@ final class Manifest {
 		// >>> Acts as junk drawer
 		'general_options' => array(
             'debug' => true,
+            'test' => 'test',
 
 		), 
         'test_options' => array(

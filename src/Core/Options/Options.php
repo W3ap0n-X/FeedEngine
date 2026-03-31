@@ -20,7 +20,7 @@ interface Options {
      * @param string $section_id Section ID.
      * @return bool              Whether the option was added.
      */
-    public function set( $name, $value, $section_id );
+    public function set( $name, $setValue );
 
     /**
      * Remove the option with the given name.
@@ -28,5 +28,5 @@ interface Options {
      * @param string $name       Option name.
      * @param string $section_id Section ID.
      */
-    public function remove( $name, $section_id );
+    public function remove( $name );
 }

@@ -1,6 +1,6 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages\Components\Sections\Fields;
-
+use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Options\Options;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
 
@@ -74,7 +74,7 @@ class Field {
             array(
                 'label'       => sprintf(
                     /* translators: %s is the unique s/n of the field. */
-                    __( 'Field #%s', 'qckfe' ),
+                    __( 'Field #%s', Manifest::PREFIX ),
                     self::$number_of_fields
                 ),
                 'id'          => 'field_' . self::$number_of_fields,

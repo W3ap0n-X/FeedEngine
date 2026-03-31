@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Element implements UI {
 
     const NUMBER_ELEMENT = 'Number';
+    const TEXT_ELEMENT = 'Text';
     const RADIO_ELEMENT = 'Radio';
     const CHECKBOX_ELEMENT = 'Checkbox';
     const CUSTOM_ELEMENT = 'Custom';
@@ -65,7 +66,7 @@ abstract class Element implements UI {
                 array(
                     'label'     => sprintf(
                         /* translators: %s is the unique s/n of the element. */
-                        __( 'Element #%s', 'glave' ),
+                        __( 'Element #%s', Manifest::PREFIX ),
                         self::$number_of_elements
                     ),
                     'name'      => 'element_' . self::$number_of_elements,
@@ -77,11 +78,10 @@ abstract class Element implements UI {
 
             $this->label       = $properties['label'];
             $this->option_name = $properties['name'];
-            $this->name        = sprintf( '%s_%s[%s]', Manifest::PREFIX, $section_id, $this->option_name );
+            $this->name        = sprintf( '%s_%s', Manifest::PREFIX , $this->option_name );
             $this->validate    = $properties['validate'];
             $this->pre_write   = $properties['pre_write'];
-            $this->value       = $options_instance->get( $this->option_name );
-
+            $this->value       = $properties['value'];
             if ( is_callable( $properties['post_read'] ) ) {
                 $this->value = $properties['post_read']( $this->value );
             }

@@ -2,7 +2,7 @@
 namespace Qck\FeedEngine\Core;
 use Qck\FeedEngine\Manifest;
 
-use Qck\FeedEngine\Core\Options\WP_Options;
+// use Qck\FeedEngine\Core\Options\WP_Options;
 // use Qck\FeedEngine\Core\Options\OptionsManager;
 use Qck\FeedEngine\Core\Hooks\HooksManager;
 use Qck\FeedEngine\Core\Shortcodes\ShortcodeManager;
@@ -12,9 +12,9 @@ use Qck\FeedEngine\Core\Hooks\Actions;
 use Qck\FeedEngine\Core\Diagnostics\SiteHealth;
 
 use Qck\FeedEngine\Pages\SettingsPage;
-use Qck\FeedEngine\Public\FeedController;
 
-class Plugin implements Actions {
+
+abstract class Plugin implements Actions {
 
     /**
 	 * Options
@@ -82,6 +82,7 @@ class Plugin implements Actions {
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
+		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
 	}
 
 	public static function instance() {
@@ -95,17 +96,18 @@ class Plugin implements Actions {
      * Initialize the plugin once activated plugins have been loaded.
      */
     public function init() {
-        $this->options = new WP_Options();
+        // $this->options = new WP_Options();
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
 		$this->shortcodes = new ShortcodeManager();
         
 		$this->hooks->load();
-		$this->rest_routes->register_endpoints();
 		
-		$this->register_api_routes();
-		$this->register_pages();
+		$this->hooks->register( new API\SettingsController() );
 		$this->shortcodes->register_all();
+		
+		$this->register_pages();
+		// $this->rest_routes->register_endpoints();
 
         new SiteHealth();
     }
@@ -121,24 +123,16 @@ class Plugin implements Actions {
 		return $actions;
 	}
 
-	private function register_pages() {
-		$pages = [
-			new \Qck\FeedEngine\Pages\SettingsPage( $this->options, $this->hooks ),
-		];
+	public function register_endpoints() {
+		$this->rest_routes->register_endpoints();
+	}
 
-		foreach ( $pages as $page ) {
+	abstract protected function add_pages();
+
+	private function register_pages() {
+		foreach ( $this->add_pages() as $page ) {
 			$this->hooks->register( $page );
 		}
 	}
 
-	private function register_api_routes() {
-		// \Qck\FeedEngine\Core\Debug::logDump('register routes', __METHOD__);
-		$routes = [
-			new API\SettingsController( $this->options ),
-		];
-
-		foreach ( $routes as $routes ) {
-			$this->hooks->register( $routes );
-		}
-	}
 }

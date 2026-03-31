@@ -1,7 +1,7 @@
 <?php
 namespace Qck\FeedEngine\Core\API;
 
-interface EndpointInterface {
+interface Endpoint {
     public function get_route(): string;
     public function get_methods(): array; // e.g., ['GET']
     public function handle( \WP_REST_Request $request );

@@ -2,29 +2,29 @@
 
 namespace Qck\FeedEngine\Core\Api;
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 use Qck\FeedEngine\Manifest;
-use Qck\FeedEngine\Core\Pages\Components\Utility\AdminNotice;
+
 use Qck\FeedEngine\Core\API\BaseController;
-use Qck\FeedEngine\Core\Options\WP_Options;
+use Qck\FeedEngine\Core\Pages\Components\Utility\AdminNotice;
 
 class SettingsController extends BaseController {
 
-    private $options;
 
-    public function __construct(WP_Options $options) {
-        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
-        $this->options = $options;
+    public function __construct() {
+
     }
 
 
     public function register_routes() {
-        // \Qck\FeedEngine\Core\Debug::logDump('registering routes', __METHOD__);
         register_rest_route($this->get_namespace(), '/settings', [
             'methods'             => 'POST',
             'callback'            => [$this, 'save_settings'],
             'permission_callback' => [$this, 'check_permission'],
         ]);
-        // \Qck\FeedEngine\Core\Debug::logDump('/settings', __METHOD__);
     }
 
     public function check_permission(): bool  {
@@ -43,17 +43,7 @@ class SettingsController extends BaseController {
             }
 
             $updated = $this->persist_form_data( $params ) ;
-            
-            // foreach ($params as $key => $value) {
-            //     foreach (Manifest::DEFAULT_OPTIONS as $section_id => $fields) {
-            //         if (array_key_exists($key, $fields)) {
-            //             // 2. The Actual Update
-            //             // We assume $this->options->set() returns true on success
-            //             $this->options->set($key, sanitize_text_field($value), $section_id);
-            //             $updated = true;
-            //         }
-            //     }
-            // }
+        
 
             // 3. Success Response
             return new \WP_REST_Response([
@@ -104,33 +94,54 @@ class SettingsController extends BaseController {
     }
 
     public function persist_form_data( array $params ) {
-        try {
-            foreach ( $params as $raw_key => $value ) {
-                \Qck\FeedEngine\Core\Debug::logDump(['key' => $raw_key, 'value' => $value], __METHOD__);
-                // Regex magic: matches 'prefix_options' and 'debug' from 'prefix_options[debug]'
-                if ( preg_match( '/^([^\[]+)\[([^\]]+)\]$/', $raw_key, $matches ) ) {
-                    $option_row = $matches[1]; // e.g., qckfe_general_options
-                    $data_key   = $matches[2]; // e.g., debug
+        $rows_to_update = [];
 
-                    // 1. Get current state
-                    $current_data = get_option( $option_row, [] );
+        foreach ( $params as $raw_key => $value ) {
+            // 1. Extract the Root Row (e.g., 'qckfe_general_options') 
+            // and the remaining path (e.g., '[processing][debug]')
+            if ( preg_match( '/^([^\[]+)(.+)$/', $raw_key, $matches ) ) {
+                $option_row  = $matches[1]; 
+                $path_string = $matches[2]; // e.g., "[processing][debug]"
 
-                    // 2. Update specific index (handling the checkbox boolean)
-                    $current_data[ $data_key ] = ( '1' === $value || true === $value );
+                // 2. Convert "[processing][debug]" into a clean array: ['processing', 'debug']
+                preg_match_all( '/\[([^\]]+)\]/', $path_string, $path_matches );
+                $full_path = $path_matches[1]; 
 
-                    // 3. Save it back
-                    update_option( $option_row, $current_data );
-                    
-                    \Qck\FeedEngine\Core\Debug::logDump("Saved to $option_row", $data_key);
+                if ( empty( $full_path ) ) continue;
+
+                // 3. Group by row so we only save once per row
+                if ( ! isset( $rows_to_update[$option_row] ) ) {
+                    $rows_to_update[$option_row] = get_option( $option_row, [] );
                 }
-                
+
+                // 4. Use the "Deep Set" logic to place the value
+                // Note: We'll separate the last element as the 'key'
+                $key = array_pop( $full_path );
+                $this->deep_set_logic( $rows_to_update[$option_row], $full_path, $key, $value );
             }
-            return true;
-        } catch (\Exception $e) {
-            \Qck\FeedEngine\Core\Debug::logDump($e, __METHOD__);
-            return false;
         }
-    
-    
+
+        // 5. Save each row once
+        foreach ( $rows_to_update as $row_name => $data ) {
+            update_option( $row_name, $data );
+        }
+
+        return ! empty( $rows_to_update );
+    }
+
+    /**
+     * A local version of the deep_set logic for the controller
+     */
+    private function deep_set_logic( array &$data, array $path, string $key, $value ) {
+        $temp = &$data;
+        foreach ( $path as $step ) {
+            if ( ! isset( $temp[$step] ) || ! is_array( $temp[$step] ) ) {
+                $temp[$step] = [];
+            }
+            $temp = &$temp[$step];
+        }
+        
+        // Handle boolean conversion for checkboxes ('1' or '0')
+        $temp[$key] = ( '1' === $value ) ? true : ( ( '0' === $value ) ? false : $value );
     }
 }
