@@ -3,7 +3,7 @@
 namespace Qck\FeedEngine\Core\Api;
 
 use Qck\FeedEngine\Manifest;
-use Qck\FeedEngine\Core\Pages\Components\Standalone\Admin_Notice;
+use Qck\FeedEngine\Core\Pages\Components\Utility\AdminNotice;
 use Qck\FeedEngine\Core\API\BaseController;
 use Qck\FeedEngine\Core\Options\WP_Options;
 
@@ -89,13 +89,13 @@ class SettingsController extends BaseController {
             if ( $updated === true  ) {
                 $this->render_admin_notice(
                     esc_html( __( 'Success: ' , Manifest::SLUG ) ),
-                    Admin_Notice::SUCCESS
+                    AdminNotice::SUCCESS
                 );
             } else {
                 /** @noinspection SpellCheckingInspection */
                 $this->render_admin_notice(
                     esc_html( __( 'An error occurred: ' , Manifest::SLUG ) ),
-                    Admin_Notice::ERROR
+                    AdminNotice::ERROR
                 );
             }
         
