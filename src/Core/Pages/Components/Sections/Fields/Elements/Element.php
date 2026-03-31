@@ -1,10 +1,8 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements;
-
+use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Pages\Components\Interfaces\UI;
 use Qck\FeedEngine\Core\Options\Options;
-use Qck\FeedEngine\Plugin;
-use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -12,10 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 abstract class Element implements UI {
 
-    const NUMBER_ELEMENT = 'Number_Element';
-    const RADIO_ELEMENT = 'Radio_Element';
-    const CHECKBOX_ELEMENT = 'Checkbox_Element';
-    const CUSTOM_ELEMENT = 'Custom_Element';
+    const NUMBER_ELEMENT = 'Number';
+    const RADIO_ELEMENT = 'Radio';
+    const CHECKBOX_ELEMENT = 'Checkbox';
+    const CUSTOM_ELEMENT = 'Custom';
 
     /**
      * @var int Number of elements instantiated.
@@ -61,7 +59,6 @@ abstract class Element implements UI {
      */
     public function __construct( $section_id, $options_instance, $properties = array() ) {
         self::$number_of_elements++;
-        Debug::logDump($properties,'Element Constructor: Properties');
         if ( $this instanceof SettingsInterface ) {
             $properties = wp_parse_args(
                 $properties,
@@ -80,7 +77,7 @@ abstract class Element implements UI {
 
             $this->label       = $properties['label'];
             $this->option_name = $properties['name'];
-            $this->name        = sprintf( '%s_%s[%s]', Plugin::PREFIX, $section_id, $this->option_name );
+            $this->name        = sprintf( '%s_%s[%s]', Manifest::PREFIX, $section_id, $this->option_name );
             $this->validate    = $properties['validate'];
             $this->pre_write   = $properties['pre_write'];
             $this->value       = $options_instance->get( $this->option_name );

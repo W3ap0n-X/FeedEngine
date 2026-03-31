@@ -25,13 +25,23 @@ class Debug implements Shortcode {
         $a = shortcode_atts( $this->atts, $atts );
         $output = '';
         if($a['plugin_info'] !== false){
-            $output .= Qck\FeedEngine\Core\Debug::easydump('Plugin Details', Qck\FeedEngine\Core\Debug::details());
+            $output .= \Qck\FeedEngine\Core\Debug::easydump( Manifest::details(), 'Plugin Details',);
         }
         if(isset($a['message'])){
-            $output .= Qck\FeedEngine\Core\Debug::easydump($a['label'], $a['message']);
+            $output .= \Qck\FeedEngine\Core\Debug::easydump( $a['message'], $a['label']);
         }
         return $output ;
 
 
+    }
+
+    public function get_name(): string {
+        return "Debug";
+    }
+    public function get_description(): string {
+        return "Testing";
+    }
+    public function get_example(): string {
+        return "Testing";
     }
 }

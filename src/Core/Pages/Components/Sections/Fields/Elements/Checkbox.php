@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Checkbox_Element extends Element implements SettingsInterface {
+class Checkbox extends Element implements SettingsInterface {
 
     /**
      * Render the element.
@@ -15,12 +15,17 @@ class Checkbox_Element extends Element implements SettingsInterface {
 
         <fieldset>
             <label>
+                <input 
+                    type="hidden" 
+                    name="<?php echo esc_attr( $this->name ); ?>" 
+                    value="0" 
+                />
                 <input
                     type="checkbox"
                     name="<?php echo esc_attr( $this->name ); ?>"
                     id="<?php echo esc_attr( $this->name ); ?>"
                     value="1"
-                    <?php checked( '1', $this->value ); ?>
+                    <?php checked( '1', $this->value , true); ?>
                 />
                 <?php echo esc_html( $this->label ); ?>
             </label>
@@ -37,7 +42,7 @@ class Checkbox_Element extends Element implements SettingsInterface {
      * @return bool
      */
     public function sanitize( $option_value ) {
-        return boolval( $option_value );
+        return ( '1' === (string) $option_value || true === $option_value );
     }
 
 }

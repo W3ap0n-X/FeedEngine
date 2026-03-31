@@ -22,7 +22,7 @@ abstract class Admin implements Actions {
     /**
      * @var Section[] Page section objects.
      */
-    private $sections = array();
+    protected $sections = array();
 
     /**
      * @var Options An instance of `Options`.
@@ -35,6 +35,7 @@ abstract class Admin implements Actions {
      * @param Options $options An instance of `Options`.
      */
     public function __construct($options , $hooks ) {
+        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         $this->options = $options;
         $this->hooks = $hooks;
     }
@@ -44,7 +45,7 @@ abstract class Admin implements Actions {
      *
      * @return array
      */
-    public function get_actions() {
+    public function get_actions(): array {
         return array(
             'admin_menu'            => array( 'add_page' ),
             'admin_init'            => array( 'register_sections' ),
@@ -61,10 +62,13 @@ abstract class Admin implements Actions {
         
         <div class="wrap" data-prefix="<?php echo Manifest::PREFIX; ?>">
             <h1><?php echo esc_html( $this->get_page_title() ); ?></h1>
+
             <div id="<?php echo Manifest::PREFIX; ?>_notices"></div>
+
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-top">
                 <?php echo $this->content_top(); ?>
             </div>
+            <?php if(count($this->sections) > 0) { ?>
             <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
                 <?php
                 settings_fields( $this->get_slug() );
@@ -72,6 +76,8 @@ abstract class Admin implements Actions {
                 $submit = new SubmitButton( $this->get_slug() );
                 ?>
             </form>
+            <?php } ?>
+
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
                 <?php echo $this->content_bottom(); ?>
             </div>
@@ -146,7 +152,7 @@ abstract class Admin implements Actions {
         // 1. CSS
         wp_enqueue_style(
             Manifest::PREFIX . '_admin_page',
-            Manifest::url('assets/css/admin-page.css'), // Using the url() method we built
+            Manifest::url('src/assets/css/admin.css'), // Using the url() method we built
             [],
             Manifest::VERSION
         );
@@ -156,7 +162,7 @@ abstract class Admin implements Actions {
 
         wp_enqueue_script( 
             $js_handle,
-            Manifest::url('assets/js/admin-page.js'), 
+            Manifest::url('src/assets/js/admin.js'), 
             ['jquery'], // Added jquery as a dependency since your script uses it
             Manifest::VERSION, 
             true // Move to footer for better performance
@@ -164,8 +170,8 @@ abstract class Admin implements Actions {
 
         // 3. Localize - Using the SAME handle
         wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
-            '__wp_plugin_prefix'     => Manifest::PREFIX,
-            'rest_url' => esc_url_raw(rest_url(Manifest::SLUG . '/v1/')),
+            'prefix'     => Manifest::PREFIX,
+            'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
             'nonce'    => wp_create_nonce('wp_rest'), 
         ]);
     }
@@ -246,7 +252,8 @@ abstract class Admin implements Actions {
      * @return SettingsSection
      */
     protected function register_section( $section_id, $properties = array() ) {
-        Debug::logDump($properties, 'FE > Pages > Admin: register_section');
+        $dump_me = ['id'=>$section_id, 'properties'=>$properties];
+        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         $section = new SettingsSection( $section_id, $this->get_slug(), $this->options, $properties );
 
         $this->sections[] = $section;
@@ -254,6 +261,7 @@ abstract class Admin implements Actions {
         register_setting(
             $this->get_slug(),
             Manifest::PREFIX . '_' . $section_id,
+            // 'qckfe_general_options',
             array( 'sanitize_callback' => array( $section, 'sanitize' ) )
         );
 

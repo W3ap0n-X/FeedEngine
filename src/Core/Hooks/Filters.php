@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 interface Filters {
-    /**
-     * Return the filters to register.
-     *
-     * @return array
-     */
-    public function get_filters();
+    /** @return array ['hook_name' => ['method', priority, args]] */
+    public function get_filters(): array;
 }

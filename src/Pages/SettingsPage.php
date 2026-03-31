@@ -5,7 +5,7 @@ use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Debug;
 use Qck\FeedEngine\Core\Hooks\Actions;
 use Qck\FeedEngine\Core\Pages\TopPage;
-use Qck\FeedEngine\Core\Options\Options;
+use Qck\FeedEngine\Core\Options\WP_Options;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
 use Qck\FeedEngine\Plugin;
 
@@ -18,20 +18,19 @@ class SettingsPage extends TopPage implements Actions {
     
 
     public function __construct( $options , $hooks) {
-        
         parent::__construct( $options , $hooks );
     }
 
-    /**
-     * Return the actions to register.
-     *
-     * @return array
-     */
-    public function get_actions() {
-        $actions = parent::get_actions();
+    // /**
+    //  * Return the actions to register.
+    //  *
+    //  * @return array
+    //  */
+    // public function get_actions() {
+    //     $actions = parent::get_actions();
 
-        return $actions;
-    }
+    //     return $actions;
+    // }
 
 
 
@@ -77,6 +76,8 @@ class SettingsPage extends TopPage implements Actions {
      * Register the General Options section.
      */
     private function register_general_options() {
+        // $current_data = $this->options->get('general_options');
+        // \Qck\FeedEngine\Core\Debug::logDump($current_data, 'UI Data Check');
         $general_options_section = $this->register_section(
             'general_options',
             array( 'title' => __( 'General Options', Manifest::PREFIX ) )
@@ -90,9 +91,10 @@ class SettingsPage extends TopPage implements Actions {
             Element::CHECKBOX_ELEMENT,
             array(
                 'label' => __( 'Debug Mode', Manifest::PREFIX ),
-                'name'  => 'engine_active'
+                'name'  => 'debug'
             )
         );
+        // \Qck\FeedEngine\Core\Debug::logDump($general_options_section, __METHOD__);
     }
 
     /**

@@ -12,7 +12,7 @@ class WP_Options implements Options {
 	/**
      * @var array Stored options.
      */
-    private $options;
+    protected $options;
 
 	/**
      * @var array Default options.
@@ -28,10 +28,13 @@ class WP_Options implements Options {
      * Options constructor.
      */
     public function __construct() {
+        
         $all_options = array();
 
         foreach ( Manifest::DEFAULT_OPTIONS as $section_id => $section_default_options ) {
             $db_option_name  = Manifest::PREFIX . '_' . $section_id;
+            \Qck\FeedEngine\Core\Debug::logDump($db_option_name, __METHOD__ . ':: $db_option_name');
+            \Qck\FeedEngine\Core\Debug::logDump($section_id, __METHOD__ . ':: $section_id');
             $section_options = get_option( $db_option_name );
 
             if ( $section_options === false ) {
@@ -39,10 +42,12 @@ class WP_Options implements Options {
                 $section_options = $section_default_options;
             }
 
-            $all_options = array_merge( $all_options, $section_options );
+            $all_options = array_merge( $all_options, [$section_id=>$section_options] );
         }
         // var_dump($all_options);
-
+        \Qck\FeedEngine\Core\Debug::logDump(Manifest::DEFAULT_OPTIONS, __METHOD__ . ':: Manifest::DEFAULT_OPTIONS');
+        \Qck\FeedEngine\Core\Debug::logDump($all_options, __METHOD__ . ':: $all_options');
+        
         $this->options = $all_options;
     }
 
@@ -106,6 +111,9 @@ class WP_Options implements Options {
         return array_keys( Manifest::DEFAULT_OPTIONS );
     }
 
+    public function get_all_data() {
+        return $this->options; // Or whatever your private property is named
+    }
 
 
 

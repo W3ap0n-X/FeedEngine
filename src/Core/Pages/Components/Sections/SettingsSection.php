@@ -15,12 +15,13 @@ class SettingsSection extends Section {
      * @return Element[]
      */
     private function get_all_elements_in_section() {
+
         $elements = array();
         
         foreach ( $this->fields as $field ) {
             $elements = array_merge( $elements, $field->get_elements() );
         }
-
+        // \Qck\FeedEngine\Core\Debug::logDump($elements, __METHOD__);
         return $elements;
     }
 
@@ -32,6 +33,7 @@ class SettingsSection extends Section {
      * @return array
      */
     public function sanitize( $options ) {
+        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         $elements = $this->get_all_elements_in_section();
 
         foreach ( $options as $key => $value ) {

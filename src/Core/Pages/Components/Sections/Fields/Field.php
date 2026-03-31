@@ -13,12 +13,12 @@ class Field {
     /**
      * @var int Number of fields instantiated.
      */
-    private static $number_of_fields = 0;
+    protected static $number_of_fields = 0;
 
     /**
      * @var Element[] Field elements.
      */
-    private $elements = array();
+    protected $elements = array();
 
     /**
      * @var Options An instance of `Options`.
@@ -28,17 +28,21 @@ class Field {
     /**
      * @var string ID of the section this field belongs to.
      */
-    private $section_id;
+    protected $section_id;
 
     /**
      * @var array Field description.
      */
-    private $description;
+    protected $description;
 
     /**
      * Render the field.
      */
     public function render() {
+        // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
+
+        
+
         if ( ! empty( $this->description ) ) {
             printf(
                 '<p class="description">%s</p>',
@@ -60,6 +64,9 @@ class Field {
      * @param array   $properties       Field properties.
      */
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
+
+        $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
+        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         self::$number_of_fields++;
 
         $properties = wp_parse_args(
@@ -67,7 +74,7 @@ class Field {
             array(
                 'label'       => sprintf(
                     /* translators: %s is the unique s/n of the field. */
-                    __( 'Field #%s', 'glave' ),
+                    __( 'Field #%s', 'qckfe' ),
                     self::$number_of_fields
                 ),
                 'id'          => 'field_' . self::$number_of_fields,
@@ -103,12 +110,12 @@ class Field {
         }
 
         $element = new $element_type( $this->section_id, $this->options, $properties );
-
         if ( ! ( $element instanceof Element ) ) {
             return;
         }
 
         $this->elements[ $element->get_option_name() ] = $element;
+        return $this;
     }
 
     /**

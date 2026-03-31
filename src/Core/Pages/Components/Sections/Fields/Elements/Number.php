@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Number_Element extends Element implements SettingsInterface {
+class Number extends Element implements SettingsInterface {
 
     /**
      * Render the element.

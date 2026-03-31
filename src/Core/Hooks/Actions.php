@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 interface Actions {
-    /**
-     * Return the actions to register.
-     *
-     * @return array
-     */
-    public function get_actions();
+    /** @return array ['hook_name' => ['method', priority, args]] */
+    public function get_actions(): array;
 }

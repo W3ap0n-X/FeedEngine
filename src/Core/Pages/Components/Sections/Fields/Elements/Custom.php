@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Custom_Element extends Element {
+class Custom extends Element {
 
     /**
      * @var string HTML to display.
