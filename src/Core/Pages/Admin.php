@@ -171,7 +171,7 @@ abstract class Admin implements Actions {
         // 3. Localize - Using the SAME handle
         wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
             '__wp_plugin_prefix'     => Manifest::PREFIX,
-            'rest_url' => esc_url_raw(rest_url(Manifest::SLUG . '/v1/')),
+            'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
             'nonce'    => wp_create_nonce('wp_rest'), 
         ]);
     }
