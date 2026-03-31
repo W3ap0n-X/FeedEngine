@@ -42,7 +42,7 @@ class WP_Options implements Options {
                 $section_options = $section_default_options;
             }
 
-            $all_options = array_merge( $all_options, $section_options );
+            $all_options = array_merge( $all_options, [$section_id=>$section_options] );
         }
         // var_dump($all_options);
         \Qck\FeedEngine\Core\Debug::logDump(Manifest::DEFAULT_OPTIONS, __METHOD__ . ':: Manifest::DEFAULT_OPTIONS');
