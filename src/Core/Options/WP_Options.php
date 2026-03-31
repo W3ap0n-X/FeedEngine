@@ -43,6 +43,7 @@ class WP_Options implements Options {
             $all_options = array_merge( $all_options, $section_options );
         }
         // var_dump($all_options);
+        \Qck\FeedEngine\Core\Debug::logDump(Manifest::DEFAULT_OPTIONS, __METHOD__ . ':: Manifest::DEFAULT_OPTIONS');
         \Qck\FeedEngine\Core\Debug::logDump($all_options, __METHOD__ . ':: $all_options');
         
         $this->options = $all_options;
