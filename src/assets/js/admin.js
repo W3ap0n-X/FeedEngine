@@ -1,6 +1,6 @@
 (function($) {
     'use strict';
-
+console.log("FEEDENGINE JS LOADED");
     $(function() {
         const prefix = $('.wrap').data('prefix'); 
         const settings = window[prefix + '_vars'];
