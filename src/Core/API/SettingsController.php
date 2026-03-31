@@ -56,14 +56,14 @@ class SettingsController extends BaseController {
             // 3. Success Response
             return new \WP_REST_Response([
                 'success' => true,
-                'message' => __( display_admin_notices($updated, 'Settings Saved.'), Manifest::SLUG )
+                'message' => __( $this->display_admin_notices($updated, 'Settings Saved.'), Manifest::SLUG )
             ], 200);
 
         } catch (\Exception $e) {
             // 4. Error Response (The Safety Net)
             return new \WP_REST_Response([
                 'success' => false,
-                'message' => display_admin_notices($updated, $e->getMessage())
+                'message' => $this->display_admin_notices($updated, $e->getMessage())
             ], 400); // 400 Bad Request
         }
     }
