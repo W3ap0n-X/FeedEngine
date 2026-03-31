@@ -39,15 +39,15 @@ class SettingsController extends BaseController {
         try {
             // 1. Validation Logic
             if ( empty($params) ) {
-                throw new \Exception( __( 'No data provided to save.', Manifest::SLUG ) );
+                throw new \Exception( __( 'No data provided to save.', Manifest::PREFIX ) );
             }
 
             foreach ($params as $key => $value) {
                 foreach (Manifest::DEFAULT_OPTIONS as $section_id => $fields) {
-                    if (array_key_exists($key, $fields)) {
+                    if (array_key_exists($key, $field)) {
                         // 2. The Actual Update
                         // We assume $this->options->set() returns true on success
-                        $this->options->set($key, sanitize_text_field($value), $section_id);
+                        $this->options->set($key, sanitize_text_field($field), $section_id);
                         $updated = true;
                     }
                 }
