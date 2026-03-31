@@ -36,6 +36,10 @@ final class Manifest {
             'debug' => true,
 
 		), 
+        'test_options' => array(
+            'debug' => true,
+
+		), 
 	);
 
     public static function details(){
