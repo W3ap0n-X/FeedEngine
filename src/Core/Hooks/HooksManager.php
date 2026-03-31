@@ -36,7 +36,7 @@ class HooksManager {
      * @param object $object
      */
     public function register( $object ) {
-        \Qck\FeedEngine\Core\Debug::logDump($object, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($object, __METHOD__);
         if ( $object instanceof Actions ) {
             $this->register_actions( $object );
         }

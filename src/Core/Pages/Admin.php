@@ -253,7 +253,7 @@ abstract class Admin implements Actions {
      */
     protected function register_section( $section_id, $properties = array() ) {
         $dump_me = ['id'=>$section_id, 'properties'=>$properties];
-        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         $section = new SettingsSection( $section_id, $this->get_slug(), $this->options, $properties );
 
         $this->sections[] = $section;

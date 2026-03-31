@@ -3,7 +3,6 @@ namespace Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Pages\Components\Interfaces\UI;
 use Qck\FeedEngine\Core\Options\Options;
-use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -60,7 +59,6 @@ abstract class Element implements UI {
      */
     public function __construct( $section_id, $options_instance, $properties = array() ) {
         self::$number_of_elements++;
-        // \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         if ( $this instanceof SettingsInterface ) {
             $properties = wp_parse_args(
                 $properties,

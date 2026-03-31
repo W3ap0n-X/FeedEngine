@@ -64,10 +64,9 @@ class Field {
      * @param array   $properties       Field properties.
      */
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
-        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
 
         $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
-        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         self::$number_of_fields++;
 
         $properties = wp_parse_args(
@@ -104,16 +103,13 @@ class Field {
      * @param array  $properties
      */
     public function add_element( $element_type, $properties ) {
-        \Qck\FeedEngine\Core\Debug::logDump([$element_type,$properties], __METHOD__);
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
         if ( ! class_exists( $element_type ) ) {
-            \Qck\FeedEngine\Core\Debug::logDump($element_type . " NOT FOUND", __METHOD__);
             return;
         }
 
         $element = new $element_type( $this->section_id, $this->options, $properties );
-        \Qck\FeedEngine\Core\Debug::logDump($element, __METHOD__ . ':: Element check');
         if ( ! ( $element instanceof Element ) ) {
             return;
         }

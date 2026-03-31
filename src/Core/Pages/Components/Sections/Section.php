@@ -89,7 +89,6 @@ class Section {
      * @param array $properties Field properties.
      */
     public function add_field( $properties ) {
-        \Qck\FeedEngine\Core\Debug::logDump($properties, __METHOD__);
         $field = new Field( $this->id, $this->page, $this->options, $properties );
 
         $this->fields[] = $field;

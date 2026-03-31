@@ -5,6 +5,7 @@
         const prefix = $('.wrap').data('prefix'); 
         const settings = window[prefix + '_vars'];
 console.log("FEEDENGINE JS LOADED");
+console.log(settings.nonce);
         // THE FIX: Use $form consistently
         const $form = $('.' + prefix + '_admin_form');
         
@@ -22,6 +23,7 @@ console.log("FEEDENGINE JS LOADED");
                     xhr.setRequestHeader('X-WP-Nonce', settings.nonce);
                 },
                 data: $form.serialize(),
+                dataType: 'json',
                 success: function(response) {
                     const anchor = $('#' + settings.prefix + '_notices');
                     anchor.html('<div class="notice notice-success is-dismissible"><p>' + response.message + '</p></div>');

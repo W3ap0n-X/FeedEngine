@@ -24,7 +24,7 @@ class SettingsController extends BaseController {
             'callback'            => [$this, 'save_settings'],
             'permission_callback' => [$this, 'check_permission'],
         ]);
-        \Qck\FeedEngine\Core\Debug::logDump('/settings', __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump('/settings', __METHOD__);
     }
 
     public function check_permission(): bool  {

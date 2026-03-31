@@ -94,7 +94,7 @@ class SettingsPage extends TopPage implements Actions {
                 'name'  => 'debug'
             )
         );
-        \Qck\FeedEngine\Core\Debug::logDump($general_options_section, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($general_options_section, __METHOD__);
     }
 
     /**
