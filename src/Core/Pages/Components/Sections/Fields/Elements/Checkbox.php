@@ -37,7 +37,7 @@ class Checkbox extends Element implements SettingsInterface {
      * @return bool
      */
     public function sanitize( $option_value ) {
-        return ( '1' == $value ) ? '1' : '0';
+        return ( '1' == $option_value ) ? '1' : '0';
     }
 
 }
