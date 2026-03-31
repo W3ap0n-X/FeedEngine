@@ -78,22 +78,22 @@ class SettingsPage extends TopPage implements Actions {
     private function register_general_options() {
         // $current_data = $this->options->get('general_options');
         // \Qck\FeedEngine\Core\Debug::logDump($current_data, 'UI Data Check');
-        $general_options_section = $this->register_section(
-            'general_options',
-            array( 'title' => __( 'General Options', Manifest::PREFIX ) )
-        );
+        // $general_options_section = $this->register_section(
+        //     'general_options',
+        //     array( 'title' => __( 'General Options', Manifest::PREFIX ) )
+        // );
 
-        $section_debug = $general_options_section->add_field(
-            array( 'label'  => __( 'Debug', Manifest::PREFIX ) )
-        );
+        // $section_debug = $general_options_section->add_field(
+        //     array( 'label'  => __( 'Debug', Manifest::PREFIX ) )
+        // );
 
-        $section_debug->add_element(
-            Element::CHECKBOX_ELEMENT,
-            array(
-                'label' => __( 'Debug Mode', Manifest::PREFIX ),
-                'name'  => 'debug'
-            )
-        );
+        // $section_debug->add_element(
+        //     Element::CHECKBOX_ELEMENT,
+        //     array(
+        //         'label' => __( 'Debug Mode', Manifest::PREFIX ),
+        //         'name'  => 'debug'
+        //     )
+        // );
         // \Qck\FeedEngine\Core\Debug::logDump($general_options_section, __METHOD__);
     }
 

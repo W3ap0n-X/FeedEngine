@@ -68,7 +68,7 @@ abstract class Admin implements Actions {
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-top">
                 <?php echo $this->content_top(); ?>
             </div>
-
+            <?php if(count($sections) > 0) { ?>
             <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
                 <?php
                 settings_fields( $this->get_slug() );
@@ -76,7 +76,7 @@ abstract class Admin implements Actions {
                 $submit = new SubmitButton( $this->get_slug() );
                 ?>
             </form>
-
+            <?php } ?>
 
             <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
                 <?php echo $this->content_bottom(); ?>
