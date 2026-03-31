@@ -42,7 +42,7 @@ class SettingsController extends BaseController {
                 throw new \Exception( __( 'No data provided to save.', Manifest::PREFIX ) );
             }
 
-            $updated = $this->persist_form_data( array $params ) ;
+            $updated = $this->persist_form_data( $params ) ;
             
             // foreach ($params as $key => $value) {
             //     foreach (Manifest::DEFAULT_OPTIONS as $section_id => $fields) {
