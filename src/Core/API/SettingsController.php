@@ -42,21 +42,23 @@ class SettingsController extends BaseController {
                 throw new \Exception( __( 'No data provided to save.', Manifest::PREFIX ) );
             }
 
-            foreach ($params as $key => $value) {
-                foreach (Manifest::DEFAULT_OPTIONS as $section_id => $fields) {
-                    if (array_key_exists($key, $fields)) {
-                        // 2. The Actual Update
-                        // We assume $this->options->set() returns true on success
-                        $this->options->set($key, sanitize_text_field($value), $section_id);
-                        $updated = true;
-                    }
-                }
-            }
+            $updated = $this->persist_form_data( array $params ) ;
+            
+            // foreach ($params as $key => $value) {
+            //     foreach (Manifest::DEFAULT_OPTIONS as $section_id => $fields) {
+            //         if (array_key_exists($key, $fields)) {
+            //             // 2. The Actual Update
+            //             // We assume $this->options->set() returns true on success
+            //             $this->options->set($key, sanitize_text_field($value), $section_id);
+            //             $updated = true;
+            //         }
+            //     }
+            // }
 
             // 3. Success Response
             return new \WP_REST_Response([
                 'success' => true,
-                'message' => __( $this->display_admin_notices($updated, 'Settings Saved.'), Manifest::SLUG )
+                'message' => __( $this->display_admin_notices($updated, 'Settings Saved.'), Manifest::PREFIX )
             ], 200);
 
         } catch (\Exception $e) {
@@ -88,16 +90,45 @@ class SettingsController extends BaseController {
 
             if ( $updated === true  ) {
                 return $this->render_admin_notice(
-                    esc_html( __( 'Success: ' , Manifest::SLUG ) ),
+                    esc_html( __( 'Success: ' , Manifest::PREFIX ) ),
                     AdminNotice::SUCCESS
                 );
             } else {
                 /** @noinspection SpellCheckingInspection */
                 return $this->render_admin_notice(
-                    esc_html( __( 'An error occurred: ' , Manifest::SLUG ) ),
+                    esc_html( __( 'An error occurred: ' , Manifest::PREFIX ) ),
                     AdminNotice::ERROR
                 );
             }
         
+    }
+
+    public function persist_form_data( array $params ) {
+        try {
+            foreach ( $params as $raw_key => $value ) {
+                // Regex magic: matches 'prefix_options' and 'debug' from 'prefix_options[debug]'
+                if ( preg_match( '/^([^\[]+)\[([^\]]+)\]$/', $raw_key, $matches ) ) {
+                    $option_row = $matches[1]; // e.g., qckfe_general_options
+                    $data_key   = $matches[2]; // e.g., debug
+
+                    // 1. Get current state
+                    $current_data = get_option( $option_row, [] );
+
+                    // 2. Update specific index (handling the checkbox boolean)
+                    $current_data[ $data_key ] = ( '1' === $value || true === $value );
+
+                    // 3. Save it back
+                    update_option( $option_row, $current_data );
+                    
+                    \Qck\FeedEngine\Core\Debug::logDump("Saved to $option_row", $data_key);
+                }
+                return true;
+            }
+        } catch (\Exception $e) {
+            \Qck\FeedEngine\Core\Debug::logDump($e, __METHOD__);
+            return false;
+        }
+    
+    
     }
 }
