@@ -13,7 +13,7 @@ console.log("FEEDENGINE JS LOADED");
     console.log(settings);
 
     $(function() {
-        const $form = $('#' + settings.slug + '_admin_form');
+        const $form = $('.' + settings.slug + '_admin_form');
         
         $form.on('submit', function(e) {
             e.preventDefault();
