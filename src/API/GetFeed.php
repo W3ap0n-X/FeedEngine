@@ -8,7 +8,7 @@ class GetFeed implements Endpoint {
     
     public function get_route(): string { return '/feed'; }
     
-    public function get_methods(): string { return 'GET'; }
+    public function get_methods(): array { return ['GET']; }
 
     public function get_args(): array {
         return [
@@ -23,5 +23,10 @@ class GetFeed implements Endpoint {
             'success' => true,
             'html'    => $controller->get_feed( $request->get_params() )
         ];
+    }
+
+    public function get_permission_callback(): callable {
+        // __return_true is a built-in WP utility function that literally just returns true.
+        return '__return_true';
     }
 }

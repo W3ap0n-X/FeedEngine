@@ -9,6 +9,7 @@ use Qck\FeedEngine\Core\Pages\Components\Sections\SettingsSection;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Section;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
 use Qck\FeedEngine\Core\Options\Options;
+use Qck\FeedEngine\Core\Options\OptionSection;
 // use Qck\FeedEngine\Plugin;
 use Qck\FeedEngine\Core\Debug;
 
@@ -34,9 +35,9 @@ abstract class Admin implements Actions {
      *
      * @param Options $options An instance of `Options`.
      */
-    public function __construct($options , $hooks ) {
+    public function __construct( $hooks ) {
         // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
-        $this->options = $options;
+        // $this->options = $options;
         $this->hooks = $hooks;
     }
 
@@ -265,6 +266,31 @@ abstract class Admin implements Actions {
             array( 'sanitize_callback' => array( $section, 'sanitize' ) )
         );
 
+        return $section;
+    }
+
+    protected function add_section( $option_section ) {
+        
+        // \Qck\FeedEngine\Core\Debug::logDump($option_section->define_fields(), __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($option_section->get_values(), __METHOD__);
+        if ( ! ( $option_section instanceof OptionSection ) ) {
+            return;
+        }
+        $section = new SettingsSection( 
+            $option_section->get_db_row(), 
+            $this->get_slug(), 
+            $option_section, 
+            ['title' => $option_section->get_title(), 'description' => $option_section->get_description()] 
+        );
+        $this->sections[] = $section;
+
+        register_setting(
+            $this->get_slug(),
+            $option_section->get_db_row(),
+            // 'qckfe_general_options',
+            array( 'sanitize_callback' => array( $section, 'sanitize' ) )
+        );
+        
         return $section;
     }
 

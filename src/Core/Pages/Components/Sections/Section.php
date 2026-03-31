@@ -1,6 +1,6 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages\Components\Sections;
-
+use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Options\Options;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Field;
 use Qck\FeedEngine\Core\Debug;
@@ -19,7 +19,7 @@ class Section {
     /**
      * @var Options An instance of `Options`.
      */
-    private $options;
+    public $options;
 
     /**
      * @var string Section title.
@@ -30,6 +30,10 @@ class Section {
      * @var string Section ID.
      */
     private $id;
+
+    public function get_id(){
+        return $this->id;
+    }
 
     /**
      * @var string Slug-name of the settings page this section belongs to.
@@ -51,12 +55,12 @@ class Section {
      */
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
         
-        $dump_me = ['section_id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
+        // $dump_me = ['section_id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
         // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         $properties = wp_parse_args(
             $properties,
             array(
-                'title'       => __( $section_id, $page ),
+                'title'       => __( $section_id, Manifest::PREFIX ),
                 'description' => ''
             )
         );
@@ -95,5 +99,7 @@ class Section {
 
         return $field;
     }
+
+
 
 }
