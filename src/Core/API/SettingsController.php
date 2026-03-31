@@ -123,8 +123,9 @@ class SettingsController extends BaseController {
                     
                     \Qck\FeedEngine\Core\Debug::logDump("Saved to $option_row", $data_key);
                 }
-                return true;
+                
             }
+            return true;
         } catch (\Exception $e) {
             \Qck\FeedEngine\Core\Debug::logDump($e, __METHOD__);
             return false;
