@@ -11,8 +11,10 @@ console.log(settings.nonce);
         
         $form.on('submit', function(e) {
             e.preventDefault();
-            let testjson = JSON.stringify($form.serializeArray());
-            console.log(testjson);
+            const formData = {};
+            $form.serializeArray().forEach(item => {
+                formData[item.name] = item.value;
+            });
             // Visual feedback: disable button
             const $submitBtn = $form.find('input[type="submit"], button[type="submit"]');
             $submitBtn.prop('disabled', true).addClass('updating');
@@ -20,11 +22,11 @@ console.log(settings.nonce);
             $.ajax({
                 url: settings.rest_url + 'settings',
                 method: 'POST',
-                headers: {
-                    'X-WP-Nonce': settings.nonce, // Necessary for REST API authentication
-                    'Content-Type': 'application/json'
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-WP-Nonce', settings.nonce);
                 },
-                data: $form.serialize(),
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(formData),
                 success: function(response) {
                     const anchor = $('#' + settings.prefix + '_notices');
                     anchor.html('<div class="notice notice-success is-dismissible"><p>' + response.message + '</p></div>');
