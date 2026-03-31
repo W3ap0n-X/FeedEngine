@@ -11,7 +11,8 @@ console.log(settings.nonce);
         
         $form.on('submit', function(e) {
             e.preventDefault();
-            
+            let testjson = JSON.serialize($form);
+            console.log(testjson);
             // Visual feedback: disable button
             const $submitBtn = $form.find('input[type="submit"], button[type="submit"]');
             $submitBtn.prop('disabled', true).addClass('updating');
