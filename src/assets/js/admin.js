@@ -8,7 +8,9 @@ console.log("FEEDENGINE JS LOADED");
      * If Manifest::PREFIX is 'qckfe', this looks for qckfe_vars.
      */
     const prefix = $('.wrap').data('prefix'); // Option A: Data Attribute
+    console.log(prefix);
     const settings = window[prefix + '_vars'];
+    console.log(settings);
 
     $(function() {
         const $form = $('#' + settings.slug + '_admin_form');
