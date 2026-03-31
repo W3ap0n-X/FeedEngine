@@ -1,8 +1,8 @@
 
-console.log("FEEDENGINE JS LOADED");
+
 (function($) {
     'use strict';
-
+console.log("FEEDENGINE JS LOADED");
     /**
      * Look for the dynamic variable created by the Manifest Prefix.
      * If Manifest::PREFIX is 'qckfe', this looks for qckfe_vars.
