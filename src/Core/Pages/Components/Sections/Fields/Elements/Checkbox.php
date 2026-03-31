@@ -20,7 +20,7 @@ class Checkbox extends Element implements SettingsInterface {
                     name="<?php echo esc_attr( $this->name ); ?>"
                     id="<?php echo esc_attr( $this->name ); ?>"
                     value="1"
-                    <?php checked( '1', $this->value ); ?>
+                    <?php checked( '1', $this->value , false); ?>
                 />
                 <?php echo esc_html( $this->label ); ?>
             </label>
