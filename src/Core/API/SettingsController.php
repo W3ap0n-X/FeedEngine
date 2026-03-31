@@ -44,10 +44,10 @@ class SettingsController extends BaseController {
 
             foreach ($params as $key => $value) {
                 foreach (Manifest::DEFAULT_OPTIONS as $section_id => $fields) {
-                    if (array_key_exists($key, $field)) {
+                    if (array_key_exists($key, $fields)) {
                         // 2. The Actual Update
                         // We assume $this->options->set() returns true on success
-                        $this->options->set($key, sanitize_text_field($field), $section_id);
+                        $this->options->set($key, sanitize_text_field($value), $section_id);
                         $updated = true;
                     }
                 }
