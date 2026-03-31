@@ -29,12 +29,14 @@ console.log(settings.nonce);
                 data: JSON.stringify(formData),
                 success: function(response) {
                     const anchor = $('#' + settings.prefix + '_notices');
-                    anchor.html( response.message );
+                    anchor.html( response.message ).hide().fadeIn();
+                    $(document).trigger('wp-updates-notice-added');
                 },
                 error: function(xhr) {
                     const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : 'Critical Server Error';
                     const anchor = $('#' + settings.prefix + '_notices');
-                    anchor.html('<div class="notice notice-error"><p>' + errorMsg + '</p></div>');
+                    anchor.html('<div class="notice notice-error"><p>' + errorMsg + '</p></div>').hide().fadeIn();
+                    $(document).trigger('wp-updates-notice-added');
                 },
                 complete: function() {
                     $submitBtn.prop('disabled', false).removeClass('updating');
