@@ -90,13 +90,13 @@ class SettingsController extends BaseController {
 
             if ( $updated === true  ) {
                 return $this->render_admin_notice(
-                    esc_html( __( 'Success: ' , Manifest::PREFIX ) ),
+                    esc_html( __( 'Success: ' . $msg, Manifest::PREFIX ) ),
                     AdminNotice::SUCCESS
                 );
             } else {
                 /** @noinspection SpellCheckingInspection */
                 return $this->render_admin_notice(
-                    esc_html( __( 'An error occurred: ' , Manifest::PREFIX ) ),
+                    esc_html( __( 'An error occurred: ' . $msg , Manifest::PREFIX ) ),
                     AdminNotice::ERROR
                 );
             }
