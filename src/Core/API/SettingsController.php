@@ -76,7 +76,7 @@ class SettingsController extends BaseController {
      */
     protected function render_admin_notice( $message, $type ) {
         $notice = new AdminNotice( $message, $type );
-        return $notice->render();
+        return $notice->renderHtml();
     }
 
         /**

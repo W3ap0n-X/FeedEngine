@@ -74,11 +74,17 @@ class AdminNotice {
      * Render this notice.
      */
     public function render() {
+        
         printf(
             '<div class="%s"><p>%s</p></div>',
             esc_attr( $this->get_css_classes() ),
             $this->message
         );
+    }
+
+    public function renderHtml() {
+        $html = '<div class="' . esc_attr( $this->get_css_classes() ) . '"><p' . $this->message . '</p></div>';
+        return $html;
     }
 
 }
