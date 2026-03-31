@@ -19,11 +19,11 @@ console.log(settings.nonce);
             $.ajax({
                 url: settings.rest_url + 'settings',
                 method: 'POST',
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('X-WP-Nonce', settings.nonce);
+                headers: {
+                    'X-WP-Nonce': settings.nonce, // Necessary for REST API authentication
+                    'Content-Type': 'application/json'
                 },
                 data: $form.serialize(),
-                dataType: 'json',
                 success: function(response) {
                     const anchor = $('#' + settings.prefix + '_notices');
                     anchor.html('<div class="notice notice-success is-dismissible"><p>' + response.message + '</p></div>');
