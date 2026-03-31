@@ -1,12 +1,12 @@
 (function($) {
     'use strict';
-console.log("FEEDENGINE JS LOADED");
+
     $(function() {
         const prefix = $('.wrap').data('prefix'); 
         const settings = window[prefix + '_vars'];
-
+console.log("FEEDENGINE JS LOADED");
         // THE FIX: Use $form consistently
-        const $form = $('.' + settings.slug + '_admin_form');
+        const $form = $('#' + settings.prefix + '_admin_form');
         
         $form.on('submit', function(e) {
             e.preventDefault();
