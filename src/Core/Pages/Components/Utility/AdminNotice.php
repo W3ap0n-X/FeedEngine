@@ -83,7 +83,7 @@ class AdminNotice {
     }
 
     public function renderHtml() {
-        $html = '<div class="' . esc_attr( $this->get_css_classes() ) . '"><p' . $this->message . '</p></div>';
+        $html = '<div class="' . esc_attr( $this->get_css_classes() ) . '"><p>' . $this->message . '</p></div>';
         return $html;
     }
 
