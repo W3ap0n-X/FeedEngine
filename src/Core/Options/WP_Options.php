@@ -33,6 +33,8 @@ class WP_Options implements Options {
 
         foreach ( Manifest::DEFAULT_OPTIONS as $section_id => $section_default_options ) {
             $db_option_name  = Manifest::PREFIX . '_' . $section_id;
+            \Qck\FeedEngine\Core\Debug::logDump($db_option_name, __METHOD__ . ':: $db_option_name');
+            \Qck\FeedEngine\Core\Debug::logDump($section_id, __METHOD__ . ':: $section_id');
             $section_options = get_option( $db_option_name );
 
             if ( $section_options === false ) {
