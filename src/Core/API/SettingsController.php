@@ -75,7 +75,7 @@ class SettingsController extends BaseController {
      * @param string $type    Notice type ('success', 'error', or 'warning').
      */
     protected function render_admin_notice( $message, $type ) {
-        $notice = new Admin_Notice( $message, $type );
+        $notice = new AdminNotice( $message, $type );
         return $notice->render();
     }
 
