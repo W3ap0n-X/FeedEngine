@@ -29,7 +29,7 @@ console.log(settings.nonce);
                 data: JSON.stringify(formData),
                 success: function(response) {
                     const anchor = $('#' + settings.prefix + '_notices');
-                    anchor.html('<div class="notice notice-success is-dismissible"><p>' + response.message + '</p></div>');
+                    anchor.html( response.message );
                 },
                 error: function(xhr) {
                     const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : 'Critical Server Error';

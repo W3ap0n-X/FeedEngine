@@ -106,6 +106,7 @@ class SettingsController extends BaseController {
     public function persist_form_data( array $params ) {
         try {
             foreach ( $params as $raw_key => $value ) {
+                \Qck\FeedEngine\Core\Debug::logDump(['key' => $raw_key, 'value' => $value], __METHOD__);
                 // Regex magic: matches 'prefix_options' and 'debug' from 'prefix_options[debug]'
                 if ( preg_match( '/^([^\[]+)\[([^\]]+)\]$/', $raw_key, $matches ) ) {
                     $option_row = $matches[1]; // e.g., qckfe_general_options

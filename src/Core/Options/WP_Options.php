@@ -12,7 +12,7 @@ class WP_Options implements Options {
 	/**
      * @var array Stored options.
      */
-    private $options;
+    protected $options;
 
 	/**
      * @var array Default options.
@@ -43,7 +43,7 @@ class WP_Options implements Options {
             $all_options = array_merge( $all_options, $section_options );
         }
         // var_dump($all_options);
-        \Qck\FeedEngine\Core\Debug::logDump($all_options, __METHOD__);
+        
         $this->options = $all_options;
     }
 
