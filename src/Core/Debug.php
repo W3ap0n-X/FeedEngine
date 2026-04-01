@@ -1,5 +1,7 @@
 <?php
 namespace Qck\FeedEngine\Core;
+
+use Qck\FeedEngine\Core\Diagnostics\Logging\Logger;
 /**
  * Activator Class
  * 
@@ -27,6 +29,6 @@ class Debug {
 	}
 
     public static function logDump($var, $label = 'FeedEngine') {
-        error_log( $label . "\n" . print_r($var, true));
+        Logger::log( $label . "\n" . print_r($var, true));
     }
 }

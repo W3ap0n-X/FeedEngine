@@ -142,7 +142,15 @@ abstract class Admin implements Actions {
      * @param string $hook_suffix The current admin page.
      */
     public function maybe_enqueue_stylesheets( $hook_suffix ) {
-        if ( $hook_suffix == $this->get_page_prefix() . $this->get_slug()  ) {
+        \Qck\FeedEngine\Core\Debug::logDump('hook_suffix: ' . $hook_suffix, __METHOD__);
+        \Qck\FeedEngine\Core\Debug::logDump('$this->get_page_prefix() . $this->get_slug(): ' . $this->get_page_prefix() . $this->get_slug(), __METHOD__);
+        // $screen = get_current_screen();
+        // \Qck\FeedEngine\Core\Debug::logDump( $screen, __METHOD__);
+        // if ( str_contains( $hook_suffix, $this->get_page_prefix() .  $this->get_slug() ) ) {
+        //     \Qck\FeedEngine\Core\Debug::logDump( 'SUCCESS: ' . $this->get_page_prefix() .  $this->get_slug() , __METHOD__);
+        // }
+
+        if ( str_contains( $hook_suffix, $this->get_page_prefix() .  $this->get_slug() ) ) {
             $this->enqueue_stylesheets();
         } else {
             return;

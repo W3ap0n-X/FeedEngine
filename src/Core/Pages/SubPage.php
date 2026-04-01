@@ -1,20 +1,20 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages;
-
+use Qck\FeedEngine\Manifest;
 abstract class SubPage extends Admin {
 
-	protected $parent_slug;
+	public $parent_slug;
 
-	public function __construct($parent_slug, $options){
+	public function __construct($parent_slug, $hooks){
 		$this->parent_slug = $parent_slug;
-		parent::__construct($options);;
+		parent::__construct($hooks);
 	}
 
 	/**
-     * Add this page as a top-level menu page.
-     * >>> Yeah... about that
+     * Add this page as a subpage
      */
     public function add_page() {
+        \Qck\FeedEngine\Core\Debug::logDump('parent_slug: ' . $this->parent_slug, __METHOD__);
         add_submenu_page(
             $this->parent_slug,   		// parent slug
             $this->get_page_title(),    // page_title
@@ -27,7 +27,7 @@ abstract class SubPage extends Admin {
     }
 
     protected function get_page_prefix() {
-        return 'glave_page_';
+        return '_page_';
     }
 
 }

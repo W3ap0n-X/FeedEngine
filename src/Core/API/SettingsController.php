@@ -25,6 +25,25 @@ class SettingsController extends BaseController {
             'callback'            => [$this, 'save_settings'],
             'permission_callback' => [$this, 'check_permission'],
         ]);
+        register_rest_route( $this->get_namespace(), '/logs', [
+            'methods'             => 'GET',
+            'callback'            => [$this, 'get_logs'],
+            'args'                => [
+                'file' => [ 'required' => false, 'sanitize_callback' => 'sanitize_text_field' ],
+                'count'  => [ 'required' => false, 'sanitize_callback' => 'sanitize_text_field' , 'default' => 0],
+            ],
+            'permission_callback' => function() {
+                return '__return_true';
+            },
+        ]);
+        register_rest_route( $this->get_namespace(), '/logs/clear', [
+            'methods'             => 'POST',
+            'callback'            => function() {
+                \Qck\FeedEngine\Core\Util\Logger::clear();
+                return new \WP_REST_Response( [ 'success' => true ] );
+            },
+            'permission_callback' => [$this, 'check_permission'],
+        ]);
     }
 
     public function check_permission(): bool  {
@@ -143,5 +162,9 @@ class SettingsController extends BaseController {
         
         // Handle boolean conversion for checkboxes ('1' or '0')
         $temp[$key] = ( '1' === $value ) ? true : ( ( '0' === $value ) ? false : $value );
+    }
+
+    public function get_logs($file) {
+
     }
 }

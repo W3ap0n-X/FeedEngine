@@ -1,6 +1,6 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages;
-
+use Qck\FeedEngine\Manifest;
 abstract class TopPage extends Admin {
 
 	/**

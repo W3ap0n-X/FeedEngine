@@ -16,6 +16,7 @@ final class Manifest {
     public const PREFIX  = 'qckfe';
     public const NAME    = 'FeedEngine';
     public const SLUG    = 'qck-feed-engine';
+    public const MENU_SLUG    = 'qck_feed_engine';
 
     // Dynamic paths (Handled via methods to stay reliable)
     public static function path(string $path = ''): string {

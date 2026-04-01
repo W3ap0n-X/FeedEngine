@@ -9,8 +9,6 @@ class Debug implements Shortcode {
 
     private $prefix = Manifest::PREFIX . '_';
 
-
-
     private $atts = array(
         'plugin_info' => false,
         'label' => null,

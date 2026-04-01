@@ -7,17 +7,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Hooks\Actions;
-use Qck\FeedEngine\Core\Pages\TopPage;
+use Qck\FeedEngine\Core\Pages\SubPage;
 use Qck\FeedEngine\Core\Pages\Components\SettingBuilder;
 
 
 
-class SettingsPage extends TopPage implements Actions {
+class LogViewer extends SubPage implements Actions {
 
     
 
-    public function __construct(  $hooks) {
-        parent::__construct(  $hooks );
+    public function __construct(  $parent_slug, $hooks) {
+        parent::__construct(  $parent_slug, $hooks );
     }
 
 
@@ -28,7 +28,7 @@ class SettingsPage extends TopPage implements Actions {
      * @return string
      */
     protected function get_menu_title() {
-        return __( Manifest::NAME, Manifest::SLUG );
+        return __( "Log Viewer", Manifest::SLUG );
     }
 
     /**
@@ -37,7 +37,7 @@ class SettingsPage extends TopPage implements Actions {
      * @return string
      */
     protected function get_page_title() {
-        return __( Manifest::NAME . ' Settings', Manifest::SLUG );
+        return __( Manifest::NAME . ' Logs', Manifest::SLUG );
     }
 
     /**
@@ -57,15 +57,15 @@ class SettingsPage extends TopPage implements Actions {
      * @return string
      */
     public function get_slug() {
-        return Manifest::PREFIX . '_settings';
+        return Manifest::PREFIX . '_logs';
     }
 
     /**
      * Register sections.
      */
     public function register_sections() {
-        $this->add_section( new \Qck\FeedEngine\Options\GeneralOptions() );
-        // $this->add_section( new \Qck\FeedEngine\Options\BentoOptions() );
+        // $this->add_section( new \Qck\FeedEngine\Options\GeneralOptions() );
+        $this->add_section( new \Qck\FeedEngine\Options\BentoOptions() );
 
         
 

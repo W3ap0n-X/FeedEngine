@@ -31,6 +31,12 @@ class GeneralOptions extends \Qck\FeedEngine\Core\Options\OptionSection {
                 type: 'text',
                 path: ['api'] 
             ),
+            new \Qck\FeedEngine\Core\Options\OptionEntry(
+                key: '213',
+                label: 'New Setting',
+                type: 'text',
+                path: ['example'] 
+            ),
         ];
     }
 }

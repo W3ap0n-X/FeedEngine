@@ -16,9 +16,9 @@ class ApiManager {
 
             if ( class_exists( $full_class ) ) {
                 $endpoint = new $full_class();
-                \Qck\FeedEngine\Core\Debug::logDump('registering routes for: ' . $full_class, __METHOD__);
+                // \Qck\FeedEngine\Core\Debug::logDump('registering routes for: ' . $full_class, __METHOD__);
                 if ( $endpoint instanceof Endpoint ) {
-                    \Qck\FeedEngine\Core\Debug::logDump(Manifest::PREFIX . '/v1' .  $endpoint->get_route(), __METHOD__);
+                    // \Qck\FeedEngine\Core\Debug::logDump(Manifest::PREFIX . '/v1' .  $endpoint->get_route(), __METHOD__);
                     register_rest_route( Manifest::PREFIX . '/v1', $endpoint->get_route(), [
                         'methods'             => $endpoint->get_methods(),
                         'callback'            => [ $endpoint, 'handle' ],
