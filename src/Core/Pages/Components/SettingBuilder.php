@@ -40,7 +40,7 @@ class SettingBuilder {
         $fields = [];
         foreach ($settings as $key => $entry) {
             // THE FACTORY LOGIC: Map Type to Element
-            $element = match($entry['type']) {
+            $element = match($entry->type) {
                 'boolean' => Element::CHECKBOX_ELEMENT,
                 'checkbox' => Element::CHECKBOX_ELEMENT,
                 'string'  => Element::TEXT_ELEMENT,

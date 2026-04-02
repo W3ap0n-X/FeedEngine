@@ -1,5 +1,5 @@
 <?php
-namespace Qck\FeedEngine\Core\Pages\Components\Sections;
+namespace Qck\FeedEngine\Core\Pages\Components;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Options\Options;
 use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\MetaField;
@@ -116,7 +116,28 @@ class Metabox {
         return $field;
     }
 
+    public function render_wrapper($post) {
+        // \Qck\FeedEngine\Core\Debug::logDump( $post, __METHOD__);
+        // 1. Security Nonce
+        wp_nonce_field($this->get_name() . '_action', $this->get_name() . '_nonce');
 
+        // 2. Fetch existing values
+        $values = get_post_meta($post->ID, '_qckfe_settings', true) ?: [];
+
+        // 3. Reuse your SettingsBuilder!
+        // $builder = new SettingBuilder($this->get_schema(), $values);
+        echo '<div class="qckfe-metabox-wrapper">';
+        echo '<h1>test</h1>';
+        SettingBuilder::build_ui_from_metabox($post->ID, $this->metabox, $this->get_schema());
+        echo '<h2>' . $post->ID . '</h2>';
+        echo '<h2>' . count($values) . '</h2>';
+        echo '<h2>' . count($this->metabox->fields) . '</h2>';
+        // echo $content;
+        // $metabox->render();
+        // \Qck\FeedEngine\Core\Debug::logDump( $content, __METHOD__);
+        // $builder->render();
+        echo '</div>';
+    }
 
 
 }

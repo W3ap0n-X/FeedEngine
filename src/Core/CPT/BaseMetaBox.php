@@ -1,7 +1,7 @@
 <?php
 namespace Qck\FeedEngine\Core\CPT;
 
-use Qck\FeedEngine\Core\Pages\Components\Sections\Metabox;
+use Qck\FeedEngine\Core\Pages\Components\Metabox;
 use Qck\FeedEngine\Core\Pages\Components\SettingBuilder;
 abstract class BaseMetaBox {
 
