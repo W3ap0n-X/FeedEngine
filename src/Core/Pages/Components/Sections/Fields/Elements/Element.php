@@ -58,7 +58,7 @@ abstract class Element implements UI {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Element properties.
      */
-    public function __construct( $section_id, $options_instance, $properties = array() ) {
+    public function __construct( $section_id, $properties = array() ) {
         self::$number_of_elements++;
         if ( $this instanceof SettingsInterface ) {
             $properties = wp_parse_args(

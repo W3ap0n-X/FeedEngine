@@ -16,7 +16,7 @@ class GeneralOptions extends \Qck\FeedEngine\Core\Options\OptionSection {
         return 'Section Description';
     }
 
-    public function define_fields(): array {
+    public function get_schema(): array {
         return [
             new \Qck\FeedEngine\Core\Options\OptionEntry(
                 key: 'debug',

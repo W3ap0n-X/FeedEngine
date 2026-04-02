@@ -10,14 +10,16 @@ class OptionEntry {
     public $type;
     public $default;
     public $description;
+    public $placeholder;
     public $path;
 
-    public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $description = '' ) {
+    public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $description = '', $placeholder = ''  ) {
         $this->key     = $key;
         $this->label   = $label;
         $this->type    = $type;
         $this->default = $default;
         $this->description = $description;
+        $this->placeholder = $placeholder;
         $this->path    = $path;
     }
 

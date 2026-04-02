@@ -22,7 +22,7 @@ abstract class OptionSection implements Options {
      * Returns an array of OptionEntry objects
      * @return OptionEntry[]
      */
-    abstract public function define_fields(): array;
+    abstract public function get_schema(): array;
 
     /**
      * Returns the full, prefixed database key.
@@ -43,12 +43,12 @@ abstract class OptionSection implements Options {
      * Helper to find a specific field definition by its key.
      */
     public function get_field_definition( string $key ): ?OptionEntry {
-        $fields = $this->define_fields();
+        $fields = $this->get_schema();
         return $fields[$key] ?? null;
     }
 
     public function set_defaults() {
-        $fields = $this->define_fields();
+        $fields = $this->get_schema();
         foreach ($fields as $field) {
             \Qck\FeedEngine\Core\Debug::logDump($field, __METHOD__);
         }

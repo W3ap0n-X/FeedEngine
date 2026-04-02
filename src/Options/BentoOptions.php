@@ -18,7 +18,7 @@ class BentoOptions extends OptionSection {
         return 'Section Description';
     }
 
-    public function define_fields(): array {
+    public function get_schema(): array {
         return [
             'enabled' => new OptionEntry(
                 key: 'enabled',

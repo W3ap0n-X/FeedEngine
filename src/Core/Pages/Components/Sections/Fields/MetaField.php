@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class Field {
+class MetaField {
 
     /**
      * @var int Number of fields instantiated.
@@ -20,6 +20,10 @@ class Field {
      */
     protected $elements = array();
 
+    /**
+     * @var Options An instance of `Options`.
+     */
+    private $options;
 
     /**
      * @var string ID of the section this field belongs to.
@@ -61,8 +65,8 @@ class Field {
      */
     public function __construct( $section_id, $page, $properties = array() ) {
 
-        $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties];
-        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+        $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
+        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         self::$number_of_fields++;
 
         $properties = wp_parse_args(
@@ -81,13 +85,13 @@ class Field {
         $this->section_id  = $section_id;
         $this->description = $properties['description'];
 
-        add_settings_field(
-            $properties['id'],
-            $properties['label'],
-            array( $this, 'render' ),
-            $page,
-            $section_id
-        );
+        // add_settings_field(
+        //     $properties['id'],
+        //     $properties['label'],
+        //     array( $this, 'render' ),
+        //     $page,
+        //     $section_id
+        // );
     }
 
     /**

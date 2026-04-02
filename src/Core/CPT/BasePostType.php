@@ -1,20 +1,22 @@
 <?php
 namespace Qck\FeedEngine\Core\CPT;
-
+global $wp_rewrite;
 abstract class BasePostType {
-
-    protected $post_type;
-    private function __construct($post_type){
-        $this->post_type = $post_type;
-    }
-
+    // public $post_type;
     abstract public function get_slug(): string;
     abstract public function get_label(): string;
-    abstract public function labels(): array;
     abstract public function public(): bool;
     abstract public function description(): string;
     abstract public function supports(): array;
 
+    public function get_metaboxes() : array {
+        return [];
+    }
+
+
+    public function labels(): array {
+        return $this->default_labels();
+    }
 
     public function hierarchical(): bool {
         return false;
@@ -43,7 +45,7 @@ abstract class BasePostType {
         return false; 
     }
 
-    public function query_var(): bool {
+    public function query_var(): bool|string {
         return false; 
     }
 
@@ -72,8 +74,8 @@ abstract class BasePostType {
         return array(); 
     }
 
-    public function rewrite(): array {
-        return array(); 
+    public function rewrite(): array|bool {
+        return true; 
     }
 
     public function capabilities(): array {
@@ -159,8 +161,8 @@ abstract class BasePostType {
         return $this->public();
     }
 
-    public function rest_base() : bool {
-        return $this->post_type;
+    public function rest_base() : ?string {
+        return $this->get_slug();
     }
 
     public function rest_namespace() : string {
@@ -172,6 +174,38 @@ abstract class BasePostType {
     }
 
     public function register() {
+        // \Qck\FeedEngine\Core\Debug::logDump( $post_type, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump( $this->get_args(), __METHOD__);
+        // $this->post_type = $post_type;
         register_post_type( $this->get_slug(), $this->get_args() );
+    }
+
+    // Sensible defaults that can be overridden if needed
+    public function get_singular_label(): string { 
+        return rtrim($this->get_label(), 's'); 
+    }
+
+    /**
+     * Automatic Label Generator
+     * No more writing 'Add New Feed', 'Edit Feed', etc. 20 times.
+     */
+    public function default_labels(): array {
+        $plural = $this->get_label();
+        $singular = $this->get_singular_label();
+
+        return [
+            'name'               => $plural,
+            'singular_name'      => $singular,
+            'add_new'            => 'Add New',
+            'add_new_item'       => "Add New $singular",
+            'edit_item'          => "Edit $singular",
+            'new_item'           => "New $singular",
+            'view_item'          => "View $singular",
+            'search_items'       => "Search $plural",
+            'not_found'          => "No $plural found",
+            'not_found_in_trash' => "No $plural found in Trash",
+            'all_items'          => "All $plural",
+            'menu_name'          => $plural,
+        ];
     }
 }

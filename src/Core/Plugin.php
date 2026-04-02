@@ -10,7 +10,7 @@ use Qck\FeedEngine\Core\API\ApiManager;
 use Qck\FeedEngine\Core\Debug;
 use Qck\FeedEngine\Core\Hooks\Actions;
 use Qck\FeedEngine\Core\Diagnostics\SiteHealth;
-
+use Qck\FeedEngine\Core\CPT\PostTypeManager;
 
 use Qck\FeedEngine\Pages\SettingsPage;
 
@@ -51,6 +51,15 @@ abstract class Plugin implements Actions {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
+	 * @var      PostTypeManager    >>> $loader    Maintains and registers all hooks for the plugin.
+	 */
+	protected $post_types;
+
+	/**
+	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
 	 * @var      ApiManager    >>> $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $rest_routes;
@@ -83,6 +92,7 @@ abstract class Plugin implements Actions {
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
+		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
 	}
 
@@ -98,8 +108,10 @@ abstract class Plugin implements Actions {
      */
     public function init() {
         // $this->options = new WP_Options();
+		
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
+		
 		$this->shortcodes = new ShortcodeManager();
         
 		$this->hooks->load();
@@ -126,6 +138,11 @@ abstract class Plugin implements Actions {
 
 	public function register_endpoints() {
 		$this->rest_routes->register_endpoints();
+	}
+
+	public function register_post_types() {
+		$this->post_types = new PostTypeManager();
+		$this->post_types->register_all();
 	}
 
 	abstract protected function add_pages();
