@@ -13,13 +13,14 @@ class OptionEntry {
     public $placeholder;
     public $path;
 
-    public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $description = '', $placeholder = ''  ) {
+    public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $options = ['none'] , $description = '', $placeholder = ''  ) {
         $this->key     = $key;
         $this->label   = $label;
         $this->type    = $type;
         $this->default = $default;
         $this->description = $description;
         $this->placeholder = $placeholder;
+        $this->options = $options;
         $this->path    = $path;
     }
 

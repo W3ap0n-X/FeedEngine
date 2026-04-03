@@ -27,12 +27,18 @@ class FeedSettings extends BaseMetaBox {
                 path: ['api'] ,
                 default: 6 ,
             ),
-            // new \Qck\FeedEngine\Core\Options\OptionEntry(
-            //     key: '213',
-            //     label: 'New Setting',
-            //     type: 'text',
-            //     path: ['example'] 
-            // ),
+            new \Qck\FeedEngine\Core\Options\OptionEntry(
+                key: 'source_type',
+                label: 'Data Source',
+                type: 'select',
+                path: ['example'] ,
+                default: 'wp' ,
+                options: [
+                    'wp'      => 'WordPress Posts',
+                    'shopify' => 'Shopify Products',
+                    'mixed'   => 'Mixed (Checkerboard)',
+                ]
+            ),
             // 'source_type' => [
             //     'type' => 'select',
             //     'label' => 'Data Source',

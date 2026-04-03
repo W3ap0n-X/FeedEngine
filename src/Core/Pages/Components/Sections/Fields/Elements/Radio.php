@@ -12,30 +12,38 @@ class Radio extends Element implements SettingsInterface {
     /**
      * @var array Radio values.
      */
-    private $values = array();
+    private $options = array();
 
     /**
      * Render the element.
      */
     public function render() {
-        foreach ( $this->values as $current_value => $label ) {
-            ?>
+        $name = esc_attr( $this->name );
+        $group_label = esc_html( $this->label );
+        $html = '<div>' . $group_label;
 
-            <fieldset>
-                <label>
-                    <input
-                        type="radio"
-                        name="<?php echo esc_attr( $this->name ); ?>"
-                        id="<?php echo esc_attr( $this->name ); ?>"
-                        value="<?php echo esc_attr( $current_value ); ?>"
-                        <?php checked( $this->value, $current_value ); ?>
-                    />
-                    <?php echo esc_html( $label ); ?>
-                </label>
-            </fieldset>
-
-            <?php
+        foreach ( $this->options as $current_value => $label ) {
+            $value = esc_attr( $current_value );
+            
+            $checked = checked( $this->value, $current_value , false);
+            $html .= <<<HTML
+                <fieldset>
+                    <label>
+                        <input
+                            type="radio"
+                            name="{$name}"
+                            id="{$name}"
+                            value="{$value}"
+                            {$checked}
+                        />
+                        {$label}
+                    </label>
+                </fieldset>
+            HTML;
         }
+        $html .= '</div>';
+        return $html;
+            
     }
 
     /**
@@ -45,11 +53,15 @@ class Radio extends Element implements SettingsInterface {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Element properties.
      */
-    public function __construct( $section_id, $options_instance, $properties = array() ) {
-        parent::__construct( $section_id, $options_instance, $properties );
+    public function __construct( $section_id, $properties = array() ) {
+        parent::__construct( $section_id, $properties );
 
-        if ( isset( $properties['values'] ) ) {
-            $this->values = $properties['values'];
+        if ( isset( $properties['options'] ) ) {
+            $this->options = $properties['options'];
+        }
+
+        if ( isset( $properties['value'] ) ) {
+            $this->value = $properties['value'];
         }
     }
 

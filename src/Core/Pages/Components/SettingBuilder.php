@@ -62,7 +62,8 @@ class SettingBuilder {
                     'description' => $entry->description, 
                     'name' => $html_name,
                     'value' => $settings->get_value_for_entry($post,$entry) ?? '',
-                    'prefix' => '_'
+                    'prefix' => '_',
+                    'options' => $entry->options, 
                 ]);
         }
         // \Qck\FeedEngine\Core\Debug::logDump( $fields, __METHOD__);
