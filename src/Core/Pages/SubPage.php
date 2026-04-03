@@ -14,7 +14,7 @@ abstract class SubPage extends Admin {
      * Add this page as a subpage
      */
     public function add_page() {
-        \Qck\FeedEngine\Core\Debug::logDump('parent_slug: ' . $this->parent_slug, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump('parent_slug: ' . $this->parent_slug, __METHOD__);
         add_submenu_page(
             $this->parent_slug,   		// parent slug
             $this->get_page_title(),    // page_title

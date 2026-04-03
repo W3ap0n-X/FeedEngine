@@ -10,28 +10,32 @@ class Checkbox extends Element implements SettingsInterface {
     /**
      * Render the element.
      */
+
+
     public function render() {
-        ?>
-
-        <fieldset>
-            <label>
-                <input 
-                    type="hidden" 
-                    name="<?php echo esc_attr( $this->name ); ?>" 
-                    value="0" 
-                />
-                <input
-                    type="checkbox"
-                    name="<?php echo esc_attr( $this->name ); ?>"
-                    id="<?php echo esc_attr( $this->name ); ?>"
-                    value="1"
-                    <?php checked( '1', $this->value , true); ?>
-                />
-                <?php echo esc_html( $this->label ); ?>
-            </label>
-        </fieldset>
-
-        <?php
+        $name = json_encode(esc_attr( $this->name ));
+        $checked = checked( '1', $this->value , true);
+        $label = esc_html( $this->label );
+        $html = <<<HTML
+            <fieldset>
+                <label>
+                    <input 
+                        type="hidden" 
+                        name={$name} 
+                        value="0" 
+                    />
+                    <input
+                        type="checkbox"
+                        name={$name} 
+                        name={$name} 
+                        value="1"
+                        {$checked}
+                    />
+                    {$label}
+                </label>
+            </fieldset>
+        HTML;
+        return $html;
     }
 
     /**

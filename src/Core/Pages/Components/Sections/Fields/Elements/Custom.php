@@ -19,19 +19,14 @@ class Custom extends Element {
      * Render the element.
      */
     public function render() {
-        ?>
+        $content = ! empty( $this->html ) ? $this->html : '';
+        $html = <<<HTML
+            <div class="custom-element">
+                {$content}
 
-        <div class="custom-element">
-
-            <?php
-            if ( ! empty( $this->html ) ) {
-                echo $this->html;
-            }
-            ?>
-
-        </div>
-
-        <?php
+            </div>
+        HTML;
+        return $html;
     }
 
     /**

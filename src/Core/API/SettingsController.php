@@ -39,8 +39,11 @@ class SettingsController extends BaseController {
         register_rest_route( $this->get_namespace(), '/logs/clear', [
             'methods'             => 'POST',
             'callback'            => function() {
-                \Qck\FeedEngine\Core\Util\Logger::clear();
-                return new \WP_REST_Response( [ 'success' => true ] );
+                \Qck\FeedEngine\Core\Diagnostics\Logging\Logger::clear();
+                return new \WP_REST_Response( [ 
+                    'success' => true ,
+                    'message' => __( $this->display_admin_notices(true, 'Logs Cleared'), Manifest::PREFIX ),
+                ] );
             },
             'permission_callback' => [$this, 'check_permission'],
         ]);
@@ -165,6 +168,10 @@ class SettingsController extends BaseController {
     }
 
     public function get_logs($file) {
-
+        return new \WP_REST_Response([
+            'success' => true,
+            'message' => __( $this->display_admin_notices(true, 'Logs Retrieved Successfully'), Manifest::PREFIX ),
+            'logs' => \Qck\FeedEngine\Core\Diagnostics\Logging\Logger::get_contents(),
+        ], 200);
     }
 }

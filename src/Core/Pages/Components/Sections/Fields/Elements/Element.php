@@ -58,7 +58,7 @@ abstract class Element implements UI {
      * @param Options $options_instance An instance of `Options`.
      * @param array   $properties       Element properties.
      */
-    public function __construct( $section_id, $properties = array() ) {
+    public function __construct( $section_id, $properties = array()) {
         self::$number_of_elements++;
         if ( $this instanceof SettingsInterface ) {
             $properties = wp_parse_args(
@@ -72,13 +72,14 @@ abstract class Element implements UI {
                     'name'      => 'element_' . self::$number_of_elements,
                     'validate'  => null,
                     'pre_write' => null,
-                    'post_read' => null
+                    'post_read' => null,
+                    'prefix' => ''
                 )
             );
 
             $this->label       = $properties['label'];
             $this->option_name = $properties['name'];
-            $this->name        = sprintf( '%s_%s', Manifest::PREFIX , $this->option_name );
+            $this->name        = sprintf( '%s%s_%s', $properties['prefix'], Manifest::PREFIX , $this->option_name );
             $this->validate    = $properties['validate'];
             $this->pre_write   = $properties['pre_write'];
             $this->value       = $properties['value'];

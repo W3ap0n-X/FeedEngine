@@ -9,6 +9,7 @@ use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Hooks\Actions;
 use Qck\FeedEngine\Core\Pages\SubPage;
 use Qck\FeedEngine\Core\Pages\Components\SettingBuilder;
+use Qck\FeedEngine\Core\Diagnostics\Logging\Logger;
 
 
 
@@ -72,6 +73,72 @@ class LogViewer extends SubPage implements Actions {
         foreach ($this->sections as  $section) {
             SettingBuilder::build_ui_from_section($this->get_slug(), $section);
         }
+    }
+
+    /**
+     * Render Custom HTML for plugin wp-admin page above options sections
+     */
+    public function content_top() {
+        $logs = esc_textarea(Logger::get_contents());
+        $path = json_encode(Manifest::PREFIX . "/v1/logs/clear");
+        $get_path = json_encode(Manifest::PREFIX . "/v1/logs");
+        $html = <<<HTML
+            <div class="qckfe-log-viewer">
+                <h3>System Logs</h3>
+                <textarea id="qckfe-log-content" readonly style="width:100%; height:300px; font-family:monospace; background:#f0f0f0;">{$logs}</textarea>
+                <div style="margin-top: 10px;">
+                    <button type="button" id="qckfe-clear-logs" class="button button-link-delete">Clear Log File</button>
+                    <button type="button" id="qckfe-refresh-logs" class="button button-link-delete">Refresh Log File</button>
+                </div>
+            </div>
+
+            <script>
+                jQuery('#qckfe-refresh-logs').on('click', function() {
+                    wp.apiFetch({
+                        path: {$get_path},
+                        method: 'GET'
+                    }).then( (response) => {
+                        console.log(response);
+                        if(response.success) {
+                            jQuery('#qckfe_notices').html( response.message ).hide().fadeIn();
+                            jQuery('#qckfe-log-content').text(response.logs);
+                            jQuery(document).trigger('wp-updates-notice-added');
+                        }
+                        
+                    } );
+                });
+                jQuery('#qckfe-clear-logs').on('click', function() {
+                    if ( ! confirm('Are you sure you want to wipe the logs?') ) return;
+                    
+                    
+                    wp.apiFetch({
+                        path: {$path},
+                        method: 'POST'
+                    }).then((res) => {
+                        if(res.success) {
+                            wp.apiFetch({
+                                path: {$get_path},
+                                method: 'GET'
+                            }).then( (response) => {
+                                console.log(response);
+                                if(response.success) {
+                                    jQuery('#qckfe_notices').html( res.message ).hide().fadeIn();
+                                    jQuery('#qckfe-log-content').text(response.logs);
+                                    jQuery(document).trigger('wp-updates-notice-added');
+                                }
+                                
+                            } );
+                        } else {
+                            jQuery('#qckfe_notices').html( res.message ).hide().fadeIn();
+                            jQuery(document).trigger('wp-updates-notice-added');
+                        }
+                        
+                    });
+                });
+            </script>
+        HTML;
+        return $html;
+    
     }
 
 }

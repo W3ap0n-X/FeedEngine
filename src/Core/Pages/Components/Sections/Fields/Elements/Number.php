@@ -11,21 +11,23 @@ class Number extends Element implements SettingsInterface {
      * Render the element.
      */
     public function render() {
-        ?>
-
-        <fieldset>
-            <label>
-                <input
-                    type="number"
-                    name="<?php echo esc_attr( $this->name ); ?>"
-                    id="<?php echo esc_attr( $this->name ); ?>"
-                    value="<?php echo esc_attr( $this->value ); ?>"
-                />
-                <?php echo esc_html( $this->label ); ?>
-            </label>
-        </fieldset>
-
-        <?php
+        $label = esc_html( $this->label );
+        $value = esc_attr( $this->value );
+        $name = esc_attr( $this->name );
+        $html = <<<HTML
+            <fieldset>
+                <label>
+                    <input
+                        type="number"
+                        name="{$name}"
+                        id="{$name}"
+                        value="{$value}"
+                    />
+                    {$label}
+                </label>
+            </fieldset>
+        HTML;
+        return $html;
     }
 
     /**

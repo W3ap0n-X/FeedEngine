@@ -41,18 +41,19 @@ class MetaField {
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
 
-        
+        $html = '';
 
         if ( ! empty( $this->description ) ) {
-            printf(
-                '<p class="description">%s</p>',
-                esc_html( $this->description )
-            );
+            $html .= '<p class="description">' . esc_html($this->description)  . '</p>';
         }
 
+        
+
         foreach ( $this->elements as $key => $element ) {
-            $element->render();
+            $html .= $element->render();
         }
+        // \Qck\FeedEngine\Core\Debug::logDump( $html, __METHOD__);
+        return $html;
     }
 
     /**
@@ -65,8 +66,8 @@ class MetaField {
      */
     public function __construct( $section_id, $page, $properties = array() ) {
 
-        $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
-        \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+        $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties];
+        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
         self::$number_of_fields++;
 
         $properties = wp_parse_args(

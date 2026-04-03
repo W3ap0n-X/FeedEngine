@@ -104,7 +104,7 @@ abstract class OptionSection implements Options {
         $path  = ( $entry && ! empty( $entry->path ) ) ? $entry->path : [];
 
         // Run the mutation
-        $this->deep_set( $data, $path, $name, $value );
+        $this->deep_set( $data, $path, $name, $setValue );
 
         // Persistence: This triggers the WordPress update_option filter stack
         return update_option( $this->get_db_row(), $data );

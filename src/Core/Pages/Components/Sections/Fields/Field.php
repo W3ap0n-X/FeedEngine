@@ -36,19 +36,19 @@ class Field {
      */
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
-
+        $html = '';
         
 
         if ( ! empty( $this->description ) ) {
-            printf(
-                '<p class="description">%s</p>',
-                esc_html( $this->description )
-            );
+            $html .= '<p class="description">' . esc_html($this->description)  . '</p>';
         }
 
+        
+
         foreach ( $this->elements as $key => $element ) {
-            $element->render();
+            $html .= $element->render();
         }
+        echo $html;
     }
 
     /**
