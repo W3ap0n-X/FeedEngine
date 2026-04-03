@@ -1,0 +1,24 @@
+{
+    "name" : "qck/feedengine",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Qck\\FeedEngine\\": "src/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3"
+        }
+    },
+    "require": {
+        "dbout/wp-orm": "^2.0"
+    },
+    "extra": {
+        "mozart": {
+            "dep_namespace": "Qck\\FeedEngine\\Dependencies\\",
+            "dep_directory": "src/Dependencies",
+            "classmap_prefix": "Qck_FeedEngine_"
+        }
+    }
+}
