@@ -49,8 +49,9 @@ abstract class Plugin implements Actions {
     public function __construct() {
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
-		add_action( 'plugins_loaded', array( $this, 'init' ) );
+		
 		add_action( 'init', array( $this, 'register_post_types' ) );
+		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
 	}
 

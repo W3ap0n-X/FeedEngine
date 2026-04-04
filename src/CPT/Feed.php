@@ -33,7 +33,7 @@ class Feed extends BasePostType {
     public function supports(): array {
         // We probably don't need the editor for a Feed config, 
         // just a Title and our custom Meta Boxes later.
-        return ['title']; 
+        return ['title' , 'thumbnail' , 'revisions']; 
     }
 
     public function get_metaboxes() : array {

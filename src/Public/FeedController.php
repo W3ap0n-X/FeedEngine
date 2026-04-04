@@ -58,4 +58,27 @@ class FeedController {
             include $path;
         }
     }
+
+    public function run_adapter_test_logic() {
+
+        $dummy_shopify_json = [
+            'id'      => 'shop_999',
+            'title'   => 'Limited Edition Bento Box',
+            'handle'  => 'limited-edition-bento',
+            'images'  => [
+                ['src' => 'https://cdn.shopify.com/test-image.jpg']
+            ],
+            'variants' => [
+                ['price' => '45.00']
+            ]
+        ];
+
+        $mapped_item = \Qck\FeedEngine\Engine\Adapters\ShopifyAdapter::create_item_from_shopify_data($dummy_shopify_json);
+
+        // Now you have a clean FeedItem object to inspect
+        // \Qck\FeedEngine\Core\Debug::logDump( $mapped_item, __METHOD__);
+        // error_log(print_r($mapped_item, true));
+        return $mapped_item;
+
+    }
 }

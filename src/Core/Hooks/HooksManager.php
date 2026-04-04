@@ -20,8 +20,9 @@ class HooksManager {
         foreach ( $files as $file ) {
             $class_name = basename( $file, '.php' );
             $full_class = "\\Qck\\FeedEngine\\Hooks\\" . $class_name;
-
+            
             if ( class_exists( $full_class ) ) {
+                
                 // Instantiate and hand off to your existing register logic
                 $this->register( new $full_class() );
             }
@@ -30,7 +31,11 @@ class HooksManager {
 
     
     public function register( $object ) {
-        // \Qck\FeedEngine\Core\Debug::logDump($object, __METHOD__);
+        if ( $object instanceof HookInterface ) {
+            $this->mutate_user_hook( $object );
+            return;
+        }
+        
         if ( $object instanceof Actions ) {
             $this->register_actions( $object );
         }
@@ -40,11 +45,36 @@ class HooksManager {
         }
     }
 
+    private function mutate_user_hook( HookInterface $object ) {
+        $priority      = self::default_value( $object->get_priority(), 10 );
+        $accepted_args      = self::default_value( $object->get_args_count(), 10 );
+
+        if( $object->is_filter() ) {
+            add_filter(
+                $object->get_hook(),
+                $object->get_callback(),
+                $priority,
+                $accepted_args
+            );
+        }
+        
+        else {
+            add_action(
+                $object->get_hook(),
+                $object->get_callback(),
+                $priority,
+                $accepted_args
+            );
+        }
+    }
+
     
     private function register_actions( $object ) {
+        // \Qck\FeedEngine\Core\Debug::logDump($object->get_actions(), __METHOD__);
         $actions = $object->get_actions();
 
         foreach ( $actions as $action_name => $action_details ) {
+            \Qck\FeedEngine\Core\Debug::logDump($action_details, __METHOD__);
             $method        = $action_details[0];
             $priority      = self::default_value( $action_details[1], 10 );
             $accepted_args = self::default_value( $action_details[2], 1 );
@@ -56,6 +86,10 @@ class HooksManager {
                 $accepted_args
             );
         }
+    }
+
+    private function register_action( $action_name, $action_details ) {
+
     }
 
     
