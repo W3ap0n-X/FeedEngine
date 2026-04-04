@@ -36,14 +36,6 @@ class Feed extends BasePostType {
         return ['title']; 
     }
 
-    /**
-     * Let's use that custom Capability logic we talked about!
-     * This makes it so 'Feeds' are handled separately from 'Posts'.
-     */
-    // public function capability_type(): string|array {
-    //     return 'qckfe_feed';
-    // }
-
     public function get_metaboxes() : array {
         return [
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedSettings(),

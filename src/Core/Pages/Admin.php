@@ -20,32 +20,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Admin implements Actions {
 
     
-    /**
-     * @var Section[] Page section objects.
-     */
+    
     protected $sections = array();
 
-    /**
-     * @var Options An instance of `Options`.
-     */
+    
     protected $options;
 
-    /**
-     * Admin_Page constructor.
-     *
-     * @param Options $options An instance of `Options`.
-     */
+    
     public function __construct( $hooks ) {
         // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         // $this->options = $options;
         $this->hooks = $hooks;
     }
 
-    /**
-     * Return the actions to register.
-     *
-     * @return array
-     */
+    
     public function get_actions(): array {
         return array(
             'admin_menu'            => array( 'add_page' ),
@@ -55,9 +43,7 @@ abstract class Admin implements Actions {
         );
     }
 
-    /**
-     * Render this admin page.
-     */
+    
     public function render() {
         ?>
         
@@ -87,34 +73,23 @@ abstract class Admin implements Actions {
         <?php
     }
 
-    /**
-     * Render Custom HTML for plugin wp-admin page above options sections
-     */
+    
     public function content_top() {
         return '';
     }
 
-    /**
-     * Render Custom HTML for plugin wp-admin page below options sections
-     */
+    
     public function content_bottom() {
         return '';
     }
 
-    /**
-     * Display an admin notice with the given message and type.
-     *
-     * @param string $message Message to display.
-     * @param string $type    Notice type ('success', 'error', or 'warning').
-     */
+    
     protected function render_admin_notice( $message, $type ) {
         $notice = new Admin_Notice( $message, $type );
         $notice->render();
     }
 
-    /**
-     * Display admin notices.
-     */
+    
     public function display_admin_notices() {
 
         if($_GET['page'] == $this->get_slug() ) {
@@ -126,7 +101,7 @@ abstract class Admin implements Actions {
                         AdminNotice::SUCCESS
                     );
                 } else {
-                    /** @noinspection SpellCheckingInspection */
+                    
                     $this->render_admin_notice(
                         esc_html( __( 'An error occurred. Couldn\'t perform action.', Manifest::SLUG ) ),
                         AdminNotice::ERROR
@@ -136,11 +111,7 @@ abstract class Admin implements Actions {
         }
     }
 
-    /**
-     * Enqueue stylesheets for all admin pages.
-     *
-     * @param string $hook_suffix The current admin page.
-     */
+    
     public function maybe_enqueue_stylesheets( $hook_suffix ) {
         // \Qck\FeedEngine\Core\Debug::logDump('hook_suffix: ' . $hook_suffix, __METHOD__);
         // \Qck\FeedEngine\Core\Debug::logDump('$this->get_page_prefix() . $this->get_slug(): ' . $this->get_page_prefix() . $this->get_slug(), __METHOD__);
@@ -187,79 +158,37 @@ abstract class Admin implements Actions {
 
     abstract public function add_page();
 
-    /**
-     * Return the menu title.
-     *
-     * @return string
-     */
+    
     abstract protected function get_menu_title();
 
-    /**
-     * Return the page title.
-     *
-     * @return string
-     */
+    
     abstract protected function get_page_title();
 
-    /**
-     * Return the capability required for this menu to be displayed to the user.
-     *
-     * @return string
-     */
+    
     protected function get_capability() {
         return 'manage_options';
     }
 
-    /**
-     * Return page slug.
-     *
-     * @return string
-     */
+    
     abstract protected function get_slug();
 
-    /**
-     * Return page prefix.
-     *
-     * @return string
-     */
+    
     abstract protected function get_page_prefix();
 
-    /**
-     * Return the URL to the icon to be used for this menu.
-     * * @link https://developer.wordpress.org/resource/dashicons/
-     *
-     * @return string
-     */
+    
     protected function get_icon_url() {
         return 'dashicons-admin-generic';
     }
 
-    /**
-     * Return the position in the menu order this item should appear.
-     *
-     * @return int|null
-     */
+    
     protected function get_position() {
         return null;
     }
 
-    /**
-     * Register sections.
-     *
-     * Used to add new sections to an admin page.
-     *
-     * @return void
-     */
+    
     abstract public function register_sections();
 
-    /**
-     * Create and register a new settings section object.
-     *
-     * @param string $section_id Section ID.
-     * @param array  $properties Section properties.
-     *
-     * @return SettingsSection
-     */
+    
     protected function register_section( $section_id, $properties = array() ) {
         $dump_me = ['id'=>$section_id, 'properties'=>$properties];
         // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
@@ -302,14 +231,7 @@ abstract class Admin implements Actions {
         return $section;
     }
 
-    /**
-     * Create and register a new section object.
-     *
-     * @param string $section_id Section ID.
-     * @param array  $properties Section properties.
-     *
-     * @return Section
-     */
+    
     protected function register_presentation_section( $section_id, $properties = array() ) {
         $section = new Section( $section_id, $this->get_slug(), $this->options, $properties );
         $this->sections[] = $section;

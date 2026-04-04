@@ -17,69 +17,27 @@ use Qck\FeedEngine\Pages\SettingsPage;
 
 abstract class Plugin implements Actions {
 
-    /**
-	 * Options
-	 * 
-	 * @since    1.0.0
-	 * @access   public
-     * @var 	 WP_Options An instance of the `Options` class.
-     */
+    
     public $options;
 
 	// public $settings;
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      HooksManager    >>> $loader    Maintains and registers all hooks for the plugin.
-	 */
+	
 	protected $hooks;
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      ShortcodeManager    >>> $loader    Maintains and registers all hooks for the plugin.
-	 */
+	
 	protected $shortcodes;
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      PostTypeManager    >>> $loader    Maintains and registers all hooks for the plugin.
-	 */
+	
 	protected $post_types;
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      ApiManager    >>> $loader    Maintains and registers all hooks for the plugin.
-	 */
+	
 	protected $rest_routes;
 
-    /**
-	 * plugin_name
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    >>> $plugin_name    The string used to uniquely identify this plugin.
-	 */
+    
 	protected $plugin_name;
 
-    /**
-	 * Glave Version.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    >>> $version    The current version of the plugin.
-	 */
+    
 	protected $version;
 
 
@@ -103,9 +61,7 @@ abstract class Plugin implements Actions {
         return self::$instance;
     }
 
-	/**
-     * Initialize the plugin once activated plugins have been loaded.
-     */
+	
     public function init() {
         // $this->options = new WP_Options();
 		
@@ -129,7 +85,7 @@ abstract class Plugin implements Actions {
 	public function get_actions():array {
 		$actions = [
 			 //'plugins_loaded' => array( 'init' ) ,
-			 /* New actions go here */
+			 
 			//  'action' => array( 'method' ) ,
 
 		];

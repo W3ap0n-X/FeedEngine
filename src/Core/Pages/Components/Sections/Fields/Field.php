@@ -10,30 +10,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Field {
 
-    /**
-     * @var int Number of fields instantiated.
-     */
+    
     protected static $number_of_fields = 0;
 
-    /**
-     * @var Element[] Field elements.
-     */
+    
     protected $elements = array();
 
 
-    /**
-     * @var string ID of the section this field belongs to.
-     */
+    
     protected $section_id;
 
-    /**
-     * @var array Field description.
-     */
+    
     protected $description;
 
-    /**
-     * Render the field.
-     */
+    
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
         $html = '';
@@ -51,14 +41,7 @@ class Field {
         echo $html;
     }
 
-    /**
-     * Field constructor.
-     *
-     * @param string  $section_id       Section ID.
-     * @param string  $page             Slug-name of settings page.
-     * @param Options $options_instance An instance of `Options`.
-     * @param array   $properties       Field properties.
-     */
+    
     public function __construct( $section_id, $page, $properties = array() ) {
 
         $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties];
@@ -90,12 +73,7 @@ class Field {
         );
     }
 
-    /**
-     * Create and add a new element object to this field.
-     *
-     * @param string $element_type
-     * @param array  $properties
-     */
+    
     public function add_element( $element_type, $properties ) {
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
@@ -112,11 +90,7 @@ class Field {
         return $this;
     }
 
-    /**
-     * Return the field elements.
-     *
-     * @return Element[]
-     */
+    
     public function get_elements() {
         return $this->elements;
     }

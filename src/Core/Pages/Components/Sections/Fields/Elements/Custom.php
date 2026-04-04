@@ -10,14 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Custom extends Element {
 
-    /**
-     * @var string HTML to display.
-     */
+    
     private $html = null;
 
-    /**
-     * Render the element.
-     */
+    
     public function render() {
         $content = ! empty( $this->html ) ? $this->html : '';
         $html = <<<HTML
@@ -29,13 +25,7 @@ class Custom extends Element {
         return $html;
     }
 
-    /**
-     * Custom_Element constructor.
-     *
-     * @param string  $section_id       Section ID.
-     * @param Options $options_instance An instance of `Options`.
-     * @param array   $properties       Element properties.
-     */
+    
     public function __construct( $section_id, $options_instance, $properties = array() ) {
         parent::__construct( $section_id, $options_instance, $properties );
 

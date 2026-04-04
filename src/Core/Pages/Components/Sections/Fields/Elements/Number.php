@@ -7,9 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Number extends Element implements SettingsInterface {
 
-    /**
-     * Render the element.
-     */
+    
     public function render() {
         $label = esc_html( $this->label );
         $value = esc_attr( $this->value );
@@ -30,13 +28,7 @@ class Number extends Element implements SettingsInterface {
         return $html;
     }
 
-    /**
-     * Sanitize the given option value.
-     *
-     * @param string $option_value
-     *
-     * @return int
-     */
+    
     public function sanitize( $option_value ) {
         return intval( $option_value );
     }

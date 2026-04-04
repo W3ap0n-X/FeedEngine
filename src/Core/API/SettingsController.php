@@ -93,9 +93,7 @@ class SettingsController extends BaseController {
         return $notice->renderHtml();
     }
 
-        /**
-     * Display admin notices.
-     */
+        
     public function display_admin_notices($updated, $msg) {
 
         // settings_errors();
@@ -106,7 +104,7 @@ class SettingsController extends BaseController {
                     AdminNotice::SUCCESS
                 );
             } else {
-                /** @noinspection SpellCheckingInspection */
+                
                 return $this->render_admin_notice(
                     esc_html( __( 'An error occurred: ' . $msg , Manifest::PREFIX ) ),
                     AdminNotice::ERROR
@@ -151,9 +149,7 @@ class SettingsController extends BaseController {
         return ! empty( $rows_to_update );
     }
 
-    /**
-     * A local version of the deep_set logic for the controller
-     */
+    
     private function deep_set_logic( array &$data, array $path, string $key, $value ) {
         $temp = &$data;
         foreach ( $path as $step ) {

@@ -9,14 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Radio extends Element implements SettingsInterface {
 
-    /**
-     * @var array Radio values.
-     */
+    
     private $options = array();
 
-    /**
-     * Render the element.
-     */
+    
     public function render() {
         $name = esc_attr( $this->name );
         $group_label = esc_html( $this->label );
@@ -46,13 +42,7 @@ class Radio extends Element implements SettingsInterface {
             
     }
 
-    /**
-     * Radio_Field constructor.
-     *
-     * @param string  $section_id       Section ID.
-     * @param Options $options_instance An instance of `Options`.
-     * @param array   $properties       Element properties.
-     */
+    
     public function __construct( $section_id, $properties = array() ) {
         parent::__construct( $section_id, $properties );
 
@@ -65,13 +55,7 @@ class Radio extends Element implements SettingsInterface {
         }
     }
 
-    /**
-     * Sanitize the given option value.
-     *
-     * @param string $option_value
-     *
-     * @return string
-     */
+    
     public function sanitize( $option_value ) {
         return sanitize_text_field( $option_value );
     }

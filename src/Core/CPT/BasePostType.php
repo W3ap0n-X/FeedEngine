@@ -34,9 +34,7 @@ abstract class BasePostType {
         return false; 
     }
     
-    /**
-     * The Toggle: Set to false to "Usurp" with your own Endpoints
-     */
+    
     public function show_in_rest(): bool {
         return false; 
     }

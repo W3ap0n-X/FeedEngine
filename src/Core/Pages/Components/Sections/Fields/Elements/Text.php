@@ -7,9 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Text extends Element implements SettingsInterface {
 
-    /**
-     * Render the element.
-     */
+    
     public function render() {
 
         $label = esc_html( $this->label );
@@ -31,13 +29,7 @@ class Text extends Element implements SettingsInterface {
         return $html;
     }
 
-    /**
-     * Sanitize the given option value.
-     *
-     * @param string $option_value
-     *
-     * @return bool
-     */
+    
     public function sanitize( $option_value ) {
         return sanitize_text_field( $option_value );
     }

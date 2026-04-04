@@ -11,48 +11,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Section {
 
-    /**
-     * @var Field[] Section field objects.
-     */
+    
     protected $fields = array();
 
-    /**
-     * @var Options An instance of `Options`.
-     */
+    
     public $options;
 
-    /**
-     * @var string Section title.
-     */
+    
     private $title;
 
-    /**
-     * @var string Section ID.
-     */
+    
     private $id;
 
     public function get_id(){
         return $this->id;
     }
 
-    /**
-     * @var string Slug-name of the settings page this section belongs to.
-     */
+    
     private $page;
 
-    /**
-     * @var string Section description.
-     */
+    
     private $description;
 
-    /**
-     * Section constructor.
-     *
-     * @param string  $id               Section ID.
-     * @param string  $page             Slug-name of the settings page.
-     * @param Options $options_instance An instance of `Options`.
-     * @param array   $properties       Properties.
-     */
+    
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
         
         // $dump_me = ['section_id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
@@ -80,18 +61,12 @@ class Section {
         );
     }
 
-    /**
-     * Print the section description.
-     */
+    
     public function print_description() {
         echo esc_html( $this->description );
     }
 
-    /**
-     * Create and add a new field object to this section.
-     *
-     * @param array $properties Field properties.
-     */
+    
     public function add_field( $properties ) {
         $field = new Field( $this->id, $this->page, $properties );
 

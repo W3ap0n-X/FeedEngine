@@ -10,34 +10,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class MetaField {
 
-    /**
-     * @var int Number of fields instantiated.
-     */
+    
     protected static $number_of_fields = 0;
 
-    /**
-     * @var Element[] Field elements.
-     */
+    
     protected $elements = array();
 
-    /**
-     * @var Options An instance of `Options`.
-     */
+    
     private $options;
 
-    /**
-     * @var string ID of the section this field belongs to.
-     */
+    
     protected $section_id;
 
-    /**
-     * @var array Field description.
-     */
+    
     protected $description;
 
-    /**
-     * Render the field.
-     */
+    
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
 
@@ -56,14 +44,7 @@ class MetaField {
         return $html;
     }
 
-    /**
-     * Field constructor.
-     *
-     * @param string  $section_id       Section ID.
-     * @param string  $page             Slug-name of settings page.
-     * @param Options $options_instance An instance of `Options`.
-     * @param array   $properties       Field properties.
-     */
+    
     public function __construct( $section_id, $page, $properties = array() ) {
 
         $dump_me = ['id'=>$section_id, 'page'=>$page,'properties'=>$properties];
@@ -74,7 +55,7 @@ class MetaField {
             $properties,
             array(
                 'label'       => sprintf(
-                    /* translators: %s is the unique s/n of the field. */
+                    
                     __( 'Field #%s', Manifest::PREFIX ),
                     self::$number_of_fields
                 ),
@@ -95,12 +76,7 @@ class MetaField {
         // );
     }
 
-    /**
-     * Create and add a new element object to this field.
-     *
-     * @param string $element_type
-     * @param array  $properties
-     */
+    
     public function add_element( $element_type, $properties ) {
         $element_type = __NAMESPACE__ . '\\Elements\\' . $element_type;
 
@@ -117,11 +93,7 @@ class MetaField {
         return $this;
     }
 
-    /**
-     * Return the field elements.
-     *
-     * @return Element[]
-     */
+    
     public function get_elements() {
         return $this->elements;
     }

@@ -31,11 +31,7 @@ class MetaSection extends Section {
         $this->id          = $section_id;
     }
 
-    /**
-     * Create and add a new field object to this section.
-     *
-     * @param array $properties Field properties.
-     */
+    
     public function add_field( $properties ) {
         $field = new MetaField( $this->id, $this->page, $properties );
 

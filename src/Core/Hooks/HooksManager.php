@@ -10,9 +10,7 @@ use Qck\FeedEngine\Manifest;
 
 class HooksManager {
 
-    /**
-     * Discovery: Automatically scans the /Hooks folder and registers classes.
-     */
+    
     public function load() {
         $dir = Manifest::path() . 'src/Hooks/';
         if ( ! is_dir( $dir ) ) return;
@@ -30,11 +28,7 @@ class HooksManager {
         }
     }
 
-    /**
-     * Register an object.
-     *
-     * @param object $object
-     */
+    
     public function register( $object ) {
         // \Qck\FeedEngine\Core\Debug::logDump($object, __METHOD__);
         if ( $object instanceof Actions ) {
@@ -46,11 +40,7 @@ class HooksManager {
         }
     }
 
-    /**
-     * Register the actions of the given object.
-     *
-     * @param object $object
-     */
+    
     private function register_actions( $object ) {
         $actions = $object->get_actions();
 
@@ -68,11 +58,7 @@ class HooksManager {
         }
     }
 
-    /**
-     * Register the filters of the given object.
-     *
-     * @param object $object
-     */
+    
     private function register_filters( $object ) {
         $filters = $object->get_filters();
 
@@ -90,14 +76,7 @@ class HooksManager {
         }
     }
 
-	/**
-     * Return the given value if it's set, otherwise return the default one.
-     *
-     * @param mixed $value
-     * @param mixed $default
-     *
-     * @return mixed
-     */
+	
     public static function default_value( &$value, $default ) {
         if ( isset( $value ) ) {
             return $value;

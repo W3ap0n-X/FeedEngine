@@ -6,42 +6,28 @@ use Qck\FeedEngine\Core\Options\Options;
 
 abstract class OptionSection implements Options {
 
-    /**
-     * The unique suffix for the DB row (e.g., 'general_options')
-     */
+    
     abstract public function get_name(): string;
 
-    /**
-     * The Title displayed in the Admin UI
-     */
+    
     abstract public function get_title(): string;
 
     abstract public function get_description(): string;
 
-    /**
-     * Returns an array of OptionEntry objects
-     * @return OptionEntry[]
-     */
+    
     abstract public function get_schema(): array;
 
-    /**
-     * Returns the full, prefixed database key.
-     * Result: qckfe_general_options
-     */
+    
     public function get_db_row(): string {
         return Manifest::PREFIX . '_' . $this->get_name();
     }
 
-    /**
-     * Fetches the current values from the database.
-     */
+    
     public function get_values(): array {
         return get_option( $this->get_db_row(), [] );
     }
 
-    /**
-     * Helper to find a specific field definition by its key.
-     */
+    
     public function get_field_definition( string $key ): ?OptionEntry {
         $fields = $this->get_schema();
         return $fields[$key] ?? null;
@@ -54,14 +40,7 @@ abstract class OptionSection implements Options {
         }
     }
 
-    /**
-     * Deep-searches an array using a path of keys.
-     *
-     * @param array $data The nested settings array.
-     * @param array|string $path The path to the value (e.g., ['services', 'google', 'api_key']).
-     * @param mixed $default What to return if the path doesn't exist.
-     * @return mixed
-     */
+    
     protected function deep_get(array $data, $path, $default = null) {
         // If it's a simple string, just return the top-level value
         if (is_string($path) && !str_contains($path, '.')) {
@@ -110,13 +89,7 @@ abstract class OptionSection implements Options {
         return update_option( $this->get_db_row(), $data );
     }
 
-    /**
-     * Sets a value deep within an array based on a path.
-     * * @param array &$data The array to modify (passed by reference).
-     * @param array $path  The nesting path, e.g., ['services', 'google'].
-     * @param string $key  The actual setting key.
-     * @param mixed $value The new value.
-     */
+    
     protected function deep_set( array &$data, array $path, string $key, $value ) {
         $temp = &$data;
 
@@ -131,9 +104,7 @@ abstract class OptionSection implements Options {
         $temp[$key] = $value;
     }
 
-    /**
-     * Implements remove() from the Options interface.
-     */
+    
     public function remove( $name) {
         $data  = $this->get_values();
         $entry = $this->get_field_definition( $name );
@@ -144,9 +115,7 @@ abstract class OptionSection implements Options {
         return update_option( $this->get_db_row(), $data );
     }
 
-    /**
-     * The recursive helper to kill a key deep in the nest.
-     */
+    
     protected function deep_unset( array &$data, array $path, string $key ) {
         $temp = &$data;
 

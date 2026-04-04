@@ -13,38 +13,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Metabox {
 
-    /**
-     * @var Section[] Page section objects.
-     */
+    
     protected $sections = array();
 
-    /**
-     * @var Options An instance of `Options`.
-     */
+    
     public $options;
 
-    /**
-     * @var string Section title.
-     */
+    
     private $title;
 
-    /**
-     * @var string Section ID.
-     */
+    
     private $id;
 
     public function get_id(){
         return $this->id;
     }
 
-    /**
-     * @var string Slug-name of the settings page this section belongs to.
-     */
+    
     private $page;
 
-    /**
-     * @var string Section description.
-     */
+    
     private $description;
 
 
@@ -52,14 +40,7 @@ class Metabox {
     public $context;
     public $priority;
 
-    /**
-     * Section constructor.
-     *
-     * @param string  $id               Section ID.
-     * @param string  $page             Slug-name of the settings page.
-     * @param Options $options_instance An instance of `Options`.
-     * @param array   $properties       Properties.
-     */
+    
     public function __construct( $section_id, $page, $properties = array() ) {
         
         // $dump_me = ['section_id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
@@ -104,11 +85,7 @@ class Metabox {
 
     }
 
-    /**
-     * Create and add a new field object to this section.
-     *
-     * @param array $properties Field properties.
-     */
+    
     public function add_section( $properties ) {
         $section = new MetaSection( $this->id, $this->page, $properties );
 

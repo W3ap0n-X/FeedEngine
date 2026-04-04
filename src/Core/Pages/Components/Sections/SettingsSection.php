@@ -9,11 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class SettingsSection extends Section {
 
-    /**
-     * Return all element objects in this section.
-     *
-     * @return Element[]
-     */
+    
     private function get_all_elements_in_section() {
 
         $elements = array();
@@ -25,13 +21,7 @@ class SettingsSection extends Section {
         return $elements;
     }
 
-    /**
-     * Sanitize the options' values.
-     *
-     * @param array $options
-     *
-     * @return array
-     */
+    
     public function sanitize( $options ) {
         // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
         $elements = $this->get_all_elements_in_section();

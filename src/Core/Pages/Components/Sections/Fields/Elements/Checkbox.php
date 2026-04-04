@@ -7,9 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Checkbox extends Element implements SettingsInterface {
 
-    /**
-     * Render the element.
-     */
+    
 
 
     public function render() {
@@ -38,13 +36,7 @@ class Checkbox extends Element implements SettingsInterface {
         return $html;
     }
 
-    /**
-     * Sanitize the given option value.
-     *
-     * @param string $option_value
-     *
-     * @return bool
-     */
+    
     public function sanitize( $option_value ) {
         return ( '1' === (string) $option_value || true === $option_value );
     }

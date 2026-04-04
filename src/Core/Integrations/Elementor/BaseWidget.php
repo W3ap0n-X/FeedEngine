@@ -8,9 +8,7 @@ use Qck\FeedEngine\Core\Options\OptionSection;
 
 abstract class BaseWidget extends Widget_Base {
 
-    /**
-     * Return the OptionSection class that defines the controls for this widget.
-     */
+    
     abstract protected function get_schema(): OptionSection;
 
     public function get_categories() {
@@ -38,9 +36,7 @@ abstract class BaseWidget extends Widget_Base {
         $this->end_controls_section();
     }
 
-    /**
-     * Translates our OptionEntry into an Elementor-compatible array.
-     */
+    
     private function map_entry_to_control( OptionEntry $entry ): array {
         $control_type = match ( $entry->type ) {
             'number'   => Controls_Manager::NUMBER,
@@ -58,9 +54,7 @@ abstract class BaseWidget extends Widget_Base {
         ];
     }
 
-    /**
-     * Standardized Render: Fetches settings and hands them to a PHP template.
-     */
+    
     protected function render() {
         $settings = $this->get_settings_for_display();
         $template = $this->get_template_name();

@@ -15,19 +15,13 @@ class AdminNotice {
     const PINNED = 'pinned';
     const DISMISSIBLE = 'dismissible';
 
-    /**
-     * @var string Message to display.
-     */
+    
     private $message;
 
-    /**
-     * @var string Notice type ('success', 'info', 'warning', or 'error').
-     */
+    
     private $notice_type;
 
-    /**
-     * @var string Pin type (either 'pinned' or 'dismissible').
-     */
+    
     private $pin_type;
 
     /**
@@ -43,20 +37,12 @@ class AdminNotice {
         $this->pin_type    = $pin_type;
     }
 
-    /**
-     * Check whether this notice is dismissible.
-     *
-     * @return bool
-     */
+    
     private function is_dismissible() {
         return $this->pin_type === self::DISMISSIBLE;
     }
 
-    /**
-     * Return the CSS classes of this notice.
-     *
-     * @return string
-     */
+    
     private function get_css_classes() {
         $css_classes = array(
             'notice',
@@ -70,9 +56,7 @@ class AdminNotice {
         return implode( ' ', array_unique( $css_classes ) );
     }
 
-    /**
-     * Render this notice.
-     */
+    
     public function render() {
         
         printf(
