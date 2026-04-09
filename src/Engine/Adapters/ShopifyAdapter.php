@@ -31,9 +31,9 @@ class ShopifyAdapter {
 
         $new_item->url       = self::build_shopify_url($raw_data);
 
-        $new_item->feature_image_url   = self::extract_primary_image($raw_data);
+        $new_item->image_url   = self::extract_primary_image($raw_data);
 
-        $new_item->price_display_value = self::format_price($raw_data);
+        $new_item->price = self::format_price($raw_data);
 
         $new_item->source  = 'shopify';
 

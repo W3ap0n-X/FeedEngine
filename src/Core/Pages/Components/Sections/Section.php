@@ -18,20 +18,20 @@ class Section {
     public $options;
 
     
-    private $title;
+    protected $title;
 
     
-    private $id;
+    protected $id;
 
     public function get_id(){
         return $this->id;
     }
 
     
-    private $page;
+    protected $page;
 
     
-    private $description;
+    protected $description;
 
     
     public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
@@ -63,7 +63,7 @@ class Section {
 
     
     public function print_description() {
-        echo esc_html( $this->description );
+        echo esc_html( $this->description ) . 'DESC';
     }
 
     

@@ -94,36 +94,14 @@ class Metabox {
         return $section;
     }
 
-    public function render_wrapper($post) {
-        // \Qck\FeedEngine\Core\Debug::logDump( $post, __METHOD__);
-        // 1. Security Nonce
-        // wp_nonce_field($this->get_name() . '_action', $this->get_name() . '_nonce');
-
-        // 2. Fetch existing values
-        $values = get_post_meta($post->ID, '_qckfe_settings', true) ?: [];
-
-        // 3. Reuse your SettingsBuilder!
-        // $builder = new SettingBuilder($this->get_schema(), $values);
-        echo '';
-        echo '<h1>test</h1>';
-        // SettingBuilder::build_ui_from_metabox($post->ID, $this->metabox, $this->get_schema());
-        echo '<h2>' . $post->ID . '</h2>';
-        echo '<h2>' . count($values) . '</h2>';
-        
-        // echo $content;
-        // $metabox->render();
-        // \Qck\FeedEngine\Core\Debug::logDump( $content, __METHOD__);
-        // $builder->render();
-        echo '</div>';
-    }
-
     public function render($post, $settings) {
+        
         $html =  '';
         // $html .= wp_nonce_field('_' . Manifest::PREFIX . '_' . $settings->get_name() . '_action', $settings->get_name() . '_nonce');
-        $values = get_post_meta($post->ID, '_' . Manifest::PREFIX . '_' . $settings->get_name(), true) ?: [];
+        // $values = get_post_meta($post->ID, '_' . Manifest::PREFIX . '_' . $settings->get_name(), true) ?: [];
         $html .= '<div class="qckfe-metabox-wrapper">';
         foreach ($this->sections as $section) {
-            $section = SettingBuilder::build_ui_from_metabox($post->ID, $section, $settings, $values);
+            $section = SettingBuilder::build_ui_from_metabox($post->ID, $section, $settings);
             $html .= $section->render();
         }
         $html .= '</div>';

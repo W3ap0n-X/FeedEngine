@@ -35,13 +35,14 @@ abstract class BaseMetaBox {
     }
 
     public function render_wrapper($post) {
+        echo '<div class="data-wrap" data-prefix="' . Manifest::PREFIX . '">';
         $html = $this->metabox->render($post, $this);
         // \Qck\FeedEngine\Core\Debug::logDump( $html, __METHOD__);
         $name = '_' . Manifest::PREFIX . '_' . $this->get_name();
         wp_nonce_field($name  . '_action', $name . '_nonce');
         // \Qck\FeedEngine\Core\Debug::logDump( $nonce, __METHOD__ . ' $nonce');
-        echo $nonce;
         echo $html;
+        echo '</div>';
         // // 1. Security Nonce
         // wp_nonce_field($this->get_name() . '_action', $this->get_name() . '_nonce');
 
@@ -103,7 +104,7 @@ abstract class BaseMetaBox {
     public function get_field_definition( string $key ): ?OptionEntry {
 
         $fields = $this->get_schema();
-        // \Qck\FeedEngine\Core\Debug::logDump( $fields, __METHOD__ . ' $fields');
+        \Qck\FeedEngine\Core\Debug::logDump( $fields, __METHOD__ . ' $fields');
         // \Qck\FeedEngine\Core\Debug::logDump( $key, __METHOD__ . ' $key');
         foreach ($fields as $entry) {
             if($entry->key == $key) {
@@ -194,14 +195,14 @@ abstract class BaseMetaBox {
     /**
      * Implements remove() from the Options interface.
      */
-    public function remove( $name) {
-        $data  = $this->get_values();
+    public function remove($data, $name) {
+        
         $entry = $this->get_field_definition( $name );
         $path  = ( $entry && ! empty( $entry->path ) ) ? $entry->path : [];
 
         $this->deep_unset( $data, $path, $name );
-
-        return update_option( $this->get_db_row(), $data );
+        
+        // return update_option( $this->get_db_row(), $data );
     }
 
     /**
@@ -241,7 +242,7 @@ abstract class BaseMetaBox {
     //     return $current[$entry->key] ?? $entry->default;
     // }
 
-    public function get_value_for_entry($post_id, \Qck\FeedEngine\Core\Options\OptionEntry $entry) {
+    public function get_value_for_entry($post_id, OptionEntry $entry) {
         $all_data = $this->get_values($post_id ); // Fetches the whole DB row
         // \Qck\FeedEngine\Core\Debug::logDump( $all_data, __METHOD__);
         // \Qck\FeedEngine\Core\Debug::logDump( $entry->key . '= ' . $this->get($all_data , $entry->key), __METHOD__ . ' $this->get($all_data , $entry->key)');

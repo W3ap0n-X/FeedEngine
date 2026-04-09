@@ -12,6 +12,7 @@ class OptionEntry {
     public $description;
     public $placeholder;
     public $path;
+    public $options;
 
     public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $options = ['none'] , $description = '', $placeholder = ''  ) {
         $this->key     = $key;

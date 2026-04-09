@@ -12,7 +12,9 @@ class Checkbox extends Element implements SettingsInterface {
 
     public function render() {
         $name = json_encode(esc_attr( $this->name ));
-        $checked = checked( '1', $this->value , true);
+        ob_start();
+        checked( '1', $this->value , true);
+        $checked = ob_get_clean();
         $label = esc_html( $this->label );
         $html = <<<HTML
             <fieldset>
@@ -31,6 +33,7 @@ class Checkbox extends Element implements SettingsInterface {
                     />
                     {$label}
                 </label>
+                <p></p>
             </fieldset>
         HTML;
         return $html;

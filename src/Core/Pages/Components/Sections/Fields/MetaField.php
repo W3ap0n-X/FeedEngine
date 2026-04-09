@@ -25,21 +25,28 @@ class MetaField {
     
     protected $description;
 
-    
+    /**
+     * Render the UI element.
+     *
+     * @return string
+     */
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
 
         $html = '';
-
-        if ( ! empty( $this->description ) ) {
-            $html .= '<p class="description">' . esc_html($this->description)  . '</p>';
-        }
+        $html .= '<div class="qckfe_meta_field">';
+        $html .= '<h4>' . (isset($this->title) ? $this->title : 'FIELD TITLE')  . '</h4>';
+        $html .= '<p>' . (isset($this->description) ? $this->description : 'FIELD DESCRIPTION')  . '</p>';
+        // if ( ! empty( $this->description ) ) {
+        //     $html .= '<p class="description">' . esc_html($this->description)  . '</p>';
+        // }
 
         
 
         foreach ( $this->elements as $key => $element ) {
             $html .= $element->render();
         }
+        $html .= '</div>';
         // \Qck\FeedEngine\Core\Debug::logDump( $html, __METHOD__);
         return $html;
     }

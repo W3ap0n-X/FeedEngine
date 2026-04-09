@@ -12,7 +12,7 @@ interface UI {
     /**
      * Render the UI element.
      *
-     * @return void
+     * @return string
      */
     public function render();
 }

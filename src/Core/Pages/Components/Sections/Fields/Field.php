@@ -24,20 +24,23 @@ class Field {
     protected $description;
 
     
+    
     public function render() {
         // \Qck\FeedEngine\Core\Debug::logDump('Rendering Field', __METHOD__);
-        $html = '';
-        
-
-        if ( ! empty( $this->description ) ) {
-            $html .= '<p class="description">' . esc_html($this->description)  . '</p>';
-        }
+        $html = '<div class="qckfe_settings_field">';
+        $html .= '<h4>' . (isset($this->title) ? $this->title : 'FIELD TITLE')  . '</h4>';
+        $html .= '<p>' . (isset($this->description) ? $this->description : 'FIELD DESCRIPTION')  . '</p>';
+ 
+        // if ( ! empty( $this->description ) ) {
+        //     $html .= '<p class="description">' . esc_html($this->description)  . '</p>';
+        // }
 
         
 
         foreach ( $this->elements as $key => $element ) {
             $html .= $element->render();
         }
+        $html .= '</div>';
         echo $html;
     }
 

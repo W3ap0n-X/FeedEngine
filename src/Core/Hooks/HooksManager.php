@@ -74,10 +74,13 @@ class HooksManager {
         $actions = $object->get_actions();
 
         foreach ( $actions as $action_name => $action_details ) {
-            \Qck\FeedEngine\Core\Debug::logDump($action_details, __METHOD__);
+
+            
+            // if ()
+
             $method        = $action_details[0];
-            $priority      = self::default_value( $action_details[1], 10 );
-            $accepted_args = self::default_value( $action_details[2], 1 );
+            $priority      = self::default_value( !empty($action_details[1])?$action_details[1]:null, 10 );
+            $accepted_args = self::default_value( $action_details[2]?$action_details[2]:null, 1 );
 
             add_action(
                 $action_name,
@@ -111,7 +114,7 @@ class HooksManager {
     }
 
 	
-    public static function default_value( &$value, $default ) {
+    public static function default_value( $value, $default ) {
         if ( isset( $value ) ) {
             return $value;
         }

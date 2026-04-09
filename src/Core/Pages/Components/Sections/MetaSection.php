@@ -19,7 +19,7 @@ class MetaSection extends Section {
             $properties,
             array(
                 'title'       => __( $section_id, Manifest::PREFIX ),
-                'description' => ''
+                'description' => null
             )
         );
 
@@ -42,9 +42,13 @@ class MetaSection extends Section {
 
     public function render() {
         $html = '';
+        $html .= '<div class="qckfe_meta_section">';
+        $html .= '<h4>' . (isset($this->title) ? $this->title : 'SECTION TITLE')  . '</h4>';
+        $html .= '<p>' . (isset($this->description) ? $this->description : 'SECTION DESCRIPTION')  . '</p>';
         foreach ($this->fields as $field) {
             $html .= $field->render();
         }
+        $html .= '</div>';
         // \Qck\FeedEngine\Core\Debug::logDump( $html, __METHOD__);
         return $html;
     }

@@ -40,6 +40,19 @@ class BentoOptions extends OptionSection {
                 default: 20,
                 path: ['layout', 'spacing'] // qckfe_bento_settings[layout][spacing][gap]
             )
+            ,
+            'img' => new OptionEntry(
+                key: 'img',
+                label: 'Test Image',
+                type: 'image',
+                path: ['test', 'image'] // qckfe_bento_settings[layout][spacing][gap]
+            ),
+            'img2' => new OptionEntry(
+                key: 'img2',
+                label: 'Test Image 2',
+                type: 'image',
+                path: ['test', 'image'] // qckfe_bento_settings[layout][spacing][gap]
+            )
         ];
     }
 }

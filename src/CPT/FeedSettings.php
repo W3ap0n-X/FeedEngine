@@ -39,6 +39,18 @@ class FeedSettings extends BaseMetaBox {
                     'mixed'   => 'Mixed (Checkerboard)',
                 ]
             ),
+            new \Qck\FeedEngine\Core\Options\OptionEntry(
+                key: 'test_image',
+                label: 'Test Image',
+                type: 'image',
+                path: ['image'] ,
+            ),
+            new \Qck\FeedEngine\Core\Options\OptionEntry(
+                key: 'test_on',
+                label: 'Test bool',
+                type: 'checkbox',
+                path: ['image'] ,
+            ),
             // 'source_type' => [
             //     'type' => 'select',
             //     'label' => 'Data Source',

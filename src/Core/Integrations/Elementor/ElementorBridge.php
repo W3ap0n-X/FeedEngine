@@ -8,6 +8,6 @@ class ElementorBridge {
 
     public function register_widgets($widgets_manager) {
         // You just register the wrapper; the wrapper does the heavy lifting
-        $widgets_manager->register(new \Qck\FeedEngine\Integrations\Elementor\BentoWidget());
+        // $widgets_manager->register(new \Qck\FeedEngine\Integrations\Elementor\BentoWidget());
     }
 }

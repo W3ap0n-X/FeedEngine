@@ -18,10 +18,13 @@ class FeedPreview implements Endpoint {
     }
 
     public function handle( \WP_REST_Request $request ) {
-        // We call our "Brain" (the Controller) just like the Shortcode does.
+        // We call our "Brain" (the Controller) just like the Shortcode do
+        // es.
+        $params = $request->get_params();
+        \Qck\FeedEngine\Core\Debug::logDump( $params, __METHOD__);
         $controller = new FeedController();
-        $items = [];
-        $items[] = $controller->run_adapter_test_logic();
+        // $items = [];
+        $items = $controller->run_adapter_test_logic($params);
 
         return [
             'success' => true,

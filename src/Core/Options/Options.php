@@ -16,8 +16,7 @@ interface Options {
      * Store the given value to an option with the given name.
      *
      * @param string $name       Option name.
-     * @param mixed  $value      Option value.
-     * @param string $section_id Section ID.
+     * @param mixed  $setValue      Option value.
      * @return bool              Whether the option was added.
      */
     public function set( $name, $setValue );
@@ -26,7 +25,6 @@ interface Options {
      * Remove the option with the given name.
      *
      * @param string $name       Option name.
-     * @param string $section_id Section ID.
      */
     public function remove( $name );
 }

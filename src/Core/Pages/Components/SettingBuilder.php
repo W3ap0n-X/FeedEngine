@@ -15,6 +15,7 @@ class SettingBuilder {
                 'string'  => Element::TEXT_ELEMENT,
                 'number'  => Element::NUMBER_ELEMENT,
                 'select'  => Element::RADIO_ELEMENT,
+                'image'  => Element::IMAGE_ELEMENT,
                 'custom'  => Element::CUSTOM_ELEMENT,
                 default   => Element::TEXT_ELEMENT,
             };
@@ -35,7 +36,7 @@ class SettingBuilder {
         return $section_object;
     }
 
-    public static function build_ui_from_metabox($post, $section_object, $settings , $values) {
+    public static function build_ui_from_metabox($post, $section_object, $settings) {
         // \Qck\FeedEngine\Core\Debug::logDump( [$post, $section_object, $settings ], __METHOD__);
         // \Qck\FeedEngine\Core\Debug::logDump( $values, __METHOD__ . ' VALUES');
         $fields = [];
@@ -47,6 +48,7 @@ class SettingBuilder {
                 'string'  => Element::TEXT_ELEMENT,
                 'number'  => Element::NUMBER_ELEMENT,
                 'select'  => Element::RADIO_ELEMENT,
+                'image'  => Element::IMAGE_ELEMENT,
                 'custom'  => Element::CUSTOM_ELEMENT,
                 default   => Element::TEXT_ELEMENT,
             };

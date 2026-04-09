@@ -28,22 +28,6 @@ final class Manifest {
         return plugins_url(ltrim($path, '/'), self::path(self::SLUG . '.php'));
     }
 
-    /**
-     * @var array Default options.
-     */
-    public const DEFAULT_OPTIONS = array(
-		// >>> Acts as junk drawer
-		'general_options' => array(
-            'debug' => true,
-            'test' => 'test',
-
-		), 
-        'test_options' => array(
-            'debug' => true,
-
-		), 
-	);
-
     public static function details(){
         $details = array(
             'Name' => self::NAME , 

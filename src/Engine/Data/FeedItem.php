@@ -8,5 +8,6 @@ class FeedItem {
     public string $image_url;
     public string $price;      // Empty for posts, filled for products
     public string $type;       // 'wp_post', 'shopify_product', etc.
-    public array  $raw_data;   // For the "just in case" moments
+    public array  $raw;   // For the "just in case" moments
+    public string $source;
 }

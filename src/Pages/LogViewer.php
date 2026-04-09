@@ -21,6 +21,20 @@ class LogViewer extends SubPage implements Actions {
         parent::__construct(  $parent_slug, $hooks );
     }
 
+    public function get_actions(): array {
+        return array(
+            'admin_menu'            => array( 'add_page' ),
+            'admin_init'            => array( 'register_sections' ),
+            'admin_notices'         => array( 'display_admin_notices' ),
+            'admin_enqueue_scripts' => array( 'maybe_enqueue_stylesheets'),
+        );
+    }
+
+    public function maybe_enqueue_stylesheets($hook_suffix ) {
+        \Qck\FeedEngine\Core\Debug::logDump( 'enqueue media', __METHOD__);
+        parent::maybe_enqueue_stylesheets($hook_suffix );
+        wp_enqueue_media();
+    }
 
 
     /**
@@ -85,10 +99,10 @@ class LogViewer extends SubPage implements Actions {
         $html = <<<HTML
             <div class="qckfe-log-viewer">
                 <h3>System Logs</h3>
-                <textarea id="qckfe-log-content" readonly style="width:100%; height:300px; font-family:monospace; background:#f0f0f0;">{$logs}</textarea>
+                <textarea id="qckfe-log-content" readonly style="width:100%; height:300px; font-family:monospace;">{$logs}</textarea>
                 <div style="margin-top: 10px;">
+                    <button type="button" id="qckfe-refresh-logs" class="button button-link">Refresh Log File</button>
                     <button type="button" id="qckfe-clear-logs" class="button button-link-delete">Clear Log File</button>
-                    <button type="button" id="qckfe-refresh-logs" class="button button-link-delete">Refresh Log File</button>
                 </div>
             </div>
 

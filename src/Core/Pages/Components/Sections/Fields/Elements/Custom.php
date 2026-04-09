@@ -26,8 +26,8 @@ class Custom extends Element {
     }
 
     
-    public function __construct( $section_id, $options_instance, $properties = array() ) {
-        parent::__construct( $section_id, $options_instance, $properties );
+    public function __construct( $section_id, $properties = array() ) {
+        parent::__construct( $section_id, $properties );
 
         $this->html = $properties['html'];
 

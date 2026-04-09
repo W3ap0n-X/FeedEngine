@@ -44,7 +44,7 @@ abstract class Plugin implements Actions {
 
 
 
-    private static $instance = null;
+    
 
     public function __construct() {
 		$this->version = Manifest::VERSION;
@@ -55,12 +55,7 @@ abstract class Plugin implements Actions {
 		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
 	}
 
-	public static function instance() {
-        if ( is_null( self::$instance ) ) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+	
 
 	
     public function init() {

@@ -39,6 +39,8 @@ class Feed extends BasePostType {
     public function get_metaboxes() : array {
         return [
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedSettings(),
+            new \Qck\FeedEngine\CPT\MetaBoxes\FeedPostTypes(),
+            new \Qck\FeedEngine\CPT\MetaBoxes\FeedCategories(),
         ];
     }
 }

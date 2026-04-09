@@ -1,1 +1,10 @@
 /* feed preview */
+
+
+.qckfe_meta_field {
+    border: 1px solid #FF0000;
+}
+
+.qckfe_meta_section {
+    border: 1px solid #0000FF;
+}

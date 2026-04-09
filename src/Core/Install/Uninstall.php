@@ -17,11 +17,8 @@ class Uninstall {
         }
 
         // 2. Access the options (We use a standard delete_option here)
-        foreach ( Manifest::DEFAULT_OPTIONS as $section_id => $fields ) {
-            delete_option( Manifest::PREFIX . '_' . $section_id );
-        }
 
         // 3. Optional: Clean up any custom database tables or transients
-        delete_transient( Manifest::PREFIX . '_feed_cache' );
+        // delete_transient( Manifest::PREFIX . '_feed_cache' );
     }
 }

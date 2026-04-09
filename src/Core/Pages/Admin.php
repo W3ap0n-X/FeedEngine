@@ -25,6 +25,7 @@ abstract class Admin implements Actions {
 
     
     protected $options;
+    protected $hooks;
 
     
     public function __construct( $hooks ) {
@@ -45,6 +46,46 @@ abstract class Admin implements Actions {
 
     
     public function render() {
+        $prefix = esc_attr(Manifest::PREFIX);
+        $title = esc_html( $this->get_page_title() );
+
+        
+        ob_start();
+        if(count($this->sections) > 0) {
+            ?>
+                <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
+                    <?php
+                        settings_fields( $this->get_slug() );
+                        do_settings_sections( $this->get_slug() );
+                        $submit = new SubmitButton( $this->get_slug() );
+                    ?>
+                </form>
+            <?php
+        }
+        $content = ob_get_clean();
+        $top = $this->content_top();
+        $bottom = $this->content_bottom();
+
+        $html = <<<HTML
+            <div class="wrap data-wrap" data-prefix="{$prefix}">
+                <div id="{$prefix}_notices"></div>
+                <div class="{$prefix}-admin-content-top">
+                    {$top}
+                </div>
+                {$content}
+                <div class="{$prefix}-admin-content-bottom">
+                    {$bottom}
+                </div>
+            </div>
+        HTML;
+        echo $html;
+
+        
+    }
+
+    public function render_old() {
+
+
         ?>
         
         <div class="wrap" data-prefix="<?php echo Manifest::PREFIX; ?>">
@@ -58,6 +99,7 @@ abstract class Admin implements Actions {
             <?php if(count($this->sections) > 0) { ?>
             <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
                 <?php
+
                 settings_fields( $this->get_slug() );
                 do_settings_sections( $this->get_slug() );
                 $submit = new SubmitButton( $this->get_slug() );
@@ -71,6 +113,9 @@ abstract class Admin implements Actions {
         </div>
 
         <?php
+
+
+        
     }
 
     
@@ -85,7 +130,7 @@ abstract class Admin implements Actions {
 
     
     protected function render_admin_notice( $message, $type ) {
-        $notice = new Admin_Notice( $message, $type );
+        $notice = new AdminNotice( $message, $type );
         $notice->render();
     }
 
