@@ -13,14 +13,22 @@ abstract class BaseMetaBox {
     abstract public function get_screen(): string|array; // e.g., 'qckfe_feed'
     abstract public function get_schema(): array;
 
+    public function get_context(): string {
+        return 'normal' ;
+    }
+
+    public function get_priority(): string {
+        return 'default' ;
+    }
+
     public function register() {
         $this->metabox = new Metabox(
                 $this->get_name(), 
                 $this->get_screen(), 
                 [
                     'title' => $this->get_title(),
-                    'context' => 'normal',
-                    'priority' => 'high',
+                    'context' => $this->get_context(),
+                    'priority' => $this->get_priority(),
                     'callback' => [$this, 'render_wrapper'],
                 ]
             );
@@ -248,6 +256,7 @@ abstract class BaseMetaBox {
         // \Qck\FeedEngine\Core\Debug::logDump( $entry->key . '= ' . $this->get($all_data , $entry->key), __METHOD__ . ' $this->get($all_data , $entry->key)');
         if( !empty($all_data) ) {
             if (empty($entry->path)) {
+                \Qck\FeedEngine\Core\Debug::logDump( $all_data[$entry->key], __METHOD__ . ' $all_data[$entry->key]');
                 return $all_data[$entry->key] ?? $entry->default;
             }
             // \Qck\FeedEngine\Core\Debug::logDump( $all_data, __METHOD__ . ' $all_data');

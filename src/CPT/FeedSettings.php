@@ -12,64 +12,51 @@ class FeedSettings extends BaseMetaBox {
 
     public function get_schema(): array {
         return [
-            new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: 'layout_pattern',
-                label: 'Pattern Ratio',
-                type: 'text',
-                placeholder: 'e.g., 2,1',
-                default: '' ,
-            ),
-            // Nested Example: qckfe_general_options[api][key]
+            
             new \Qck\FeedEngine\Core\Options\OptionEntry(
                 key: 'items_per_page',
                 label: 'Total Items',
                 type: 'number',
-                path: ['api'] ,
                 default: 6 ,
             ),
             new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: 'source_type',
-                label: 'Data Source',
+                key: 'orderby',
+                label: 'Item order',
                 type: 'select',
-                path: ['example'] ,
-                default: 'wp' ,
-                options: [
-                    'wp'      => 'WordPress Posts',
-                    'shopify' => 'Shopify Products',
-                    'mixed'   => 'Mixed (Checkerboard)',
-                ]
+                default: 'date' ,
+                options: [ 
+                    'date' => 'Date', 
+                    'title' => 'Title' ,
+                    'rand' => 'Random',
+                    'ID' => 'ID',
+                    'menu_order' => 'Menu Order???',
+                    'modified' => 'Modified',
+                    'post__in' => 'Manual',
+                ],
             ),
             new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: 'test_image',
-                label: 'Test Image',
+                key: 'image_placeholder_select',
+                label: 'Image Placeholder Type',
+                type: 'select',
+                default: 'none' ,
+                options: [ 
+                    'none' => 'None', 
+                    'feed_image' => 'Use Feed Featured Image' ,
+                    'custom' => 'Custom'
+                ],
+            ),
+            new \Qck\FeedEngine\Core\Options\OptionEntry(
+                key: 'image_placeholder',
+                label: 'Custom Placeholder',
                 type: 'image',
-                path: ['image'] ,
             ),
             new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: 'test_on',
-                label: 'Test bool',
-                type: 'checkbox',
-                path: ['image'] ,
+                key: 'manual_ids',
+                label: 'Custom Placeholder',
+                type: 'custom',
+                html: new \Qck\FeedEngine\Pages\Components\PostSearch
             ),
-            // 'source_type' => [
-            //     'type' => 'select',
-            //     'label' => 'Data Source',
-            //     'options' => [
-            //         'wp'      => 'WordPress Posts',
-            //         'shopify' => 'Shopify Products',
-            //         'mixed'   => 'Mixed (Checkerboard)'
-            //     ]
-            // ],
-            // 'layout_pattern' => [
-            //     'type' => 'text',
-            //     'label' => 'Pattern Ratio',
-            //     'placeholder' => 'e.g., 2,1'
-            // ],
-            // 'items_per_page' => [
-            //     'type' => 'number',
-            //     'label' => 'Total Items',
-            //     'default' => 12
-            // ]
+
         ];
     }
 }

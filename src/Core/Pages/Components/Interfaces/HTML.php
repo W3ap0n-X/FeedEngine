@@ -14,5 +14,5 @@ interface HTML {
      *
      * @return string
      */
-    public function get_html();
+    public function get_html( $data = [] );
 }

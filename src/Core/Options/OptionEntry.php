@@ -14,7 +14,9 @@ class OptionEntry {
     public $path;
     public $options;
 
-    public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $options = ['none'] , $description = '', $placeholder = ''  ) {
+    public $html;
+
+    public function __construct( $key, $label, $type = 'text', $default = null, $path = [], $options = ['none'] , $description = '', $placeholder = '', $html = ''  ) {
         $this->key     = $key;
         $this->label   = $label;
         $this->type    = $type;
@@ -23,6 +25,7 @@ class OptionEntry {
         $this->placeholder = $placeholder;
         $this->options = $options;
         $this->path    = $path;
+        $this->html    = $html;
     }
 
     public function get_ui_name(){

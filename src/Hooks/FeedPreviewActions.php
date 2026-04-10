@@ -3,7 +3,7 @@ namespace Qck\FeedEngine\Hooks;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Hooks\HookInterface;
 
-class PublicAssets implements HookInterface {
+class FeedPreviewActions implements HookInterface {
     public function is_filter(): bool { return false ; }
     public function get_hook(): string { return 'admin_enqueue_scripts'; }
     public function get_priority(): int { return 10; }

@@ -5,6 +5,7 @@ use WP_Query;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Engine\Adapters\ShopifyAdapter;
 use Qck\FeedEngine\Engine\Adapters\PostAdapter;
+use Qck\FeedEngine\Engine\FeedQuery;
 
 
 class FeedController {
@@ -63,28 +64,10 @@ class FeedController {
         }
     }
 
-    private function get_query_category_defaults($_args = []){
-        
-    
 
 
-        // $categories = ['uncategorized' => ['id' => 1,'include' => $a['uncategorized']]];
-        $args = array(
-            'taxonomy' => 'category',
-            'hide_empty' => false,
-    
-        );
-        $all_categories = [];
-        foreach (get_terms($args) as $category) {
-            $all_categories[$category->slug] = false;
-        }
-        $a = wp_parse_args( $_args, $all_categories);
-        return $a;
-
-    }
-
-    private function get_query_category_List($raw_cats = []){
-
+    private function get_query_category_List($raw_cats){
+        $categories = [];
 
         
         $args = array(
@@ -94,108 +77,106 @@ class FeedController {
         );
 
         foreach (get_terms($args) as $category) {
-            $categories[$category->slug] = ['id' => $category->term_id,'include' => $raw_cats[$category->slug]];
+            if( !empty($raw_cats[ $category->slug ]) ) {
+                $categories[] =  $category->slug ;
+            }
+            // $categories[] = ['id' => $category->term_id,'include' => $raw_cats[$category->slug]];
         }
         return $categories;
 
     }
 
-    private function get_query_post_type_defaults(){
-        $post_types = [
-            'post' => true,
-            'page'=> true,
-            'attachment'=> false,
-        ];
+    private function get_query_tags_List($raw_tags){
+        $tags = [];
+
+        
         $args = array(
-            'public'   => true,
-            '_builtin' => false,
+            'taxonomy' => 'post_tag',
+            'hide_empty' => false,
     
         );
-        foreach (get_post_types($args) as $post_type) {
-            $post_types[$post_type] = false;
+
+        foreach (get_terms($args) as $tag) {
+            if( !empty($raw_tags[ $tag->slug ] )) {
+                $tags[] =  $tag->slug ;
+            }
+            // $categories[] = ['id' => $category->term_id,'include' => $raw_cats[$category->slug]];
         }
-        return $post_types;
+        return $tags;
 
     }
 
-    private function get_query_post_types($post_types){
-        $types = [] ;
-         foreach ($post_types as $post_type => $include) {
-            if($include == true) {
-                $types[] = $post_type;
+    private function get_query_types_List($raw_types){
+        $types = [];
+
+        
+        $args = array(
+            'public'   => true,
+    
+        );
+
+        foreach (get_post_types($args) as $type) {
+            if( $raw_types[ $type ] ) {
+                $types[] =  $type ;
             }
+            // $categories[] = ['id' => $category->term_id,'include' => $raw_cats[$category->slug]];
         }
+        if(empty($types)) { $types = 'any'; }
         return $types;
 
     }
 
-    private function get_query_categories($categories){
-        $cats = [] ;
-         foreach ($categories as $category => $details) {
-            // \Qck\FeedEngine\Core\Debug::logDump( $details, __METHOD__ . ' $details');
-            if($details['include'] == true) {
-                $cats[] = $details['id'];
+    public function run_adapter_test_logic($args) {
+        $count = $args['feedSettings']['items_per_page'];
+        
+        $types = $this->get_query_types_List($args['post_types']);
+        $categories = $this->get_query_category_List($args['categories']);
+        $tags = $this->get_query_tags_List($args['tags']);
+        $feed = [];
+
+        $count -= count($args['feedSettings']['manual_ids']);
+
+        $feed_query = FeedQuery::from($types)
+            ->only( $args['feedSettings']['manual_ids'] ?? [])
+            ->where_taxonomy('category', $categories)
+            ->where_taxonomy('post_tag', $tags)
+            ->order_by( $args['feedSettings']['orderby'] ?? '' )
+            ->limit($count)
+            ->execute();
+        foreach ($feed_query as $group => $posts) {
+            foreach ( $posts as $post ) {
+                $postItem = PostAdapter::map($post); 
+                if ( empty( $postItem->image_url ) ) {
+                    switch ($args['feedSettings']['image_placeholder_select'] ) {
+                        case 'feed_image':
+                            if(!empty($args['feed_info']['image'])){
+                                $postItem->image_url = wp_get_attachment_image_url($args['feed_info']['image']);
+                            }
+                            break;
+
+                        case 'custom':
+                            if(!empty($args['feedSettings']['image_placeholder'])){
+                                $postItem->image_url = wp_get_attachment_image_url($args['feedSettings']['image_placeholder']);
+                            }
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+
+                }
+                
+                $feed[$group][] = $postItem;
             }
         }
-        \Qck\FeedEngine\Core\Debug::logDump( $cats, __METHOD__ . ' $cats');
-        return $cats;
-
-    }
-
-    public function run_adapter_test_logic($args) {
-        // ob_start();
-        $a = wp_parse_args( $args, [
-            'feedSettings' => [
-                'categories'         => '',
-                'exclude_duplicates' => true,
-                'debug'              => false,
-                'api' => [
-                    'items_per_page'=> 1,
-                ]
-            ],
-            'post_types' => $this->get_query_post_type_defaults(),
-            'categories' => $this->get_query_category_defaults($args['categories']),
-
-        ]);
-
-        $a['categories'] = $this->get_query_category_defaults($a['categories']);
-
-        \Qck\FeedEngine\Core\Debug::logDump( $a, __METHOD__ . ' $a');
-
-        \Qck\FeedEngine\Core\Debug::logDump( $this->get_query_category_List($a['categories']), __METHOD__ . ' $this->get_query_categories($a[\'categories\'])');
-
-        // $categories = get_terms(['taxonomy' => 'category', 'hide_empty' => false]);
-        // \Qck\FeedEngine\Core\Debug::logDump( $categories, __METHOD__ . ' $categories');
-
-
-        $exclude_list = ( $a['exclude_duplicates'] ) ? self::$rendered_ids : [];
-        $query = new WP_Query([
-            'posts_per_page' => (int) $a['feedSettings']['api']['items_per_page'],
-            'post__not_in'   => $exclude_list,
-            'no_found_rows'  => true,
-            'post_type'  => $this->get_query_post_types($a['post_types']),
-            'category__in' => $this->get_query_categories($this->get_query_category_List($a['categories'])),
-        ]);
-        $feed = [];
-        foreach ( $query->get_posts() as $post ) {
-            $feed[] = PostAdapter::map($post); 
-        }
+        
         \Qck\FeedEngine\Core\Debug::logDump( $feed, __METHOD__ . ' $feed');
+
+        set_transient( "qckfe_cache_" . $args['feed_info']['id'], $feed , 1 * HOUR_IN_SECONDS );
         return $feed;
 
-        // return ob_get_clean();
 
-        // $dummy_shopify_json = [
-        //     'id'      => 'shop_999',
-        //     'title'   => 'Limited Edition Bento Box',
-        //     'handle'  => 'limited-edition-bento',
-        //     'images'  => [
-        //         ['src' => 'https://cdn.shopify.com/test-image.jpg']
-        //     ],
-        //     'variants' => [
-        //         ['price' => '45.00']
-        //     ]
-        // ];
 
         // $mapped_item = \Qck\FeedEngine\Engine\Adapters\ShopifyAdapter::create_item_from_shopify_data($dummy_shopify_json);
 
@@ -204,5 +185,23 @@ class FeedController {
         // error_log(print_r($mapped_item, true));
         // return $mapped_item;
 
+    }
+
+
+    public function shopify_test_item() {
+        return [
+            [
+                'id'      => 'shop_999',
+                'title'   => 'Limited Edition Bento Box',
+                'handle'  => 'limited-edition-bento',
+                'images'  => [
+                    ['src' => 'https://cdn.shopify.com/test-image.jpg']
+                ],
+                'variants' => [
+                    ['price' => '45.00']
+                ]
+            ]
+            
+        ];
     }
 }

@@ -49,3 +49,4 @@ error_log
 #/wp-content/themes
 
 /vendor
+/.vscode

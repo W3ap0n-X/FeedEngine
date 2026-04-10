@@ -24,11 +24,19 @@ class FeedPreview implements HookInterface {
                 <div class="qckfe-main-preview-container">
                     <h2>Feed Preview</h2>
                     <div id="qckfe-preview-loading-overlay" style="display:none;">Scanning...</div>
-                    <div id="qckfe-preview-results"> </div>
+
+                    <div id="qckfe-preview-results">
+
+                    </div>
+
+                        
                     <button type="button" id="qckfe-refresh-preview" class="button">
                         Refresh List
                     </button>
                 </div>
+                
+
+            
             HTML;
             $js = '
                 <script>

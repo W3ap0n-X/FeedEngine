@@ -8,6 +8,14 @@ class FeedPostTypes extends BaseMetaBox {
     public function get_title(): string { return 'Include Post Types'; }
     public function get_screen(): array { return ['qckfe-feed' ]; }
 
+    public function get_context(): string {
+        return 'side' ;
+    }
+
+    public function get_priority(): string {
+        return 'low' ;
+    }
+
 
     public function get_schema(): array {
         $entries = [];

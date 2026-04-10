@@ -11,7 +11,7 @@ class Feed extends BasePostType {
     }
 
     public function public(): bool {
-        return true;
+        return false;
     }
 
     public function show_ui() : bool {
@@ -39,8 +39,10 @@ class Feed extends BasePostType {
     public function get_metaboxes() : array {
         return [
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedSettings(),
+            new \Qck\FeedEngine\CPT\MetaBoxes\ShopifySettings(),
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedPostTypes(),
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedCategories(),
+            new \Qck\FeedEngine\CPT\MetaBoxes\FeedPostTags(),
         ];
     }
 }

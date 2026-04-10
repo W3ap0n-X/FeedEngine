@@ -18,7 +18,7 @@ abstract class Element implements UI {
     private static $number_of_elements = 0;
     protected $label;
     protected $name;
-    protected $value;
+    public $value;
     protected $option_name;
     private $validate;
     private $pre_write;

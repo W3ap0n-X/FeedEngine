@@ -3,9 +3,9 @@ namespace Qck\FeedEngine\CPT\MetaBoxes;
 
 use Qck\FeedEngine\Core\CPT\BaseMetaBox;
 
-class FeedCategories extends BaseMetaBox {
-    public function get_name(): string { return 'feed_categories'; }
-    public function get_title(): string { return 'Include Categories'; }
+class FeedPostTags extends BaseMetaBox {
+    public function get_name(): string { return 'feed_tags'; }
+    public function get_title(): string { return 'Include Tags'; }
     public function get_screen(): array { return ['qckfe-feed' ]; }
 
     public function get_context(): string {
@@ -21,26 +21,17 @@ class FeedCategories extends BaseMetaBox {
         $entries = [];
 
 
-        $entries[] = new \Qck\FeedEngine\Core\Options\OptionEntry(
-            key: 'uncategorized',
-            label: 'Uncategorized',
-            type: 'checkbox',
-            default: true ,
-        );
-
-
     
         $args = array(
-            'taxonomy' => 'category',
+            'taxonomy' => 'post_tag',
             'hide_empty' => false,
-            'exclude' => 1,
     
         );
         
-        foreach (get_terms($args) as $category) {
+        foreach (get_terms($args) as $tag) {
             $entries[] = new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: $category->slug,
-                label: $category->name,
+                key: $tag->slug,
+                label: $tag->name,
                 type: 'checkbox',
                 default: false ,
             );

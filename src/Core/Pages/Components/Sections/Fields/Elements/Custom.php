@@ -2,7 +2,6 @@
 namespace Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements;
 
 use Qck\FeedEngine\Core\Pages\Components\Interfaces\HTML;
-use Qck\FeedEngine\Core\Options\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -25,15 +24,23 @@ class Custom extends Element {
         return $html;
     }
 
+    public function set_html($html) {
+        \Qck\FeedEngine\Core\Debug::logDump( $this->value, __METHOD__ . ' $this->value');
+        \Qck\FeedEngine\Core\Debug::logDump( $this->get_value(), __METHOD__ . ' $this->get_value()');
+        if ( $html instanceof HTML ) {
+            $this->html = $html->get_html( $this->value );
+        } else {
+            \Qck\FeedEngine\Core\Debug::logDump( $html, __METHOD__ . ' HTML is not valid');
+        }
+
+    }
+
     
     public function __construct( $section_id, $properties = array() ) {
         parent::__construct( $section_id, $properties );
-
-        $this->html = $properties['html'];
-
-        if ( $properties['html'] instanceof HTML ) {
-            $this->html = $properties['html']->get_html();
-        }
+        $this->value = $properties['value'];
+        \Qck\FeedEngine\Core\Debug::logDump( $properties, __METHOD__ . ' $properties');
+        $this->set_html( $properties['html'] );
     }
 
 }

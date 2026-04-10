@@ -35,7 +35,7 @@ class MetaField {
 
         $html = '';
         $html .= '<div class="qckfe_meta_field">';
-        $html .= '<h4>' . (isset($this->title) ? $this->title : 'FIELD TITLE')  . '</h4>';
+        // $html .= '<h4>' . (isset($this->title) ? $this->title : 'FIELD TITLE')  . '</h4>';
         $html .= '<p>' . (isset($this->description) ? $this->description : 'FIELD DESCRIPTION')  . '</p>';
         // if ( ! empty( $this->description ) ) {
         //     $html .= '<p class="description">' . esc_html($this->description)  . '</p>';

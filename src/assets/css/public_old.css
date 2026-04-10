@@ -1,0 +1,178 @@
+
+
+
+.qckfe-trending-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-rows: repeat(2, 250px);
+    grid-template-areas: 
+        "main sub1 sub2"
+        "main sub3 sub4";
+}
+
+/* Slot Assignment */
+.main-feature { grid-area: main; }
+.sub-feature:nth-child(2) { grid-area: sub1; }
+.sub-feature:nth-child(3) { grid-area: sub2; }
+.sub-feature:nth-child(4) { grid-area: sub3; }
+.sub-feature:nth-child(5) { grid-area: sub4; }
+
+.trending-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    align-items: flex-end;
+}
+
+.card-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+}
+
+.trending-card:hover .card-img { transform: scale(1.05); }
+
+.card-overlay {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    width: 100%;
+    color: white;
+}
+
+/* Dynamic Accents */
+.accent-orange .badge { background: #FF7F50; color: white; }
+.accent-blue .badge { background: #0056D2; color: white; }
+.accent-orange .view-link { color: #FF7F50; }
+.accent-blue .view-link { color: #60A5FA; }
+
+/* Responsive: Stack on mobile */
+@media (max-width: 900px) {
+    .qckfe-trending-grid {
+        grid-template-areas: 
+            "main"
+            "sub1"
+            "sub2"
+            "sub3"
+            "sub4";
+        grid-template-columns: 1fr;
+        grid-template-rows: 400px repeat(4, 250px);
+    }
+}
+
+
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.cat-card {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #f0f0f0;
+}
+
+.cat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.cat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.cat-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cat-name {
+  font-weight: 700;
+  color: #1F2633; /* Your Navy */
+  font-size: 16px;
+}
+
+.cat-count {
+  font-size: 12px;
+  color: #777;
+  margin-top: 2px;
+}
+
+.cat-arrow {
+  color: #0056D2; /* Your Blue */
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.cat-card:hover .cat-arrow {
+  opacity: 1;
+}
+
+/* The Bento Magic */
+.rhha-bento-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+    grid-auto-rows: minmax(200px, auto);
+}
+
+.rhha-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make the first item big (Bento Style) */
+.rhha-card.is-featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .rhha-bento-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .rhha-bento-grid { grid-template-columns: 1fr; }
+    .rhha-card.is-featured { grid-column: span 1; grid-row: span 1; }
+}
+
+.trending-card {
+    border:#0056D2 solid 8px;
+}
+
+
+/* Internal Card Styling */
+.rhha-card-image { height: 200px; background-size: cover; background-position: center; position: relative; }
+.rhha-card.is-featured .rhha-card-image { height: 400px; }
+.rhha-card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+.rhha-title { font-size: 1.2rem; margin: 10px 0; color: #333; }
+.rhha-card.is-featured .rhha-title { font-size: 1.8rem; }
+.rhha-badge { position: absolute; top: 10px; left: 10px; background: #ff5722; color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; }
