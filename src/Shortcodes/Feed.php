@@ -4,6 +4,7 @@ namespace Qck\FeedEngine\Shortcodes;
 // use Qck\FeedEngine\Core\Debug;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Shortcodes\Shortcode;
+use Qck\FeedEngine\Public\FeedController;
 
 class Feed implements Shortcode {
 
@@ -25,6 +26,10 @@ class Feed implements Shortcode {
             return $output;
         } 
         $transient = get_transient( 'qckfe_cache_' . $post_id);
+        if( $transient === false ) {
+            $controller = new FeedController();
+            $transient = $controller->build_front( $post_id);
+        }
         // $settings = get_post_meta( $post_id, '_qckfe_feed_settings', true );
         $content = [];
         foreach ($transient as $group => $items) {

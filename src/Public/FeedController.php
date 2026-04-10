@@ -171,7 +171,7 @@ class FeedController {
             }
         }
         
-        \Qck\FeedEngine\Core\Debug::logDump( $feed, __METHOD__ . ' $feed');
+        // \Qck\FeedEngine\Core\Debug::logDump( $feed, __METHOD__ . ' $feed');
 
         set_transient( "qckfe_cache_" . $args['feed_info']['id'], $feed , 1 * HOUR_IN_SECONDS );
         return $feed;
@@ -185,6 +185,21 @@ class FeedController {
         // error_log(print_r($mapped_item, true));
         // return $mapped_item;
 
+    }
+
+    public function build_front($post_id) {
+        $attributes = [
+            'feedSettings' => 'settings',
+            'post_types' => 'post_types',
+            'categories' => 'categories',
+            'tags' => 'tags',
+        ];
+        $featured_image = get_post_thumbnail_id( $post_id );
+        $feed_meta = ['feed_info' => ['id' => $post_id,'image'=> $featured_image ] ];
+        foreach ($attributes as $key => $value) {
+            $feed_meta[$key] = get_post_meta( $post_id, '_qckfe_feed_' . $value, true );
+        }
+        return $this->run_adapter_test_logic($feed_meta);
     }
 
 
