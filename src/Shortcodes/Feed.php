@@ -78,7 +78,7 @@ class Feed implements Shortcode {
     private function get_template_grid( $content, $grid ) {
         // $template = Manifest::path() . 'templates/bento-card.php';
         if (!$this->is_legit_template($grid . '-grid')) {
-            // \Qck\FeedEngine\Core\Debug::logDump( $grid . ' is not legit template', __METHOD__ . ' Template Error');
+            \Qck\FeedEngine\Core\Debug::logDump( $grid . ' is not legit template', __METHOD__ . ' Template Error');
             $grid = 'feed';
         }
         // ob_start();

@@ -21,7 +21,7 @@ class FeedPreview implements Endpoint {
         // We call our "Brain" (the Controller) just like the Shortcode do
         // es.
         $params = $request->get_params();
-        \Qck\FeedEngine\Core\Debug::logDump( $params, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump( $params, __METHOD__);
         $controller = new FeedController();
         // $items = [];
         $items = $controller->run_adapter_test_logic($params);

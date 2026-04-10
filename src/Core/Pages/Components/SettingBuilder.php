@@ -55,9 +55,9 @@ class SettingBuilder {
             // \Qck\FeedEngine\Core\Debug::logDump( $entry, __METHOD__ . ' $entry');
             $html_name = $settings->get_name() . $entry->get_path();
             $value = $settings->get_value_for_entry($post,$entry);
-            if($entry->type == 'custom'){
-                \Qck\FeedEngine\Core\Debug::logDump( [ $entry, $value], __METHOD__ . ' ' . $html_name . '->get_value_for_entry($post,$entry)');
-            }
+            // if($entry->type == 'custom'){
+            //     \Qck\FeedEngine\Core\Debug::logDump( [ $entry, $value], __METHOD__ . ' ' . $html_name . '->get_value_for_entry($post,$entry)');
+            // }
             // \Qck\FeedEngine\Core\Debug::logDump( $html_name, __METHOD__ . ' $html_name');
             $fields[] = $section_object->add_field([
                 'id' => $entry->key, 

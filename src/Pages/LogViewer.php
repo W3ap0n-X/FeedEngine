@@ -31,7 +31,7 @@ class LogViewer extends SubPage implements Actions {
     }
 
     public function maybe_enqueue_stylesheets($hook_suffix ) {
-        \Qck\FeedEngine\Core\Debug::logDump( 'enqueue media', __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump( 'enqueue media', __METHOD__);
         parent::maybe_enqueue_stylesheets($hook_suffix );
         wp_enqueue_media();
     }

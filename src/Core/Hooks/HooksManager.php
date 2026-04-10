@@ -22,7 +22,7 @@ class HooksManager {
             $full_class = "\\Qck\\FeedEngine\\Hooks\\" . $class_name;
             
             if ( class_exists( $full_class ) ) {
-                \Qck\FeedEngine\Core\Debug::logDump( $full_class, __METHOD__ . ' $full_class');
+                // \Qck\FeedEngine\Core\Debug::logDump( $full_class, __METHOD__ . ' $full_class');
                 // Instantiate and hand off to your existing register logic
                 $this->register( new $full_class() );
             }
@@ -48,7 +48,7 @@ class HooksManager {
     private function mutate_user_hook( HookInterface $object ) {
         $priority      = self::default_value( $object->get_priority(), 10 );
         $accepted_args      = self::default_value( $object->get_args_count(), 10 );
-        \Qck\FeedEngine\Core\Debug::logDump( $object->get_hook(), __METHOD__ . ' $object->get_hook()');
+        // \Qck\FeedEngine\Core\Debug::logDump( $object->get_hook(), __METHOD__ . ' $object->get_hook()');
 
         if( $object->is_filter() ) {
             // \Qck\FeedEngine\Core\Debug::logDump( $object->get_hook(), __METHOD__ . ' $object->get_hook()');

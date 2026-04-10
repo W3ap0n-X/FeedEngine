@@ -25,8 +25,8 @@ class Custom extends Element {
     }
 
     public function set_html($html) {
-        \Qck\FeedEngine\Core\Debug::logDump( $this->value, __METHOD__ . ' $this->value');
-        \Qck\FeedEngine\Core\Debug::logDump( $this->get_value(), __METHOD__ . ' $this->get_value()');
+        // \Qck\FeedEngine\Core\Debug::logDump( $this->value, __METHOD__ . ' $this->value');
+        // \Qck\FeedEngine\Core\Debug::logDump( $this->get_value(), __METHOD__ . ' $this->get_value()');
         if ( $html instanceof HTML ) {
             $this->html = $html->get_html( $this->value );
         } else {
@@ -39,7 +39,7 @@ class Custom extends Element {
     public function __construct( $section_id, $properties = array() ) {
         parent::__construct( $section_id, $properties );
         $this->value = $properties['value'];
-        \Qck\FeedEngine\Core\Debug::logDump( $properties, __METHOD__ . ' $properties');
+        // \Qck\FeedEngine\Core\Debug::logDump( $properties, __METHOD__ . ' $properties');
         $this->set_html( $properties['html'] );
     }
 

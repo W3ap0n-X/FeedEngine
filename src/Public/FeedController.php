@@ -134,7 +134,7 @@ class FeedController {
         $tags = $this->get_query_tags_List($args['tags']);
         $feed = [];
 
-        $count -= count($args['feedSettings']['manual_ids']);
+        $count -= count($args['feedSettings']['manual_ids'] ?? []);
 
         $feed_query = FeedQuery::from($types)
             ->only( $args['feedSettings']['manual_ids'] ?? [])

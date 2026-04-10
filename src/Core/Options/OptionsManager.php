@@ -14,7 +14,7 @@ class OptionsManager {
      */
     public function get_section( $section_id ) {
         // Trace here to see if the UI is asking for the right key!
-        \Qck\FeedEngine\Core\Debug::logDump($section_id, __METHOD__ . ' :: Fetching Section');
+        // \Qck\FeedEngine\Core\Debug::logDump($section_id, __METHOD__ . ' :: Fetching Section');
         
         return $this->data[ $section_id ] ?? [];
     }

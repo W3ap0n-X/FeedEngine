@@ -7,7 +7,7 @@ class PostSearch implements HTML {
 
     public function get_html($value = []) : string {
         $value = (array) $value;
-        \Qck\FeedEngine\Core\Debug::logDump( $value, __METHOD__ . ' $value');
+        // \Qck\FeedEngine\Core\Debug::logDump( $value, __METHOD__ . ' $value');
         $content = '';
 
         foreach ($value as $post_id) {

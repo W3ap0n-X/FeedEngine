@@ -87,7 +87,7 @@ abstract class BaseMetaBox {
 
         // Save the whole array as one row (The "Rhyme" strategy)
         if (isset($_POST['_' . Manifest::PREFIX . '_' . $this->get_name()])) {
-            \Qck\FeedEngine\Core\Debug::logDump( $_POST, __METHOD__);
+            // \Qck\FeedEngine\Core\Debug::logDump( $_POST, __METHOD__);
             update_post_meta($post_id, '_' . Manifest::PREFIX . '_' . $this->get_name(), $_POST['_' . Manifest::PREFIX . '_' . $this->get_name()]);
         }
     }
@@ -102,7 +102,7 @@ abstract class BaseMetaBox {
 
             $defaults = $this->set($defaults, $entry->key , $entry->default);
         }
-        \Qck\FeedEngine\Core\Debug::logDump( $defaults, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump( $defaults, __METHOD__);
         return $defaults;
     }
 
@@ -112,7 +112,7 @@ abstract class BaseMetaBox {
     public function get_field_definition( string $key ): ?OptionEntry {
 
         $fields = $this->get_schema();
-        \Qck\FeedEngine\Core\Debug::logDump( $fields, __METHOD__ . ' $fields');
+        // \Qck\FeedEngine\Core\Debug::logDump( $fields, __METHOD__ . ' $fields');
         // \Qck\FeedEngine\Core\Debug::logDump( $key, __METHOD__ . ' $key');
         foreach ($fields as $entry) {
             if($entry->key == $key) {
@@ -256,7 +256,7 @@ abstract class BaseMetaBox {
         // \Qck\FeedEngine\Core\Debug::logDump( $entry->key . '= ' . $this->get($all_data , $entry->key), __METHOD__ . ' $this->get($all_data , $entry->key)');
         if( !empty($all_data) ) {
             if (empty($entry->path)) {
-                \Qck\FeedEngine\Core\Debug::logDump( $all_data[$entry->key], __METHOD__ . ' $all_data[$entry->key]');
+                // \Qck\FeedEngine\Core\Debug::logDump( $all_data[$entry->key], __METHOD__ . ' $all_data[$entry->key]');
                 return $all_data[$entry->key] ?? $entry->default;
             }
             // \Qck\FeedEngine\Core\Debug::logDump( $all_data, __METHOD__ . ' $all_data');

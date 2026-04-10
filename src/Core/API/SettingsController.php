@@ -54,7 +54,7 @@ class SettingsController extends BaseController {
     }
 
     public function save_settings($request) {
-        \Qck\FeedEngine\Core\Debug::logDump($request, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump($request, __METHOD__);
         $params = $request->get_params();
         $updated = false;
 
