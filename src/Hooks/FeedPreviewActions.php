@@ -11,38 +11,51 @@ class FeedPreviewActions implements HookInterface {
 
     public function get_callback(): callable {
         return function() {
-            wp_enqueue_style( Manifest::PREFIX . '-feed_preview', Manifest::url('src/assets/css/feed_preview.css') );
-            $js_handle = Manifest::PREFIX . '-feed_preview';
-            wp_enqueue_script( 
-                $js_handle,
-                Manifest::url('src/assets/js/feed_preview.js'), 
-                ['jquery'], // Added jquery as a dependency since your script uses it
-                Manifest::VERSION, 
-                true // Move to footer for better performance
-            );
-                wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
-                'prefix'     => Manifest::PREFIX,
-                'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
-                'nonce'    => wp_create_nonce('wp_rest'), 
-            ]);
-            // 2. JS - Let's use a consistent handle variable
-            $js_handle = Manifest::PREFIX . '_admin_page';
+            // ? Get current admin page
+            global $pagenow;
+            if ($pagenow === 'post.php') {
+                // ? Check if current screen is a FeedEngine Feed
+                $screen = get_current_screen();
+                if($screen->post_type == 'qckfe-feed') {
 
-            wp_enqueue_script( 
-                $js_handle,
-                Manifest::url('src/assets/js/admin.js'), 
-                ['jquery'], // Added jquery as a dependency since your script uses it
-                Manifest::VERSION, 
-                true // Move to footer for better performance
-            );
+                    // * If this is a Feedengine Item, enqueue JS for preview
+                    wp_enqueue_style( Manifest::PREFIX . '-feed_preview', Manifest::url('src/assets/css/feed_preview.css') );
+                    $js_handle = Manifest::PREFIX . '-feed_preview';
+                    wp_enqueue_script( 
+                        $js_handle,
+                        Manifest::url('src/assets/js/feed_preview.js'), 
+                        ['jquery'], // Added jquery as a dependency since your script uses it
+                        Manifest::VERSION, 
+                        true // Move to footer for better performance
+                    );
+                        wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
+                        'prefix'     => Manifest::PREFIX,
+                        'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
+                        'nonce'    => wp_create_nonce('wp_rest'), 
+                    ]);
+                    // 2. JS - Let's use a consistent handle variable
+                    $js_handle = Manifest::PREFIX . '_admin_page';
 
-            // 3. Localize - Using the SAME handle
-            wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
-                'prefix'     => Manifest::PREFIX,
-                'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
-                'nonce'    => wp_create_nonce('wp_rest'), 
-            ]);
-            wp_enqueue_media();
+                    wp_enqueue_script( 
+                        $js_handle,
+                        Manifest::url('src/assets/js/admin.js'), 
+                        ['jquery'], // Added jquery as a dependency since your script uses it
+                        Manifest::VERSION, 
+                        true // Move to footer for better performance
+                    );
+
+                    // 3. Localize - Using the SAME handle
+                    wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
+                        'prefix'     => Manifest::PREFIX,
+                        'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
+                        'nonce'    => wp_create_nonce('wp_rest'), 
+                    ]);
+                    wp_enqueue_media();
+                }
+
+                
+            }
+            
         };
     }
 }

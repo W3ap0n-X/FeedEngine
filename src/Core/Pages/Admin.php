@@ -137,7 +137,7 @@ abstract class Admin implements Actions {
     
     public function display_admin_notices() {
 
-        if($_GET['page'] == $this->get_slug() ) {
+        if(!empty($_GET['page']) && $_GET['page'] == $this->get_slug() ) {
             // settings_errors();
             if ( isset( $_GET['action_result'] ) ) {
                 if ( $_GET['action_result'] === 'success' ) {

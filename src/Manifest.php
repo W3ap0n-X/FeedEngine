@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) { die; }
  */
 final class Manifest {
     // Static meta
-    public const VERSION = '0.0.1.3';
+    public const VERSION = '0.0.1.4';
     public const PREFIX  = 'qckfe';
     public const NAME    = 'FeedEngine';
     public const SLUG    = 'qck-feed-engine';
