@@ -1,12 +1,11 @@
 <?php
-
-
-
 namespace Qck\FeedEngine\Core\Shortcodes;
-
+// Prevent direct access to files
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 use Qck\FeedEngine\Manifest;
 
-if ( ! defined( 'WPINC' ) ) { die; }
 class ShortcodeManager {
 
     /** @var Shortcode[] List of registered shortcode objects */

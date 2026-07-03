@@ -18,25 +18,14 @@ class GeneralOptions extends \Qck\FeedEngine\Core\Options\OptionSection {
 
     public function get_schema(): array {
         return [
-            new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: 'debug',
-                label: 'Debug Mode',
-                type: 'checkbox',
-                default: false
-            ),
             // Nested Example: qckfe_general_options[api][key]
             new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: 'key',
-                label: 'API Key',
-                type: 'text',
-                path: ['api'] 
+                key: 'cache-interval',
+                label: 'Cache Interval',
+                type: 'number',
+                default: 3600,
             ),
-            new \Qck\FeedEngine\Core\Options\OptionEntry(
-                key: '213',
-                label: 'New Setting',
-                type: 'text',
-                path: ['example'] 
-            ),
+            
         ];
     }
 }

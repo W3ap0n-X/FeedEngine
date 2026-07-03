@@ -17,6 +17,10 @@ abstract class OptionSection implements Options {
     
     abstract public function get_schema(): array;
 
+    public function get_css_class(): string|null {
+        return null;
+    }
+
     
     public function get_db_row(): string {
         return Manifest::PREFIX . '_' . $this->get_name();
@@ -148,5 +152,29 @@ abstract class OptionSection implements Options {
         }
 
         return $current[$entry->key] ?? $entry->default;
+    }
+
+    public function get_value_for_field(OptionField $entry) {
+        $all_data = $this->get_values(); // Fetches the whole DB row
+        // \Qck\FeedEngine\Core\Debug::logDump( $all_data, __METHOD__ . ' $all_data');
+        // \Qck\FeedEngine\Core\Debug::logDump( $entry, __METHOD__ . ' $entry');
+        
+        // If there's no path, just grab the key from the top level
+        if (empty($entry->path)) {
+            return $all_data[$entry->key] ?? [];
+        }
+
+        // Walk the path
+        $current = $all_data;
+        foreach ($entry->path as $step) {
+            if (isset($current[$step]) && is_array($current[$step])) {
+                $current = $current[$step];
+            } 
+            else {
+                return []; // Path broken, return default
+            }
+        }
+
+        return $current[$entry->key] ?? [];
     }
 }

@@ -1,22 +1,45 @@
 <?php
 /** @var \Qck\FeedEngine\Engine\Data\FeedItem $item */
-$image_url =esc_url( $item->image_url );
-$source = esc_html( $item->source );
-$title = esc_html( $item->title );
-$type = esc_html( $item->type );
-$url = esc_url( $item->url );
+
+
+    
+
+
+
+$source = !empty($features['badges']) && in_array('source', $features['badges'] ) ? '<span class="qckfe-badge source">' .  esc_html( $item->source ) . '</span>' : '';
+    $type = !empty($features['badges']) && in_array('post-type', $features['badges'] ) ? '<span class="qckfe-badge type">' .  esc_html( $item->type ) . '</span>' : '';
+    $group = !empty($features['badges']) && in_array('group', $features['badges'] ) ? '<span class="qckfe-badge group">' .  esc_html( $group ) . '</span>' : '';
+    $tag = !empty($features['badges']) && in_array('tag', $features['badges'] ) ? '<span class="qckfe-badge tag">' .  esc_html( 'tag' ) . '</span>' : '';
+    $category = !empty($features['badges']) && in_array('category', $features['badges'] ) ? '<span class="qckfe-badge category">' .  esc_html( 'category' ) . '</span>' : '';
+
+    $url = esc_url( $item->url );
+
+$heading = in_array('heading', $features) ? '<span class="qckfe-card-title">' . esc_html( $item->title ) . '</span>'  : '';
+$excerpt = in_array('excerpt', $features) ? '<span class="qckfe-card-exerpt">' . wp_trim_excerpt('' , $item->id ) . '</span>'  : '<a href="' . $url . '" class="qckfe-card-link">Read More</a>';
+$image = in_array('image', $features) ? '<div class="qckfe-card-media"><img src="' . esc_url( $item->image_url ) . '" alt=""></div>'  : '';
+
+
 $output = <<<HTML
 <div class="qckfe-card">
-    <div class="qckfe-card-media">
-        <img src="{$image_url}" alt="">
-    </div>
+    {$image}
+    
     <div class="qckfe-card-content">
-        <span class="badge">{$source}</span>
-        <h3>{$title}</h3>
-        <p>{$type}</p>
-        <a href="{$url}" class="btn">Read More</a>
+        <div class="qckfe-card-badges">
+            {$source}
+            {$group}
+            {$type}
+            {$category}
+            {$tag}
+        </div>
+        {$heading}
+        
+        {$excerpt}
     </div>
+    
 </div>
 HTML;
+
+// $output = \Qck\FeedEngine\Core\Debug::easyDump( $item, ' $item') . $output;
+// $output = \Qck\FeedEngine\Core\Debug::easyDump( $features, ' $features') . $output;
 
 return $output;

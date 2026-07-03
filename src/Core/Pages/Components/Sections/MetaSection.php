@@ -1,55 +1,66 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages\Components\Sections;
-use Qck\FeedEngine\Manifest;
-use Qck\FeedEngine\Core\Options\Options;
-use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\MetaField;
-use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+use Qck\FeedEngine\Manifest;
+use Qck\FeedEngine\Core\Options\Options;
+use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\MetaField;
+use Qck\FeedEngine\Core\Debug;
+
+
+
 class MetaSection extends Section {
 
-        public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
-        
-        // $dump_me = ['section_id'=>$section_id, 'page'=>$page,'properties'=>$properties, 'options'=>$options_instance];
-        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
+    public function parse_defaults($properties){
         $properties = wp_parse_args(
             $properties,
             array(
-                'title'       => __( $section_id, Manifest::PREFIX ),
-                'description' => null
+                'title'       => __( $this->section_id, Manifest::PREFIX ),
+                'description' => '',
+                'meta' => true,
+                'type' => 'meta',
+                'class' => null,
+                'style' => null,
             )
         );
-
-        $this->options = $options_instance;
-
-        $this->title       = $properties['title'];
-        $this->description = $properties['description'];
-        $this->page        = $page;
-        $this->id          = $section_id;
+        return $properties;
     }
 
-    
-    public function add_field( $properties ) {
-        $field = new MetaField( $this->id, $this->page, $properties );
+    public function __construct( $section_id, $page, $options_instance, $properties = array() ) {
 
-        $this->fields[] = $field;
-
-        return $field;
+        parent::__construct($section_id, $page, $options_instance, $properties);
+        // \Qck\FeedEngine\Core\Debug::logDump($this->hook, __METHOD__ . ' ## ' . $this::class . ' || ' . $options_instance::class);
+        
     }
 
     public function render() {
-        $html = '';
-        $html .= '<div class="qckfe_meta_section">';
-        $html .= '<h4>' . (isset($this->title) ? $this->title : 'SECTION TITLE')  . '</h4>';
-        $html .= '<p>' . (isset($this->description) ? $this->description : 'SECTION DESCRIPTION')  . '</p>';
+        $prefix = Manifest::PREFIX;
+
+        $class = $this->get_css_class();
+        $name = $this->get_name();
+        $description = $this->get_description() ;
+
+        $content = '';
         foreach ($this->fields as $field) {
-            $html .= $field->render();
+            $content .= $field->render();
         }
-        $html .= '</div>';
-        // \Qck\FeedEngine\Core\Debug::logDump( $html, __METHOD__);
+
+        $html = <<<HTML
+            
+            <div class="{$class}" name="{$name}">
+                {$description}
+                <fieldset class="{$prefix}-section-content">
+                    {$content}
+                </fieldset>
+            </div>
+        HTML;
         return $html;
+    }
+
+    public function get_css_class() {
+        return Manifest::PREFIX . '-section' . ' ' . Manifest::PREFIX . '-meta-section' . ' ' . ( empty($this->class) ? '' : " " . esc_attr( $this->class ) )  ;
     }
 }

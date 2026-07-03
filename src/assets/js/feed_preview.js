@@ -14,7 +14,7 @@ document.addEventListener( 'DOMContentLoaded' , function() {
 
 function gather_meta_data(elementName) {
     const data = {};
-    jQuery( '[name^="' + elementName + '"]' ).each( function() {
+    jQuery( 'input[name^="' + elementName + '"]' ).each( function() {
         const input = jQuery( this );
         let value;
         const type = jQuery( this ).attr('type');
@@ -34,7 +34,8 @@ function gather_meta_data(elementName) {
                     value = input.val();
                     break;
                 } else if(jQuery(this).hasClass('qckfe-post-id') && input.val() != '') {
-                    value = input.val();
+                    console.log(input.val());
+                    value = input.val() ?? null;
                     break;
                 } else {
                     return;
@@ -42,6 +43,7 @@ function gather_meta_data(elementName) {
 
             default:
                 // console.log(`Element is ${type}.`);
+                // console.log(input);
                 value = input.val();
         }
         
@@ -91,13 +93,15 @@ function runQckFeedPreview() {
     
     const categories = gather_meta_data('_qckfe_feed_categories');
     const tags = gather_meta_data('_qckfe_feed_tags');
+    const styles = gather_meta_data('_qckfe_feed_card_settings');
     
     const feed_data = {
         "feed_info": feed_info,
         "feedSettings":feedSettings,
         "post_types":post_types, 
         "categories": categories,
-        "tags": tags
+        "tags": tags,
+        "card_settings": styles
     };
     console.log(feed_data);
 

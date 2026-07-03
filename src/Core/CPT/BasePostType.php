@@ -9,7 +9,90 @@ abstract class BasePostType {
     abstract public function description(): string;
     abstract public function supports(): array;
 
+    
+
+    public function get_args(): array {
+        return [
+            'label'               => $this->get_label(), // Fixed: Use $this
+            'labels'              => $this->labels(),
+            'description'         => $this->description(),
+            'public'              => $this->public(),
+            'show_in_rest'        => $this->show_in_rest(),
+            'supports'            => $this->supports(),
+            'menu_icon'           => $this->menu_icon(),
+            'has_archive'         => $this->has_archive(),
+            'hierarchical'        => $this->hierarchical(),
+            'show_ui'             => $this->show_ui(),
+            'show_in_menu'        => $this->show_in_menu(),
+            'show_in_nav_menus'   => $this->show_in_nav_menus(),
+            'show_in_admin_bar'   => $this->show_in_admin_bar(),
+            'exclude_from_search' => $this->exclude_from_search(),
+            'publicly_queryable'  => $this->publicly_queryable(),
+            'rest_base'           => $this->rest_base(),
+            'rest_namespace'      => $this->rest_namespace(),
+            'query_var'           => $this->query_var(),
+            'can_export'          => $this->can_export(),
+            'menu_position'       => $this->menu_position(),
+            'taxonomies'          => $this->taxonomies(),
+            'rewrite'             => $this->rewrite(),
+            'capability_type'     => $this->capability_type(),
+            'capabilities'        => $this->capabilities(),
+            'map_meta_cap'        => $this->map_meta_cap(), // Set this to true in your child classes!
+            'delete_with_user'    => $this->delete_with_user(),
+            'template'            => $this->template(),
+            'template_lock'       => $this->template_lock(),
+            'register_meta_box_cb'=> $this->register_meta_box_cb(),
+            'rest_controller_class' => $this->rest_controller_class(),
+        ];
+    }
+
+   
+
+    public function register() {
+        // \Qck\FeedEngine\Core\Debug::logDump( $post_type, __METHOD__);
+        // \Qck\FeedEngine\Core\Debug::logDump( $this->get_args(), __METHOD__);
+        // $this->post_type = $post_type;
+        register_post_type( $this->get_slug(), $this->get_args() );
+    }
+
+    public function late_register_taxonomy( string $taxonomy ) {
+        register_taxonomy_for_object_type($taxonomy, $this->get_slug());
+    }
+
+    // Sensible defaults that can be overridden if needed
+    public function get_singular_label(): string { 
+        return rtrim($this->get_label(), 's'); 
+    }
+
+    /**
+     * Automatic Label Generator
+     * No more writing 'Add New Feed', 'Edit Feed', etc. 20 times.
+     */
+    public function default_labels(): array {
+        $plural = $this->get_label();
+        $singular = $this->get_singular_label();
+
+        return [
+            'name'               => $plural,
+            'singular_name'      => $singular,
+            'add_new'            => 'Add New',
+            'add_new_item'       => "Add New $singular",
+            'edit_item'          => "Edit $singular",
+            'new_item'           => "New $singular",
+            'view_item'          => "View $singular",
+            'search_items'       => "Search $plural",
+            'not_found'          => "No $plural found",
+            'not_found_in_trash' => "No $plural found in Trash",
+            'all_items'          => "All $plural",
+            'menu_name'          => $plural,
+        ];
+    }
+
     public function get_metaboxes() : array {
+        return [];
+    }
+
+    public function get_taxonomies() : array {
         return [];
     }
 
@@ -84,42 +167,8 @@ abstract class BasePostType {
         return array(); 
     }
 
-    public function get_args(): array {
-        return [
-            'label'               => $this->get_label(), // Fixed: Use $this
-            'labels'              => $this->labels(),
-            'description'         => $this->description(),
-            'public'              => $this->public(),
-            'show_in_rest'        => $this->show_in_rest(),
-            'supports'            => $this->supports(),
-            'menu_icon'           => $this->menu_icon(),
-            'has_archive'         => $this->has_archive(),
-            'hierarchical'        => $this->hierarchical(),
-            'show_ui'             => $this->show_ui(),
-            'show_in_menu'        => $this->show_in_menu(),
-            'show_in_nav_menus'   => $this->show_in_nav_menus(),
-            'show_in_admin_bar'   => $this->show_in_admin_bar(),
-            'exclude_from_search' => $this->exclude_from_search(),
-            'publicly_queryable'  => $this->publicly_queryable(),
-            'rest_base'           => $this->rest_base(),
-            'rest_namespace'      => $this->rest_namespace(),
-            'query_var'           => $this->query_var(),
-            'can_export'          => $this->can_export(),
-            'menu_position'       => $this->menu_position(),
-            'taxonomies'          => $this->taxonomies(),
-            'rewrite'             => $this->rewrite(),
-            'capability_type'     => $this->capability_type(),
-            'capabilities'        => $this->capabilities(),
-            'map_meta_cap'        => $this->map_meta_cap(), // Set this to true in your child classes!
-            'delete_with_user'    => $this->delete_with_user(),
-            'template'            => $this->template(),
-            'template_lock'       => $this->template_lock(),
-            'register_meta_box_cb'=> $this->register_meta_box_cb(),
-            'rest_controller_class' => $this->rest_controller_class(),
-        ];
-    }
 
-    public function rest_controller_class() : string|null {
+     public function rest_controller_class() : string|null {
         return null;
     }
 
@@ -169,41 +218,5 @@ abstract class BasePostType {
 
     public function capability_type() : string|array {
         return 'post';
-    }
-
-    public function register() {
-        // \Qck\FeedEngine\Core\Debug::logDump( $post_type, __METHOD__);
-        // \Qck\FeedEngine\Core\Debug::logDump( $this->get_args(), __METHOD__);
-        // $this->post_type = $post_type;
-        register_post_type( $this->get_slug(), $this->get_args() );
-    }
-
-    // Sensible defaults that can be overridden if needed
-    public function get_singular_label(): string { 
-        return rtrim($this->get_label(), 's'); 
-    }
-
-    /**
-     * Automatic Label Generator
-     * No more writing 'Add New Feed', 'Edit Feed', etc. 20 times.
-     */
-    public function default_labels(): array {
-        $plural = $this->get_label();
-        $singular = $this->get_singular_label();
-
-        return [
-            'name'               => $plural,
-            'singular_name'      => $singular,
-            'add_new'            => 'Add New',
-            'add_new_item'       => "Add New $singular",
-            'edit_item'          => "Edit $singular",
-            'new_item'           => "New $singular",
-            'view_item'          => "View $singular",
-            'search_items'       => "Search $plural",
-            'not_found'          => "No $plural found",
-            'not_found_in_trash' => "No $plural found in Trash",
-            'all_items'          => "All $plural",
-            'menu_name'          => $plural,
-        ];
     }
 }

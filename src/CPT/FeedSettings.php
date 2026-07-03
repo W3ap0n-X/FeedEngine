@@ -1,7 +1,7 @@
 <?php 
 namespace Qck\FeedEngine\CPT\MetaBoxes;
 
-use Qck\FeedEngine\Core\CPT\BaseMetaBox;
+use Qck\FeedEngine\Core\Data\BaseMetaBox;
 
 class FeedSettings extends BaseMetaBox {
     public function get_name(): string { return 'feed_settings'; }
@@ -22,7 +22,7 @@ class FeedSettings extends BaseMetaBox {
             new \Qck\FeedEngine\Core\Options\OptionEntry(
                 key: 'orderby',
                 label: 'Item order',
-                type: 'select',
+                type: 'radio',
                 default: 'date' ,
                 options: [ 
                     'date' => 'Date', 
@@ -37,7 +37,7 @@ class FeedSettings extends BaseMetaBox {
             new \Qck\FeedEngine\Core\Options\OptionEntry(
                 key: 'image_placeholder_select',
                 label: 'Image Placeholder Type',
-                type: 'select',
+                type: 'radio',
                 default: 'none' ,
                 options: [ 
                     'none' => 'None', 
@@ -54,6 +54,7 @@ class FeedSettings extends BaseMetaBox {
                 key: 'manual_ids',
                 label: 'Custom Placeholder',
                 type: 'custom',
+                default: [],
                 html: new \Qck\FeedEngine\Pages\Components\PostSearch
             ),
 

@@ -25,10 +25,26 @@ class FeedPreview implements Endpoint {
         $controller = new FeedController();
         // $items = [];
         $items = $controller->run_adapter_test_logic($params);
+        // $return = [];
+        // if(in_array('manual', $items)) {
+        //     $return['manual'] = $items['manual'];
+        // }
+        // if(in_array('automatic', $items)) {
+        //     $return['automatic'] = $items['automatic'];
+        // }
+
+        
+        // \Qck\FeedEngine\Core\Debug::logDump( $items, __METHOD__ . ' $items');
+        // \Qck\FeedEngine\Core\Debug::logDump( $items['automatic'], __METHOD__ . ' $items');
+        // \Qck\FeedEngine\Core\Debug::logDump( $items->automatic, __METHOD__ . ' $items');
+
+        // \Qck\FeedEngine\Core\Debug::logDump( $return, __METHOD__ . ' $return');
+
 
         return [
             'success' => true,
-            'html'    => $items,
+            'html'    => ['manual' => $items['manual'] ?? [],'automatic' => $items['automatic'] ?? []],
+            'params' => $params
         ];
     }
 

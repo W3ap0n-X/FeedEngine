@@ -45,6 +45,7 @@ class SettingsPage extends TopPage implements Actions {
     
     public function register_sections() {
         $this->add_section( new \Qck\FeedEngine\Options\GeneralOptions() );
+        $this->add_section( new \Qck\FeedEngine\Options\CardSettings() );
         // $this->add_section( new \Qck\FeedEngine\Options\BentoOptions() );
 
         

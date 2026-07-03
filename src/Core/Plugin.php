@@ -1,19 +1,14 @@
 <?php
 namespace Qck\FeedEngine\Core;
 use Qck\FeedEngine\Manifest;
-
-// use Qck\FeedEngine\Core\Options\WP_Options;
-// use Qck\FeedEngine\Core\Options\OptionsManager;
 use Qck\FeedEngine\Core\Hooks\HooksManager;
 use Qck\FeedEngine\Core\Shortcodes\ShortcodeManager;
 use Qck\FeedEngine\Core\API\ApiManager;
-use Qck\FeedEngine\Core\Debug;
 use Qck\FeedEngine\Core\Hooks\Actions;
 use Qck\FeedEngine\Core\Diagnostics\SiteHealth;
 use Qck\FeedEngine\Core\CPT\PostTypeManager;
-
-use Qck\FeedEngine\Pages\SettingsPage;
-
+use Qck\FeedEngine\Core\Data\BaseMetaBox;
+use Qck\FeedEngine\Core\Data\BaseTaxonomy;
 
 abstract class Plugin implements Actions {
 
@@ -23,7 +18,7 @@ abstract class Plugin implements Actions {
 	// public $settings;
 
 	
-	protected $hooks;
+	public $hooks;
 
 	
 	protected $shortcodes;
@@ -41,15 +36,18 @@ abstract class Plugin implements Actions {
 	protected $version;
 
 
+	
 
-
+	public function debug_end(){
+        \Qck\FeedEngine\Core\Debug::logDump( '', __METHOD__ . ' -------------------- End --------------------' , 720);
+    }
 
     
-
     public function __construct() {
+		\Qck\FeedEngine\Core\Debug::logDump( '', __METHOD__ . ' -------------------- START --------------------' , 720);
+        add_action( 'shutdown', array( $this, 'debug_end' ) );
 		$this->version = Manifest::VERSION;
 		$this->plugin_name = Manifest::NAME;
-		
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'rest_api_init', array( $this, 'register_endpoints' ) );
@@ -59,7 +57,7 @@ abstract class Plugin implements Actions {
 
 	
     public function init() {
-        // $this->options = new WP_Options();
+		\Qck\FeedEngine\Core\Debug::logDump( '', __METHOD__ . ' init' , 800);
 		
 		$this->rest_routes = new ApiManager();
 		$this->hooks = new HooksManager();
@@ -72,7 +70,6 @@ abstract class Plugin implements Actions {
 		$this->shortcodes->register_all();
 		
 		$this->register_pages();
-		// $this->rest_routes->register_endpoints();
 
         new SiteHealth();
     }
@@ -90,18 +87,42 @@ abstract class Plugin implements Actions {
 
 	public function register_endpoints() {
 		$this->rest_routes->register_endpoints();
+		
 	}
 
 	public function register_post_types() {
 		$this->post_types = new PostTypeManager();
 		$this->post_types->register_all();
+		$this->register_plugin_meta();
+		$this->register_plugin_taxonomies();
+		
 	}
 
 	abstract protected function add_pages();
+	abstract protected function add_plugin_meta();
+	abstract protected function add_plugin_taxonomy();
 
 	private function register_pages() {
 		foreach ( $this->add_pages() as $page ) {
 			$this->hooks->register( $page );
+		}
+	}
+
+	private function register_plugin_meta() {
+		foreach ( $this->add_plugin_meta() as $meta ) {
+			if( $meta instanceof BaseMetaBox ) {
+				$meta->register();
+			}
+			
+		}
+	}
+
+	private function register_plugin_taxonomies() {
+		foreach ( $this->add_plugin_taxonomy() as $meta ) {
+			if( $meta instanceof BaseTaxonomy ) {
+				$meta->register();
+			}
+			
 		}
 	}
 

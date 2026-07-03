@@ -34,9 +34,22 @@ class Feed implements Shortcode {
         $content = [];
         foreach ($transient as $group => $items) {
             $content[$group] = '';
-            foreach ($items as $item) {
-                $content[$group] .= $this->get_template_card( $item , $atts['card']);
+            switch ($group) {
+                case 'style':
+                    $content[$group] = $items;
+                    break;
+
+                case 'features':
+                    // do nothing
+                    break;
+                
+                default:
+                    foreach ($items as $item) {
+                        $content[$group] .= $this->get_template_card( $item , $atts['card'], ['group' => $group , 'features' => ($transient['features'] ?? []) ] );
+                    }
+                    break;
             }
+            
         }
         
 
@@ -44,9 +57,9 @@ class Feed implements Shortcode {
 
         $output .= <<<HTML
             <div class="qck-feed-container" data-feed-id="{$post_id}">
-                <div class="qck-feed-grid">
+                
                     {$content}
-                </div>
+                
             </div>
         HTML;
         
@@ -63,11 +76,23 @@ class Feed implements Shortcode {
         return is_file(Manifest::path() . 'templates/' . $template . '.php');
     }
 
-    private function get_template_card( $item, $card ) {
+    private function get_template_card( $item, $card , $arguments = array() ) {
         // $template = Manifest::path() . 'templates/bento-card.php';
+
+        $features = $arguments['features'];
+        $group = $arguments['group'];
+
         if (!$this->is_legit_template($card . '-card')) {
             \Qck\FeedEngine\Core\Debug::logDump( $card . ' is not legit template', __METHOD__ . ' Template Error');
             $card = 'bento';
+        }
+
+        if(empty($features)){
+            $default = 
+            $features = FeedController::_get_card_features( get_option('qckfe_card_settings') );
+            if(empty($features)){
+                $features = ['heading'];
+            }
         }
         // ob_start();
         // This makes $item available inside the included file

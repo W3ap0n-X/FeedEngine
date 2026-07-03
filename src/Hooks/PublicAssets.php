@@ -13,7 +13,8 @@ class PublicAssets implements HookInterface {
     public function get_callback(): callable {
         return function() {
             // \Qck\FeedEngine\Core\Debug::logDump( Manifest::url('src/assets/css/public.css' ), __METHOD__ . ' Manifest::url(\'src/assets/css/public.css\' )');
-        wp_enqueue_style( Manifest::PREFIX . '-main', Manifest::url('src/assets/css/public.css' ));
+            wp_enqueue_style( Manifest::PREFIX . '-main', Manifest::url('src/assets/css/public.css' ));
+            wp_add_inline_style(Manifest::PREFIX . '-main', $this->compile_card_styles());
             wp_enqueue_style( Manifest::PREFIX . '-old', Manifest::url('src/assets/css/public_old.css')  );
             wp_enqueue_script( 
                 Manifest::PREFIX . '-main',
@@ -22,6 +23,22 @@ class PublicAssets implements HookInterface {
                 Manifest::VERSION, 
                 true // Move to footer for better performance
             );
+            
         };
+    }
+
+    public function compile_card_styles() {
+        
+        $card_settings = get_option('qckfe_card_settings');
+
+        $styles = ':root {';
+
+        $styles .= \Qck\FeedEngine\Public\FeedController::_compile_card_styles($card_settings);
+
+        $styles .= '}';
+
+
+
+        return $styles;
     }
 }

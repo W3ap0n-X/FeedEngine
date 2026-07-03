@@ -14,12 +14,12 @@ class AdminSetup implements Actions {
     }
 
     public function register_settings_menu() {
-        \Qck\FeedEngine\Core\Debug::logDump('', __METHOD__);
+        \Qck\FeedEngine\Core\Debug::logDump('', __METHOD__, 10);
         // add_menu_page logic goes here...
     }
 
     public function initialize_settings() {
-        \Qck\FeedEngine\Core\Debug::logDump('', __METHOD__);
+        \Qck\FeedEngine\Core\Debug::logDump('', __METHOD__, 10);
         // register_setting logic goes here...
     }
 }

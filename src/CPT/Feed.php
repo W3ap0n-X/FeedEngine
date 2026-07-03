@@ -43,6 +43,7 @@ class Feed extends BasePostType {
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedPostTypes(),
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedCategories(),
             new \Qck\FeedEngine\CPT\MetaBoxes\FeedPostTags(),
+            new \Qck\FeedEngine\CPT\MetaBoxes\CardSettings(),
         ];
     }
 }

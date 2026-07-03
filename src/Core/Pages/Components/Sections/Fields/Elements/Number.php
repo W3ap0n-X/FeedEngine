@@ -9,20 +9,33 @@ class Number extends Element implements SettingsInterface {
 
     
     public function render() {
-        $label = esc_html( $this->label );
+        $label =  $this->get_label() ;
+        
         $value = esc_attr( $this->value );
         $name = esc_attr( $this->name );
+        $description = $this->get_description() ;
+        $helptext = $this->get_helptext() ;
+        $class = $this->get_css_class();
+        $style = $this->style;
+        $disabled = $this->get_disabled();
         $html = <<<HTML
-            <fieldset>
+            <fieldset class="{$class}" >
+                {$label}
                 <label>
                     <input
-                        type="number"
-                        name="{$name}"
-                        id="{$name}"
-                        value="{$value}"
+                        type="number" 
+                        name="{$name}" 
+                        id="{$name}" 
+                        style="{$style}"
+
+                        
+                        value="{$value}" 
+                        {$disabled}
+
                     />
-                    {$label}
+                    {$helptext}
                 </label>
+                {$description}
             </fieldset>
         HTML;
         return $html;

@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Feed Engine
- * Description: Feeds for days
- * Version: 0.0.1.4
- * Author: Me
+ * Plugin Name: FeedEngine
+ * Description: Create curated lists of posts and objects and display them fast and efficiently.
+ * Version: 0.0.5
+ * Author: Qck
  */
 
 

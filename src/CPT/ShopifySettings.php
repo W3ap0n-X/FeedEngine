@@ -1,7 +1,7 @@
 <?php 
 namespace Qck\FeedEngine\CPT\MetaBoxes;
 
-use Qck\FeedEngine\Core\CPT\BaseMetaBox;
+use Qck\FeedEngine\Core\Data\BaseMetaBox;
 
 class ShopifySettings extends BaseMetaBox {
     public function get_name(): string { return 'feed_shopify'; }

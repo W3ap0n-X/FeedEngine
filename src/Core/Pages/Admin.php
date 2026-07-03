@@ -2,16 +2,11 @@
 namespace Qck\FeedEngine\Core\Pages;
 use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Hooks\Actions;
-
+use Qck\FeedEngine\Core\Pages\Components\SettingBuilder;
 use Qck\FeedEngine\Core\Pages\Components\Utility\AdminNotice;
 use Qck\FeedEngine\Core\Pages\Components\Utility\SubmitButton;
 use Qck\FeedEngine\Core\Pages\Components\Sections\SettingsSection;
-use Qck\FeedEngine\Core\Pages\Components\Sections\Section;
-use Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements\Element;
-use Qck\FeedEngine\Core\Options\Options;
 use Qck\FeedEngine\Core\Options\OptionSection;
-// use Qck\FeedEngine\Plugin;
-use Qck\FeedEngine\Core\Debug;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -20,25 +15,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Admin implements Actions {
 
     
-    
     protected $sections = array();
 
-    
-    protected $options;
     protected $hooks;
 
     
     public function __construct( $hooks ) {
-        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__);
-        // $this->options = $options;
+        \Qck\FeedEngine\Core\Debug::logDump( '', __METHOD__ . ' ## ' . $this::class , 900);
         $this->hooks = $hooks;
+        $this->boot_sections();
     }
 
     
     public function get_actions(): array {
         return array(
             'admin_menu'            => array( 'add_page' ),
-            'admin_init'            => array( 'register_sections' ),
+            // 'init'            => array( 'register_sections' ),
             'admin_notices'         => array( 'display_admin_notices' ),
             'admin_enqueue_scripts' => array( 'maybe_enqueue_stylesheets' ),
         );
@@ -48,8 +40,6 @@ abstract class Admin implements Actions {
     public function render() {
         $prefix = esc_attr(Manifest::PREFIX);
         $title = esc_html( $this->get_page_title() );
-
-        
         ob_start();
         if(count($this->sections) > 0) {
             ?>
@@ -67,7 +57,9 @@ abstract class Admin implements Actions {
         $bottom = $this->content_bottom();
 
         $html = <<<HTML
+            
             <div class="wrap data-wrap" data-prefix="{$prefix}">
+                <h1>{$title}</h1>
                 <div id="{$prefix}_notices"></div>
                 <div class="{$prefix}-admin-content-top">
                     {$top}
@@ -79,41 +71,6 @@ abstract class Admin implements Actions {
             </div>
         HTML;
         echo $html;
-
-        
-    }
-
-    public function render_old() {
-
-
-        ?>
-        
-        <div class="wrap" data-prefix="<?php echo Manifest::PREFIX; ?>">
-            <h1><?php echo esc_html( $this->get_page_title() ); ?></h1>
-
-            <div id="<?php echo Manifest::PREFIX; ?>_notices"></div>
-
-            <div class="<?php echo Manifest::PREFIX; ?>-admin-content-top">
-                <?php echo $this->content_top(); ?>
-            </div>
-            <?php if(count($this->sections) > 0) { ?>
-            <form id="<?php echo $this->get_slug(); ?>_form" class="<?php echo Manifest::PREFIX; ?>_admin_form" method="post">
-                <?php
-
-                settings_fields( $this->get_slug() );
-                do_settings_sections( $this->get_slug() );
-                $submit = new SubmitButton( $this->get_slug() );
-                ?>
-            </form>
-            <?php } ?>
-
-            <div class="<?php echo Manifest::PREFIX; ?>-admin-content-bottom">
-                <?php echo $this->content_bottom(); ?>
-            </div>
-        </div>
-
-        <?php
-
 
         
     }
@@ -134,11 +91,9 @@ abstract class Admin implements Actions {
         $notice->render();
     }
 
-    
+    /* Not currently implemented */
     public function display_admin_notices() {
-
         if(!empty($_GET['page']) && $_GET['page'] == $this->get_slug() ) {
-            // settings_errors();
             if ( isset( $_GET['action_result'] ) ) {
                 if ( $_GET['action_result'] === 'success' ) {
                     $this->render_admin_notice(
@@ -146,7 +101,6 @@ abstract class Admin implements Actions {
                         AdminNotice::SUCCESS
                     );
                 } else {
-                    
                     $this->render_admin_notice(
                         esc_html( __( 'An error occurred. Couldn\'t perform action.', Manifest::SLUG ) ),
                         AdminNotice::ERROR
@@ -158,42 +112,32 @@ abstract class Admin implements Actions {
 
     
     public function maybe_enqueue_stylesheets( $hook_suffix ) {
-        // \Qck\FeedEngine\Core\Debug::logDump('hook_suffix: ' . $hook_suffix, __METHOD__);
-        // \Qck\FeedEngine\Core\Debug::logDump('$this->get_page_prefix() . $this->get_slug(): ' . $this->get_page_prefix() . $this->get_slug(), __METHOD__);
-        // $screen = get_current_screen();
-        // \Qck\FeedEngine\Core\Debug::logDump( $screen, __METHOD__);
-        // if ( str_contains( $hook_suffix, $this->get_page_prefix() .  $this->get_slug() ) ) {
-        //     \Qck\FeedEngine\Core\Debug::logDump( 'SUCCESS: ' . $this->get_page_prefix() .  $this->get_slug() , __METHOD__);
-        // }
-
         if ( str_contains( $hook_suffix, $this->get_page_prefix() .  $this->get_slug() ) ) {
             $this->enqueue_stylesheets();
         } else {
+            
             return;
         }
     }
 
     public function enqueue_stylesheets() {
-        // 1. CSS
         wp_enqueue_style(
             Manifest::PREFIX . '_admin_page',
-            Manifest::url('src/assets/css/admin.css'), // Using the url() method we built
+            Manifest::url('src/assets/css/admin.css'), 
             [],
             Manifest::VERSION
         );
-
-        // 2. JS - Let's use a consistent handle variable
+        
         $js_handle = Manifest::PREFIX . '_admin_page';
 
         wp_enqueue_script( 
             $js_handle,
             Manifest::url('src/assets/js/admin.js'), 
-            ['jquery'], // Added jquery as a dependency since your script uses it
+            ['jquery'], 
             Manifest::VERSION, 
-            true // Move to footer for better performance
+            true 
         );
 
-        // 3. Localize - Using the SAME handle
         wp_localize_script($js_handle, Manifest::PREFIX . '_vars', [
             'prefix'     => Manifest::PREFIX,
             'rest_url' => esc_url_raw(rest_url(Manifest::PREFIX . '/v1/')),
@@ -233,28 +177,19 @@ abstract class Admin implements Actions {
     
     abstract public function register_sections();
 
-    
-    protected function register_section( $section_id, $properties = array() ) {
-        $dump_me = ['id'=>$section_id, 'properties'=>$properties];
-        // \Qck\FeedEngine\Core\Debug::logDump($dump_me, __METHOD__);
-        $section = new SettingsSection( $section_id, $this->get_slug(), $this->options, $properties );
 
-        $this->sections[] = $section;
+    public function boot_sections() {
 
-        register_setting(
-            $this->get_slug(),
-            Manifest::PREFIX . '_' . $section_id,
-            // 'qckfe_general_options',
-            array( 'sanitize_callback' => array( $section, 'sanitize' ) )
-        );
+        $this->register_sections();
+        
 
-        return $section;
+        foreach ( $this->sections as  $section) {
+            SettingBuilder::build_ui_from_section($this->get_slug(), $section);
+        }
     }
 
     protected function add_section( $option_section ) {
-        
-        // \Qck\FeedEngine\Core\Debug::logDump($option_section->define_fields(), __METHOD__);
-        // \Qck\FeedEngine\Core\Debug::logDump($option_section->get_values(), __METHOD__);
+        \Qck\FeedEngine\Core\Debug::logDump( $option_section->get_title(), __METHOD__ . ' ## ' . $this::class , 950);
         if ( ! ( $option_section instanceof OptionSection ) ) {
             return;
         }
@@ -269,18 +204,9 @@ abstract class Admin implements Actions {
         register_setting(
             $this->get_slug(),
             $option_section->get_db_row(),
-            // 'qckfe_general_options',
             array( 'sanitize_callback' => array( $section, 'sanitize' ) )
         );
         
-        return $section;
-    }
-
-    
-    protected function register_presentation_section( $section_id, $properties = array() ) {
-        $section = new Section( $section_id, $this->get_slug(), $this->options, $properties );
-        $this->sections[] = $section;
-
         return $section;
     }
 

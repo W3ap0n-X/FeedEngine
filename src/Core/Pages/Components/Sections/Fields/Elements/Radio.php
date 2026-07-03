@@ -1,6 +1,6 @@
 <?php
 namespace Qck\FeedEngine\Core\Pages\Components\Sections\Fields\Elements;
-
+use Qck\FeedEngine\Manifest;
 use Qck\FeedEngine\Core\Options\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,32 +12,60 @@ class Radio extends Element implements SettingsInterface {
     
     private $options = array();
 
-    
-    public function render() {
-        $name = esc_attr( $this->name );
-        $group_label = esc_html( $this->label );
-        $html = '<div>' . $group_label;
 
+    public function render() {
+        $prefix = Manifest::PREFIX;
+        $name = esc_attr( $this->name );
+        $group_label =  $this->get_label() ;
+        $description = $this->get_description() ;
+        $helptext = $this->get_helptext() ;
+        $options = '';
+        $class = $this->get_css_class();
+        $disabled = $this->get_disabled();
+        $style = $this->style;
         foreach ( $this->options as $current_value => $label ) {
-            $value = esc_attr( $current_value );
+            if(array_is_list($this->options)){
+                $value = $this->list_keys ? esc_attr( $current_value ) : esc_attr( $label );
+            } else {
+                $value = esc_attr( $current_value );
+            }
+
+            ob_start();
+            checked( $this->value, $value , true);
+
+            $checked = ob_get_clean();
             
-            $checked = checked( $this->value, $current_value , false);
-            $html .= <<<HTML
-                <fieldset>
-                    <label>
-                        <input
-                            type="radio"
-                            name="{$name}"
-                            id="{$name}"
-                            value="{$value}"
-                            {$checked}
-                        />
-                        {$label}
-                    </label>
-                </fieldset>
+            
+            $options .= <<<HTML
+                
+                    <input  
+                        type="radio"
+                        name="{$name}"
+                        id="{$name}"
+                        value="{$value}"
+                        style="{$style}"
+                        {$checked}
+                        {$disabled}
+                    />
+                    {$label}
+                
             HTML;
         }
-        $html .= '</div>';
+
+        $html = <<<HTML
+            <fieldset class="{$class}">
+                {$group_label}
+                <label>
+                    
+                    <fieldset class="{$prefix}-options-wrapper"> 
+                    {$options}
+                    </fieldset>
+                    
+                    {$helptext}
+                </label>
+                {$description}
+            </fieldset>
+        HTML;
         return $html;
             
     }

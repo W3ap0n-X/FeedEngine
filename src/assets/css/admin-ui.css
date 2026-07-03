@@ -1,0 +1,11 @@
+.qckfe-element {
+    margin-block: 0.5rem;
+}
+
+.qckfe-element-description {
+    color: #777;
+}
+
+legend.qckfe-label{
+    font-weight: 500;
+}

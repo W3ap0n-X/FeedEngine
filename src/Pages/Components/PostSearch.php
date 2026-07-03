@@ -5,7 +5,7 @@ use Qck\FeedEngine\Core\Pages\Components\Interfaces\HTML;
 class PostSearch implements HTML {
 
 
-    public function get_html($value = []) : string {
+    public function get_html($value = [], $name = null, $prefix = null) : string {
         $value = (array) $value;
         // \Qck\FeedEngine\Core\Debug::logDump( $value, __METHOD__ . ' $value');
         $content = '';

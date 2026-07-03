@@ -1,9 +1,11 @@
 <?php 
 /** @var string $content */
-$content= $content['manual'] . $content['automatic'];
+$_content= $content['manual'] . $content['automatic'];
+$style = $content['style'];
+$output = '';
 $output .= <<<HTML
-    <div class="qckfe-feed-grid">
-        {$content}
+    <div class="qckfe-feed-grid" style="{$style}">
+        {$_content}
     </div>
 HTML;
 

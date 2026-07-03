@@ -1,0 +1,96 @@
+<?php
+
+
+namespace Qck\FeedEngine\Core\Options;
+
+class OptionField {
+
+    public $key;
+    public $label;
+    public $labels;
+    public $type;
+    public $default;
+    public $description;
+    public $helptext;
+    public $placeholder;
+    public $label_element;
+    public $path;
+    public $options;
+
+    public $html;
+    public $meta;
+    public $class;
+
+    public $entries = [];
+
+    public function __construct( $key, $label, $type = 'field', $default = null, $meta = false, $path = [], $options = ['none'] , $description = '', $helptext = '', $placeholder = '', $html = '', $class = '', $labels = null , $label_element = null, $entries = [] ) {
+        $this->key     = $key;
+        $this->label   = $label;
+        $this->labels   = $labels;
+        $this->label_element       = $label_element;
+
+
+        $this->description = $description;
+        
+        $this->entries = $entries;
+        
+        
+        
+        $this->path    = $path;
+        $this->type    = $type;
+        $this->options = $options;
+        $this->placeholder = $placeholder;
+        $this->helptext = $helptext;
+        $this->default = $default;
+        $this->html    = $html;
+        $this->class    = $class;
+        $this->meta    = $meta;
+    }
+
+    public function get_ui_name(){
+        $path  = (! empty( $this->path ) ) ? $this->path : [];
+        if (is_string($path) && !str_contains($path, '.')) {
+            $path = is_array($path) ? $path : explode('.', $path);
+        }
+        $output = '';
+        foreach ($path as $key) {
+            $output .=  $key . '][';
+        }
+        $output .= "" . $this->key . '';
+        return $output;
+        
+    }
+
+    // public function get_path(): string {
+    //     // If there is no path, just return section[key]
+    //     if (empty($this->path)) {
+    //         return sprintf('[%s]', $this->key);
+    //     }
+
+    //     // Build the middle pieces: [sub][group]
+    //     $mid_path = implode('][', $this->path);
+
+    //     // Result: section_id[sub][group][key]
+    //     return sprintf('[%s][%s]', $mid_path, $this->key);
+    // }
+
+    public function get_path($withKey = true): string {
+        // If there is no path, just return section[key]
+        if (empty($this->path)) {
+            if($withKey){
+                return sprintf('[%s]', $this->key);
+            }
+            return '';
+        }
+
+        // Build the middle pieces: [sub][group]
+        $mid_path = implode('][', $this->path);
+
+        // Result: section_id[sub][group][key]
+        if($withKey){
+            return sprintf('[%s][%s]', $mid_path, $this->key);
+        }
+        
+        return sprintf('[%s]', $mid_path);
+    }
+}
