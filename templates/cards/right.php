@@ -21,27 +21,23 @@ $overlay = in_array('overlay', $features) ? '<div class="qckfe-card-overlay"></d
 
 
 $output = <<<HTML
-
-    <div class="qckfe-card">
-
-        {$image}
-        
-        <div class="qckfe-card-content">
-            <div class="qckfe-card-badges">
-                {$source}
-                {$group}
-                {$type}
-                {$category}
-                {$tag}
-            </div>
-            {$heading}
-            
-            {$excerpt}
-        </div>
-        {$overlay}
-    </div>
+<div class="qckfe-card qckfe-card-right">
+    {$image}
     
-
+    <div class="qckfe-card-content">
+        <div class="qckfe-card-badges">
+            {$source}
+            {$group}
+            {$type}
+            {$category}
+            {$tag}
+        </div>
+        {$heading}
+        
+        {$excerpt}
+    </div>
+    {$overlay}
+</div>
 HTML;
 
 // $output = \Qck\FeedEngine\Core\Debug::easyDump( $item, ' $item') . $output;

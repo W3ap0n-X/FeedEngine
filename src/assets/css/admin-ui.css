@@ -9,3 +9,47 @@
 legend.qckfe-label{
     font-weight: 500;
 }
+
+/* .qckfe-field-collapsible {
+    & .qckfe-field-content {
+        display: block;
+    }
+}
+
+.qckfe-field-collapsible.collapsed {
+    & .qckfe-field-content {
+        display: none;
+    }
+}
+
+.qckfe-field-collapsible .qckfe-field-label::after {
+    content: '▼';
+    display: inline-block;
+    margin-left: 1.5rem;
+}
+
+.qckfe-field-collapsible.collapsed .qckfe-field-label::after {
+    content: '▶';
+    display: inline-block;
+    margin-left: 1.5rem;
+} */
+
+.qckfe-field-collapsible {
+    &>.qckfe-field-content {
+        display: block;
+    }
+    &>.qckfe-field-label::after {
+        content: '▼';
+        display: inline-block;
+        margin-left: 1.5rem;
+    }
+}
+
+.qckfe-field-collapsible.collapsed {
+    &>.qckfe-field-content {
+        display: none;
+    }
+    &>.qckfe-field-label::after {
+        content: '▶';
+    }
+}

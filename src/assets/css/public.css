@@ -12,14 +12,31 @@
 
 
 :root {
-
+  --bento-interval:5n;
 }
 
+
+
+
 .qckfe-feed-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    display:flex;
+    flex-direction: column;
+
+    max-width: var(--qckfe-container-max-width);
+    margin: 0;
+    padding: 0;
+    padding-inline: var(--qckfe-container-padding-x);
+    padding-block: var(--qckfe-container-padding-y);
+    margin-inline: var(--qckfe-container-margin-x);
+    margin-block: var(--qckfe-container-margin-y);
+    font-family: var(--qckfe-font-text);
+    font-size: var(--qckfe-font-size-text);
+
+    border: var(--qckfe-container-border-width) solid var(--qckfe-color-container-border);
+    border-width: var(--qckfe-container-border-width) ;
+    border-radius: var(--qckfe-container-border-radius);
+
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; */
 }
 
 /* --- Section 1: The Hero (Manual Items) --- */
@@ -49,31 +66,345 @@
 /* --- Section 2: The Standard Grid (Auto Items) --- */
 .qckfe-feed-grid {
     display: grid;
-    border:none;
+    border: 0px solid var(--qckfe-color-grid-border);
+    border-width: var(--qckfe-grid-border-width);
+    background: var(--qckfe-color-grid-bg);
+    border-radius: var(--qckfe-grid-border-radius);
     padding-inline: var(--qckfe-grid-padding-x);
     padding-block: var(--qckfe-grid-padding-y);
-    grid-template-columns: repeat(auto-fill, minmax(var(--qckfe-card-min-width), var(--qckfe-card-max-width)));
+    margin-inline: var(--qckfe-grid-margin-x);
+    margin-block: var(--qckfe-grid-margin-y);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--qckfe-card-min-width)), 1fr));
     gap: var(--qckfe-grid-gap);
+    /* max-width: var(--qckfe-grid-max-width); */
 }
+
+.qckfe-feed-container .qckfe-feed-title {
+    font-family: var(--qckfe-font-title);
+    font-size: var(--qckfe-font-size-title);
+    font-weight:var(--qckfe-font-weight-title);
+    align-self: var(--qckfe-font-alignment-title);
+}
+
+/* ==========================================================================
+   Section 2b: Grid Layout Modifiers (Fancy Types)
+   ========================================================================== */
+
+/* Layout 1: The Asymmetric Bento Box 
+   Uses 'dense' packing to seamlessly fit cards of different structural weights. */
+.qckfe-feed-grid.qckfe-layout-bento {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--qckfe-card-min-width)), 1fr));
+    grid-auto-flow: dense;
+}
+
+@media (min-width: 900px) {
+    /* Every 5th card becomes a wide landscape banner */
+    .qckfe-feed-grid.qckfe-layout-bento .qckfe-card:first-child {
+        grid-column: span 2;
+        /* grid-row: span 2; */
+    }
+    /* Every 5th card's inner content layout shifts horizontally to look balanced */
+    /* .qckfe-feed-grid.qckfe-layout-bento .qckfe-card:first-child:not(.qckfe-overlay-card) {
+        flex-direction: row;
+    } */
+    /* .qckfe-feed-grid.qckfe-layout-bento .qckfe-card:nth-child(5n + 1) .qckfe-card-media { */
+    .qckfe-feed-grid.qckfe-layout-bento .qckfe-card:first-child .qckfe-card-media {
+        /* width: 50%;
+        max-width: 50%;
+        min-width: 30%; */
+        height: calc(var(--qckfe-card-img-height) * 1);
+        & img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .qckfe-feed-grid.qckfe-layout-bento .qckfe-overlay-card:first-child {
+        & .qckfe-card-content {
+            height: calc(var(--qckfe-card-img-height) * 1);
+        }
+        & .qckfe-card-media {
+            height: calc(calc(var(--qckfe-card-img-height) + var(--qckfe-card-padding-y)) * 1);
+            margin-bottom:calc(calc(var(--qckfe-card-img-height) + var(--qckfe-card-padding-y)) * -1);
+        }
+    }
+
+    .qckfe-feed-grid.qckfe-layout-bento .qckfe-card-right:first-child {
+
+        & .qckfe-card-media {
+            width: calc(var(--qckfe-card-img-height) * 2);
+        }
+        & .qckfe-card-overlay {
+            margin-right: calc(var(--qckfe-card-overlay) * -1);
+        }
+    }
+    .qckfe-feed-grid.qckfe-layout-bento .qckfe-card-left:first-child {
+
+        & .qckfe-card-media {
+            width: calc(var(--qckfe-card-img-height) * 2);
+        }
+        & .qckfe-card-overlay {
+            margin-left: calc(var(--qckfe-card-overlay) * -1);
+        }
+    }
+
+    .qckfe-feed-grid.qckfe-layout-bento .qckfe-card:first-child:not(.qckfe-overlay-card, .qckfe-card-left, .qckfe-card-right) .qckfe-card-overlay {
+        z-index: 2;
+        padding: 0;
+        padding-inline:calc((var(--qckfe-card-overlay)  / 2) - (var(--qckfe-grid-padding-y) *2));
+        padding-block: calc(100% /2);
+
+        margin: 0;
+        margin-top: calc(100% * -1);
+        background: linear-gradient(transparent,  var(--qckfe-card-overlay-color) );
+        width: 100%;
+    }
+
+    /* Every 5th card + 3 becomes a tall feature block */
+    /* .qckfe-feed-grid.qckfe-layout-bento .qckfe-card:nth-child(5n + 3) {
+        grid-row: span 2;
+    } */
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* Layout 2: The Editorial Stream (Alternating Row Layout)
+   Forces cards to ignore min/max widths and stack neatly, using your row variables. */
+.qckfe-feed-grid.qckfe-layout-editorial {
+    grid-template-columns: 1fr;
+    min-width:  var(--qckfe-card-min-width);
+    max-width: var(--qckfe-card-max-width);
+    /* width:auto; */
+    /* margin-inline: auto; */
+}
+
+.qckfe-feed-grid.qckfe-layout-editorial .qckfe-card {
+
+    flex-direction: row;
+    & .qckfe-card-overlay {
+        padding: 0;
+        margin: 0;
+        margin-left: calc(100% * -1);
+    }
+    /* & .qckfe-card-content {
+        width: 100%
+    } */
+}
+
+
+
+.qckfe-feed-grid.qckfe-layout-editorial .qckfe-overlay-card {
+    flex-direction: row;
+    & .qckfe-card-media {
+        margin: 0;
+        margin-right: calc(100% * -1);
+    }
+    & .qckfe-card-overlay {
+        padding: 0;
+        /* padding-block:calc((var(--qckfe-card-overlay)  / 2) - (var(--qckfe-grid-padding-y) *2)); */
+        margin: 0;
+        margin-left: calc(100% * -1);
+    }
+}
+
+/* Automatically alternate image placement left-to-right down the stream */
+.qckfe-feed-grid.qckfe-layout-editorial .qckfe-card:nth-child(even) {
+    flex-direction: row-reverse;
+    & .qckfe-card-overlay {
+        margin: 0;
+        margin-right: calc(100% * -1);
+    }
+}
+
+.qckfe-feed-grid.qckfe-layout-editorial .qckfe-overlay-card:nth-child(even) {
+    flex-direction: row-reverse;
+    & .qckfe-card-media {
+        margin: 0;
+        margin-left: calc(100% * -1);
+    }
+    & .qckfe-card-overlay {
+        margin: 0;
+        margin-right: calc(100% * -1);
+    }
+}
+
+.qckfe-feed-grid.qckfe-layout-editorial .qckfe-card.qckfe-card-left {
+    flex-direction: row;
+    & .qckfe-card-content {
+        width: 100%
+    }
+    & .qckfe-card-overlay {
+        padding-inline: calc(var(--qckfe-card-overlay) / 2);
+        /* padding: 0; */
+        margin: 0;
+        /* margin-left: calc(100% * -1); */
+        margin-left: calc( calc( calc(100% - var(--qckfe-card-overlay)) + var(--qckfe-card-img-height)) * -1);
+    }
+
+    &:nth-child(even){
+        flex-direction: row-reverse;
+        & .qckfe-card-overlay {
+            margin: 0;
+            margin-right: calc( calc( calc(100% - var(--qckfe-card-overlay)) + var(--qckfe-card-img-height)) * -1);
+            /* margin-right: calc(100% * -1); */
+            right: calc( calc(100% - var(--qckfe-card-overlay)) * -1);
+        }
+    }
+}
+
+.qckfe-feed-grid.qckfe-layout-editorial .qckfe-card.qckfe-card-right {
+    
+    flex-direction: row-reverse;
+    & .qckfe-card-content {
+        width: 100%
+    }
+    & .qckfe-card-overlay {
+        padding-inline: calc(var(--qckfe-card-overlay) / 2);
+        /* padding: 0; */
+        margin: 0;
+        /* margin-left: calc(100% * -1); */
+        margin-right: calc( calc( calc(100% - var(--qckfe-card-overlay)) + var(--qckfe-card-img-height)) * -1);
+    }
+
+    &:nth-child(even){
+        flex-direction: row;
+        & .qckfe-card-overlay {
+            margin: 0;
+            margin-left: calc( calc( calc(100% - var(--qckfe-card-overlay)) + var(--qckfe-card-img-height)) * -1);
+            /* margin-right: calc(100% * -1); */
+            left: calc( calc(100% - var(--qckfe-card-overlay)) * -1);
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    /* Graceful collapse back to stacked blocks on small viewports */
+    .qckfe-feed-grid.qckfe-layout-editorial .qckfe-card,
+    .qckfe-feed-grid.qckfe-layout-editorial .qckfe-card:nth-child(even) {
+        flex-direction: column;
+    }
+    .qckfe-feed-grid.qckfe-layout-editorial .qckfe-card .qckfe-card-media {
+        width: 100%;
+        max-width: 100%;
+        height: var(--qckfe-card-img-height);
+    }
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* Layout 3: The Magazine Feature Matrix
+   Gives a distinct asymmetric 'Focus' on the very first card item. */
+@media (min-width: 900px) {
+    .qckfe-feed-grid.qckfe-layout-magazine {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .qckfe-feed-grid.qckfe-layout-magazine .qckfe-card:first-child {
+        grid-column: span 2;
+        grid-row: span 2;
+
+        & .qckfe-card-media {
+            height: calc(calc(var(--qckfe-card-img-height) + var(--qckfe-card-padding-y)) * 2);
+            margin-bottom:calc(var(--qckfe-card-img-height) * -0.5);
+            & img{
+                height: 100%;
+            }
+        }
+        & .qckfe-card-content {
+            height: 100%;
+        }
+    }
+
+    .qckfe-feed-grid.qckfe-layout-magazine .qckfe-card.qckfe-overlay-card:first-child {
+        grid-column: span 2;
+        grid-row: span 2;
+
+        & .qckfe-card-media {
+            height: calc(calc(var(--qckfe-card-img-height) + var(--qckfe-card-padding-y)) * 2);
+            margin-bottom:calc(var(--qckfe-card-img-height) * -2);
+        }
+        & .qckfe-card-content {
+            height: 100%;
+        }
+    }
+    
+    .qckfe-feed-grid.qckfe-layout-magazine .qckfe-card:first-child .qckfe-card-title {
+        font-size: calc(var(--qckfe-font-size-heading) * 1.5);
+    }
+}
+
 
 /* --- Section 3: The Card Itself --- */
 .qckfe-card {
-    background: var(--qckfe-color-bg);
-    
+    z-index: 1;
+    background: var(--qckfe-color-card-bg);
+    height: 100%;
     border-radius: var(--qckfe-card-radius);
-    box-shadow: var(--qckfe-shadow);
+    box-shadow: var(--qckfe-card-shadow-size) var(--qckfe-card-shadow);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    border: var(--qckfe-card-border-width) solid var(--qckfe-color-border);
+    border: 0 solid var(--qckfe-color-card-border);
+    border-width: var(--qckfe-card-border-width) ;
+    
+}
 
+.qckfe-card.qckfe-card-left {
+    flex-direction: row;
+}
+.qckfe-card.qckfe-card-right {
+    flex-direction: row-reverse;
 }
 
 .qckfe-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    box-shadow: var(--qckfe-card-shadow-hover-size) var(--qckfe-card-shadow-hover);
+
+    & .qckfe-card-overlay {
+        background:transparent;
+        /* transition: transform 0.2s ease, background 0.2s ease; */
+        /* z-index: 0; */
+    }
+}
+
+.qckfe-card .qckfe-card-overlay {
+    position: relative;
+    z-index: 2;
+    padding-block: calc(var(--qckfe-card-overlay) / 2);
+    margin: 0;
+    margin-top: calc(var(--qckfe-card-overlay) * -1);
+    background: linear-gradient(transparent,  var(--qckfe-card-overlay-color) );
+    width: 100%;
+    color: white;
+    /* transition: transform 0.2s ease, background-color 0.2s ease; */
+}
+
+.qckfe-card.qckfe-card-left>.qckfe-card-overlay {
+    padding-block:0;
+    padding-inline: calc(var(--qckfe-card-overlay) / 2);
+    margin: 0;
+    margin-left: calc(var(--qckfe-card-overlay) * -1);
+    background: linear-gradient(to right, transparent,  var(--qckfe-card-overlay-color) );
+    max-height:100%;
+    width: 0;
+    /* transition: transform 0.2s ease, background-color 0.2s ease; */
+}
+.qckfe-card.qckfe-card-right>.qckfe-card-overlay {
+    padding-block:0;
+    padding-inline: calc(var(--qckfe-card-overlay) / 2);
+    margin: 0;
+    margin-right: calc(var(--qckfe-card-overlay) * -1);
+    background: linear-gradient(to left, transparent,  var(--qckfe-card-overlay-color) );
+    max-height:100%;
+    width: 0;
+    /* transition: transform 0.2s ease, background-color 0.2s ease; */
+}
+
+.qckfe-card.qckfe-card-right:hover>.qckfe-card-overlay ,
+.qckfe-card.qckfe-card-left:hover>.qckfe-card-overlay {
+    background:transparent;
 }
 
 .qckfe-card-media img {
@@ -83,10 +414,43 @@
     display: block;
 }
 
+.qckfe-overlay-card .qckfe-card-media {
+    height: var(--qckfe-card-img-height);
+   width: 0;
+    position: relative;
+    /* display: flex; */
+    /* inset: 0; */
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    padding-inline:50%;
+    margin-bottom:calc(var(--qckfe-card-img-height) * -1);
+}
+
+.qckfe-overlay-card .qckfe-card-content {
+    height: var(--qckfe-card-img-height);
+}
+
+.qckfe-card.qckfe-card-left .qckfe-card-media img,
+.qckfe-card.qckfe-card-right .qckfe-card-media img {
+    height: 100%;
+   width: 100%;;
+    object-fit: cover;
+    display: block;
+}
+.qckfe-card.qckfe-card-left .qckfe-card-media,
+.qckfe-card.qckfe-card-right .qckfe-card-media {
+    height: 100%;
+    /* width: 100%; */
+    width: var(--qckfe-card-img-height);
+    max-width: var(--qckfe-card-img-height);
+    min-width: var(--qckfe-card-img-height);
+}
+
 .qckfe-card-content {
     padding-inline: var(--qckfe-card-padding-x);
     padding-block: var(--qckfe-card-padding-y);
-    
+    z-index: 3;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -129,25 +493,31 @@
 }
 
 .qckfe-card-content .qckfe-card-excerpt {
-    
+    display: flex;
+    flex-flow: column;
     color: var(--qckfe-color-text);
     font-size:  var(--qckfe-font-size-text);
-    
+    flex-grow: 1;
 }
 
 .qckfe-card-content .qckfe-card-title {
     font-size:  var(--qckfe-font-size-heading);
     color: var(--qckfe-color-heading);
     line-height: 1.3;
-    margin-bottom: auto;
+    /* margin-bottom: auto; */
+    margin-bottom: 1rem;
+    font-family: var(--qckfe-font-heading);
 }
 
-.qckfe-card-exerpt>.text-end {
+.qckfe-card-excerpt>.text-end {
     margin: 0;
     padding: 0;
+    flex-grow: 1;
+    align-content: end;
 }
 .qckfe-card-content .qckfe-card-link {
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
+    margin-top: auto;
 }
 .qckfe-card-content .qckfe-card-link , .qckfe-card-content a  {
     margin-top: auto;
@@ -159,8 +529,11 @@
     display: inline-flex;
     align-items: center;
     align-self: end;
+    font-family: var(--qckfe-font-link);
+    font-size: var(--qckfe-font-size-link);
     font-weight: var(--qckfe-font-weight-link);
-    border: var(--qckfe-color-link) solid var(--qckfe-link-border-width);
+    border: 0px solid var(--qckfe-color-link);
+    border-width: var(--qckfe-link-border-width);
     border-radius: var(--qckfe-link-radius);
 }
 
@@ -170,7 +543,8 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    border: var(--qckfe-color-link) solid var(--qckfe-link-border-width);
+    border: 0px solid var(--qckfe-color-link);
+    border-width: var(--qckfe-link-border-width);
 }
 
 .qckfe-card-content .qckfe-card-link::after {

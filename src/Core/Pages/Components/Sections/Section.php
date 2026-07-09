@@ -83,7 +83,7 @@ class Section {
     public function sanitize( $options ) {
         $_options = $options;
         $fields = $this->fields;
-        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__ . ' ## ' . $this::class . '  ' . $this->id);
+        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__ . ' ## ' . $this::class . '  ' . $this->id);
 
         foreach ( $options as $key => $value ) {
             $field         = $fields[ $key ];

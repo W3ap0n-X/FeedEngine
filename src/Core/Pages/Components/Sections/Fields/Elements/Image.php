@@ -47,7 +47,7 @@ class Image extends Element implements SettingsInterface {
 
     
     public function sanitize( $option_value ) {
-        return ( '1' === (string) $option_value || true === $option_value );
+        return intval( $option_value );
     }
 
 }

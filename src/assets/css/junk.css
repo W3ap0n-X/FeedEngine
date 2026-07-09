@@ -1,0 +1,1119 @@
+ :root {
+
+    --ink: #161310;
+
+
+  --ink: #0f172a;
+  --ink-1: #111827;
+  --ink-2: #334155;
+  --ink-3: #64748b;
+  --ink-4: #94a3b8;
+  --rule: #e2e8f0;
+  --rule-soft: #eef2f7;
+
+  --paper: #ffffff;
+  --paper-2: #f8fafc;
+  --paper-3: #eff6ff;
+
+  --accent: #2563eb;
+  --accent-deep: #1d4ed8;
+  --accent-ink: #1e3a8a;
+  --accent-2: #bfdbfe;
+
+  --display: "Outfit", "Inter", Arial, sans-serif;
+  --ui: "Inter", Arial, sans-serif;
+
+  --pad-x: clamp(20px, 5vw, 72px);
+  --maxw: 1280px;
+
+  --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.05);
+  --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  --shadow-2: 0 24px 48px rgba(15, 23, 42, 0.22);
+  --shadow-3: 0 12px 26px rgba(37, 99, 235, 0.28);
+  --shadow-4: 0 24px 48px rgba(37, 99, 235, 0.16);
+  --shadow-btn: 0 8px 20px rgba(37, 99, 235, 0.18);
+}
+
+.rh-pricing-page,
+.rh-pricing-page * {
+  box-sizing: border-box;
+}
+
+.rh-pricing-page {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.rh-pricing-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rh-pricing-page .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: var(--pad-x);
+}
+
+/* Labels */
+
+.rh-pricing-page .rh-label {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-family: var(--ui);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Global heading styles */
+
+.rh-pricing-page h1,
+.rh-pricing-page h2,
+.rh-pricing-page h3,
+.rh-pricing-page .tier-name,
+.rh-pricing-page .faq h2,
+.rh-pricing-page .final h2,
+.rh-pricing-page h1.display,
+.rh-pricing-page details.q summary,
+.rh-pricing-page .cmp-table thead .tname {
+  font-family: var(--display);
+  font-style: normal;
+  letter-spacing: -0.02em;
+  color: var(--ink-1);
+}
+
+/* Remove italic accent text */
+
+.rh-pricing-page h1.display .alt,
+.rh-pricing-page h2 .alt,
+.rh-pricing-page .tier-name .alt,
+.rh-pricing-page .final h2 .alt {
+  color: var(--accent);
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Body/supporting text */
+
+.rh-pricing-page p,
+.rh-pricing-page .hero-lede,
+.rh-pricing-page .section-head p,
+.rh-pricing-page .tier-tag,
+.rh-pricing-page .step p,
+.rh-pricing-page .faq .lede,
+.rh-pricing-page details.q .a,
+.rh-pricing-page .cmp-table tbody td {
+  font-family: var(--ui);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
+
+/* Hero */
+
+.rh-pricing-page .hero {
+  padding: 88px 0 52px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+
+.rh-pricing-page .hero .grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: end;
+}
+
+.rh-pricing-page h1.display {
+  font-weight: 700;
+  font-size: clamp(44px, 6vw, 58px);
+  line-height: 1.03;
+  margin: 0;
+}
+
+.rh-pricing-page .hero-lede {
+  font-size: 18px;
+  max-width: 46ch;
+  margin: 0 0 28px 0;
+}
+
+.rh-pricing-page .hero-meta {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 32px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+}
+
+.rh-pricing-page .hero-meta strong {
+  font-family: var(--display);
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink-1);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.rh-pricing-page .hero-meta .lbl {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+/* Shared section structure */
+
+.rh-pricing-page .tiers-section,
+.rh-pricing-page .how,
+.rh-pricing-page .faq {
+  padding: 88px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rh-pricing-page .compare {
+  padding: 88px 0;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.rh-pricing-page .section-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: baseline;
+  gap: 48px;
+  margin-bottom: 44px;
+}
+
+.rh-pricing-page .section-head h2 {
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.08;
+  margin: 0;
+}
+
+.rh-pricing-page .section-head p {
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* Tiers */
+
+.rh-pricing-page .tiers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.rh-pricing-page .tier {
+  position: relative;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  min-height: 660px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 22px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rh-pricing-page .tier:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.rh-pricing-page .tier .num {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--ink-4);
+  text-transform: uppercase;
+}
+
+.rh-pricing-page .tier .cat {
+  display: inline-block;
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+  background: var(--paper-3);
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+.rh-pricing-page .tier-name {
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.05;
+  margin: 36px 0 12px;
+}
+
+.rh-pricing-page .tier-tag {
+  margin: 0 0 28px;
+  max-width: 30ch;
+  line-height: 1.65;
+}
+
+.rh-pricing-page .price-block {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.rh-pricing-page .price {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 78px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink-1);
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.rh-pricing-page .price .cur {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink-4);
+  margin-top: 10px;
+}
+
+.rh-pricing-page .price-meta {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-4);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.rh-pricing-page .tier-features {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+.rh-pricing-page .tier-features li {
+  padding: 12px 0;
+  border-top: 1px solid var(--rule-soft);
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 10px;
+  align-items: start;
+  line-height: 1.55;
+}
+
+.rh-pricing-page .tier-features li::before {
+  content: "✓";
+  color: var(--accent);
+  font-weight: 700;
+  margin-top: 1px;
+  font-size: 13px;
+}
+
+.rh-pricing-page .tier-cta,
+.rh-pricing-page .btn-primary,
+.rh-pricing-page .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.rh-pricing-page .tier-cta {
+  margin-top: 22px;
+  background: var(--paper);
+  color: var(--ink-1);
+  border: 1px solid var(--rule);
+}
+
+.rh-pricing-page .tier-cta:hover {
+  background: var(--ink-1);
+  color: #fff;
+  border-color: var(--ink-1);
+}
+
+/* Featured tier */
+
+.rh-pricing-page .tier.featured {
+  background: var(--ink-1);
+  color: #fff;
+  border-color: var(--ink-1);
+  box-shadow: var(--shadow-2);
+}
+
+.rh-pricing-page .tier.featured .num {
+  color: rgba(255,255,255,0.55);
+}
+
+.rh-pricing-page .tier.featured .cat {
+  background: rgba(37, 99, 235, 0.25);
+  color: var(--accent-2);
+}
+
+.rh-pricing-page .tier.featured .tier-name,
+.rh-pricing-page .tier.featured .price {
+  color: #fff;
+}
+
+.rh-pricing-page .tier.featured .tier-name .alt {
+  color: #93c5fd;
+  font-style: normal;
+}
+
+.rh-pricing-page .tier.featured .tier-tag {
+  color: rgba(255,255,255,0.75);
+}
+
+.rh-pricing-page .tier.featured .price .cur,
+.rh-pricing-page .tier.featured .price-meta {
+  color: rgba(255,255,255,0.6);
+}
+
+.rh-pricing-page .tier.featured .price-block {
+  border-top-color: rgba(255,255,255,0.15);
+}
+
+.rh-pricing-page .tier.featured .tier-features {
+  color: rgba(255,255,255,0.82);
+}
+
+.rh-pricing-page .tier.featured .tier-features li {
+  border-top-color: rgba(255,255,255,0.12);
+}
+
+.rh-pricing-page .tier.featured .tier-features li::before {
+  color: #60a5fa;
+}
+
+.rh-pricing-page .tier.featured .tier-cta {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-btn);
+}
+
+.rh-pricing-page .tier.featured .tier-cta:hover {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+}
+
+.rh-pricing-page .ribbon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fef3c7;
+  background: rgba(245, 158, 11, 0.22);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+
+/* How it works */
+
+.rh-pricing-page .how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.rh-pricing-page .step {
+  padding: 32px 28px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 24px;
+  position: relative;
+}
+
+.rh-pricing-page .step .snum {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.rh-pricing-page .step .snum::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.rh-pricing-page .step h3 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.15;
+  margin: 36px 0 10px;
+}
+
+.rh-pricing-page .step p {
+  margin: 0;
+  max-width: 34ch;
+}
+
+/* Compare table */
+
+.rh-pricing-page .cmp-wrap {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 22px;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.rh-pricing-page .cmp-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.rh-pricing-page .cmp-table thead th {
+  text-align: left;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 18px 20px;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.rh-pricing-page .cmp-table thead th:first-child {
+  width: 36%;
+}
+
+.rh-pricing-page .cmp-table thead .tname {
+  display: block;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+
+.rh-pricing-page .cmp-table thead .tprice {
+  display: block;
+  font-size: 13px;
+  color: var(--accent-2);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.rh-pricing-page .cmp-table tbody th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-1);
+  padding: 16px 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.rh-pricing-page .cmp-table tbody td {
+  padding: 16px 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.rh-pricing-page .cmp-table tbody tr:nth-child(even) th,
+.rh-pricing-page .cmp-table tbody tr:nth-child(even) td {
+  background: var(--paper-2);
+}
+
+.rh-pricing-page .cmp-row-group th {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent) !important;
+  padding-top: 22px !important;
+  padding-bottom: 10px !important;
+  background: var(--paper) !important;
+  border-top: 1px solid var(--rule) !important;
+}
+
+.rh-pricing-page .cmp-check {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.rh-pricing-page .cmp-dash {
+  color: var(--ink-4);
+}
+
+/* FAQ */
+
+.rh-pricing-page .faq .grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.rh-pricing-page .faq h2 {
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.08;
+  margin: 0 0 14px;
+}
+
+.rh-pricing-page .faq .lede {
+  margin: 0;
+  max-width: 34ch;
+}
+
+.rh-pricing-page .faq-list {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 22px;
+  padding: 8px 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.rh-pricing-page details.q {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rh-pricing-page details.q:last-child {
+  border-bottom: 0;
+}
+
+.rh-pricing-page details.q summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.rh-pricing-page details.q summary::-webkit-details-marker {
+  display: none;
+}
+
+.rh-pricing-page details.q summary .plus {
+  font-family: var(--ui);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink-4);
+  transition: transform 0.2s ease;
+  margin-left: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  flex-shrink: 0;
+}
+
+.rh-pricing-page details.q[open] summary .plus {
+  transform: rotate(45deg);
+  color: var(--accent);
+  background: var(--paper-3);
+  border-color: var(--accent-2);
+}
+
+.rh-pricing-page details.q .a {
+  max-width: 62ch;
+  padding-top: 12px;
+}
+
+/* Final CTA */
+
+.rh-pricing-page .final {
+  padding: 112px 0 128px;
+  background: linear-gradient(180deg, var(--paper-2) 0%, var(--paper-3) 100%);
+  border-bottom: 1px solid var(--rule);
+}
+
+.rh-pricing-page .final .grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: end;
+  gap: 56px;
+}
+
+.rh-pricing-page .final h2 {
+  font-weight: 700;
+  font-size: clamp(42px, 6vw, 56px);
+  line-height: 1.02;
+  margin: 0;
+}
+
+.rh-pricing-page .final-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rh-pricing-page .btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-btn);
+  border: 1px solid transparent;
+  min-height: 52px;
+  justify-content: space-between;
+}
+
+.rh-pricing-page .btn-primary:hover {
+  background: var(--accent-deep);
+}
+
+.rh-pricing-page .btn-ghost {
+  background: var(--paper);
+  color: var(--ink-1);
+  border: 1px solid var(--rule);
+  min-height: 52px;
+  justify-content: space-between;
+}
+
+.rh-pricing-page .btn-ghost:hover {
+  border-color: var(--ink-1);
+}
+
+/* Footer */
+
+.rh-pricing-page footer {
+  padding: 36px 0;
+  font-size: 13px;
+  color: var(--ink-4);
+}
+
+.rh-pricing-page footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+
+@media (max-width: 1040px) {
+  .rh-pricing-page .hero .grid,
+  .rh-pricing-page .section-head,
+  .rh-pricing-page .faq .grid,
+  .rh-pricing-page .final .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .rh-pricing-page .tiers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rh-pricing-page .how-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .rh-pricing-page .hero {
+    padding: 64px 0 36px;
+  }
+
+  .rh-pricing-page h1.display {
+  font-weight: 700;
+  font-size: clamp(52px, 8vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+  .rh-pricing-page .section-head h2,
+  .rh-pricing-page .faq h2,
+  .rh-pricing-page .final h2 {
+    font-size: 32px;
+    line-height: 1.08;
+  }
+
+  .rh-pricing-page .hero-meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .rh-pricing-page .tiers {
+    grid-template-columns: 1fr;
+  }
+
+  .rh-pricing-page .tier {
+    min-height: auto;
+  }
+
+  .rh-pricing-page .tier-name {
+    font-size: 28px;
+  }
+
+  .rh-pricing-page .price {
+    font-size: 64px;
+  }
+
+  .rh-pricing-page .price .cur {
+    font-size: 24px;
+  }
+
+  .rh-pricing-page p,
+  .rh-pricing-page .hero-lede,
+  .rh-pricing-page .section-head p,
+  .rh-pricing-page .tier-tag,
+  .rh-pricing-page .step p,
+  .rh-pricing-page .faq .lede,
+  .rh-pricing-page details.q .a {
+    font-size: 15px;
+  }
+
+  .rh-pricing-page .faq-list {
+    padding: 8px 18px;
+  }
+
+  .rh-pricing-page details.q summary {
+    font-size: 18px;
+  }
+}
+
+/* ======================================
+   RetailHub Pricing Page Typography Reset
+   Add after existing pricing page CSS
+====================================== */
+
+.rh-pricing-page {
+  font-family: inherit;
+  color: var(--ink);
+}
+
+.rh-pricing-page *,
+.rh-pricing-page h1,
+.rh-pricing-page h2,
+.rh-pricing-page h3,
+.rh-pricing-page h4,
+.rh-pricing-page p,
+.rh-pricing-page a,
+.rh-pricing-page li,
+.rh-pricing-page td,
+.rh-pricing-page th,
+.rh-pricing-page summary,
+.rh-pricing-page .tier-name,
+.rh-pricing-page .price,
+.rh-pricing-page .price .cur,
+.rh-pricing-page .hero-lede,
+.rh-pricing-page .tier-tag,
+.rh-pricing-page .section-head p {
+  font-family: inherit !important;
+}
+
+.rh-pricing-page h1.display {
+  font-size: clamp(40px, 5vw, 70px) !important;
+  font-weight: 800 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.rh-pricing-page .section-head h2,
+.rh-pricing-page .faq h2 {
+  font-size: clamp(30px, 4vw, 42px) !important;
+  font-weight: 800 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.rh-pricing-page .final h2 {
+  font-size: clamp(36px, 5vw, 52px) !important;
+  font-weight: 800 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.rh-pricing-page .tier-name {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.rh-pricing-page .step h3 {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}
+
+.rh-pricing-page .price {
+  font-size: 64px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.rh-pricing-page .price .cur {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+}
+
+.rh-pricing-page p,
+.rh-pricing-page li,
+.rh-pricing-page .hero-lede,
+.rh-pricing-page .tier-tag,
+.rh-pricing-page .section-head p,
+.rh-pricing-page .step p,
+.rh-pricing-page details.q .a {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+}
+
+.rh-pricing-page .rh-label,
+.rh-pricing-page .tier .num,
+.rh-pricing-page .tier .cat,
+.rh-pricing-page .price-meta,
+.rh-pricing-page .step .snum,
+.rh-pricing-page .cmp-table thead th,
+.rh-pricing-page .cmp-row-group th,
+.rh-pricing-page .ribbon {
+  font-family: inherit !important;
+  letter-spacing: 0.08em !important;
+}
+
+.rh-pricing-page h1.display .alt,
+.rh-pricing-page h2 .alt,
+.rh-pricing-page .tier-name .alt,
+.rh-pricing-page .final h2 .alt {
+  font-style: normal !important;
+  font-family: inherit !important;
+}
+
+@media (max-width: 767px) {
+  .rh-pricing-page h1.display {
+    font-size: 40px !important;
+  }
+
+  .rh-pricing-page .price {
+    font-size: 58px !important;
+  }
+}
+
+/* Align pricing blocks higher across all pricing cards */
+.rh-pricing-page .tier {
+  min-height: 660px;
+}
+
+.rh-pricing-page .tier-tag {
+  min-height: 92px;
+  margin-bottom: 24px !important;
+}
+
+.rh-pricing-page .price-block {
+  margin-top: 0 !important;
+}
+
+/* Keep feature lists flexible so buttons stay near bottom */
+.rh-pricing-page .tier-features {
+  min-height: 235px;
+}
+
+/* Make all buttons the brighter blue */
+.rh-pricing-page .tier-cta,
+.rh-pricing-page .tier.featured .tier-cta,
+.rh-pricing-page .btn-primary {
+  background: var(--accent) !important;
+  color: var(--paper) !important;
+  border-color: var(--accent) !important;
+  box-shadow: var(--shadow-3) !important;
+}
+
+.rh-pricing-page .tier-cta:hover,
+.rh-pricing-page .tier.featured .tier-cta:hover,
+.rh-pricing-page .btn-primary:hover {
+  background: var(--accent-deep) !important;
+  border-color: var(--accent-deep) !important;
+  color: var(--paper) !important;
+}
+
+/* Light blue featured card, like the design */
+.rh-pricing-page .tier.featured {
+  background: var(--paper-3) !important;
+  color: var(--ink) !important;
+  border-color: var(--accent-2) !important;
+  box-shadow: var(--shadow-4) !important;
+}
+
+.rh-pricing-page .tier.featured .tier-name,
+.rh-pricing-page .tier.featured .price {
+  color: var(--ink) !important;
+}
+
+.rh-pricing-page .tier.featured .tier-name .alt {
+  color: var(--accent) !important;
+}
+
+.rh-pricing-page .tier.featured .tier-tag,
+.rh-pricing-page .tier.featured .tier-features {
+  color: #475569 !important;
+}
+
+.rh-pricing-page .tier.featured .price .cur,
+.rh-pricing-page .tier.featured .price-meta,
+.rh-pricing-page .tier.featured .num {
+  color: var(--accent-ink) !important;
+}
+
+.rh-pricing-page .tier.featured .price-block,
+.rh-pricing-page .tier.featured .tier-features li {
+  border-color: var(--accent-2) !important;
+}
+
+.rh-pricing-page .tier.featured .cat {
+  background: var(--paper) !important;
+  color: var(--accent) !important;
+}
+
+.rh-pricing-page .tier.featured .tier-features li::before {
+  color: var(--accent) !important;
+}
+
+/* Light blue badge instead of dark/gold */
+.rh-pricing-page .ribbon {
+  color: var(--accent-ink) !important;
+  background: var(--paper-3) !important;
+  border-color: var(--accent-2) !important;
+}
+
+/* Mobile reset */
+@media (max-width: 767px) {
+  .rh-pricing-page .tier-tag,
+  .rh-pricing-page .tier-features {
+    min-height: auto;
+  }
+}
+
+/* Make each pricing card a vertical flex layout */
+.rh-pricing-page .tier {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Let the content section take up available space */
+.rh-pricing-page .tier-features {
+  flex-grow: 1;
+}
+
+/* Push the button to the bottom */
+.rh-pricing-page .tier-cta {
+  margin-top: auto;
+}
+
+/* Optional: ensure consistent spacing above buttons */
+.rh-pricing-page .tier-cta {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+/* Align all pricing buttons to the lowest card button */
+.rh-pricing-page .tiers {
+  align-items: stretch;
+}
+
+.rh-pricing-page .tier {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100%;
+}
+
+.rh-pricing-page .price-block {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+}
+
+.rh-pricing-page .tier-features {
+  flex: 1 1 auto !important;
+  min-height: 280px !important;
+}
+
+.rh-pricing-page .tier-cta {
+  margin-top: auto !important;
+  align-self: flex-start;
+}
+
+/* Keep mobile natural */
+@media (max-width: 767px) {
+  .rh-pricing-page .tier-features {
+    min-height: auto !important;
+  }
+
+  .rh-pricing-page .tier-cta {
+    margin-top: 22px !important;
+  }
+}
+
+/* Fix button text alignment */
+.rh-pricing-page .tier-cta,
+.rh-pricing-page .btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+  line-height: 1 !important;
+
+  padding: 14px 22px !important; /* adjust if needed */
+}
+
+/* Make sure arrow stays aligned too */
+.rh-pricing-page .tier-cta span,
+.rh-pricing-page .btn-primary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

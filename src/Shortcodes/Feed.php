@@ -12,8 +12,8 @@ class Feed implements Shortcode {
 
     private $atts = array(
         'id'=> null,
-        'card' => 'bento',
-        'grid' => 'feed',
+        'card' => null,
+        'grid' => null,
     );
 
     public function get_tag(): string { return $this->prefix . 'feed'; }
@@ -30,38 +30,50 @@ class Feed implements Shortcode {
             $controller = new FeedController();
             $transient = $controller->build_front( $post_id);
         }
-        // $settings = get_post_meta( $post_id, '_qckfe_feed_settings', true );
-        $content = [];
-        foreach ($transient as $group => $items) {
-            $content[$group] = '';
-            switch ($group) {
-                case 'style':
-                    $content[$group] = $items;
-                    break;
+        $settings = $transient;
+        if ( !empty( $atts['card'] ) ) { 
+            $settings['card'] = $atts['card'];
+        } 
+        if ( !empty( $atts['grid'] ) ) { 
+            $settings['grid']= $atts['grid'];
+        } 
 
-                case 'features':
-                    // do nothing
-                    break;
+        // $output .= \Qck\FeedEngine\Core\Debug::easydump($settings, $post_id . ' settings');
+
+        $output .= apply_filters('qckfe/render', $post_id, $settings);
+        // $settings = get_post_meta( $post_id, '_qckfe_feed_settings', true );
+        // $content = [];
+        // \Qck\FeedEngine\Core\Debug::logDump( $transient , __METHOD__ . ' transient ' );
+        // foreach ($transient as $group => $items) {
+        //     $content[$group] = '';
+        //     switch ($group) {
+        //         case 'style':
+        //             $content[$group] = $items;
+        //             break;
+
+        //         case 'features':
+        //             // do nothing
+        //             break;
                 
-                default:
-                    foreach ($items as $item) {
-                        $content[$group] .= $this->get_template_card( $item , $atts['card'], ['group' => $group , 'features' => ($transient['features'] ?? []) ] );
-                    }
-                    break;
-            }
+        //         default:
+        //             foreach ($items as $item) {
+        //                 $content[$group] .= $this->get_template_card( $item , $transient['card'] , ['group' => $group , 'features' => ($transient['features'] ?? []) ] );
+        //             }
+        //             break;
+        //     }
             
-        }
+        // }
         
 
-        $content = $this->get_template_grid($content, $atts['grid']);
+        // $content = $this->get_template_grid($content, $transient['grid']);
 
-        $output .= <<<HTML
-            <div class="qck-feed-container" data-feed-id="{$post_id}">
+        // $output .= <<<HTML
+        //     <div class="qck-feed-container" data-feed-id="{$post_id}">
                 
-                    {$content}
+        //             {$content}
                 
-            </div>
-        HTML;
+        //     </div>
+        // HTML;
         
         // if(isset($a['message'])){
             
@@ -82,9 +94,9 @@ class Feed implements Shortcode {
         $features = $arguments['features'];
         $group = $arguments['group'];
 
-        if (!$this->is_legit_template($card . '-card')) {
+        if (!$this->is_legit_template( 'cards/' . $card )) {
             \Qck\FeedEngine\Core\Debug::logDump( $card . ' is not legit template', __METHOD__ . ' Template Error');
-            $card = 'bento';
+            $card = 'standard';
         }
 
         if(empty($features)){
@@ -96,19 +108,19 @@ class Feed implements Shortcode {
         }
         // ob_start();
         // This makes $item available inside the included file
-        return include Manifest::path() . 'templates/' . $card . '-card.php';
+        return include Manifest::path() . 'templates/cards/' . $card . '.php';
         // return ob_get_clean();
     }
 
     private function get_template_grid( $content, $grid ) {
         // $template = Manifest::path() . 'templates/bento-card.php';
-        if (!$this->is_legit_template($grid . '-grid')) {
+        if (!$this->is_legit_template('grid/' . $grid)) {
             \Qck\FeedEngine\Core\Debug::logDump( $grid . ' is not legit template', __METHOD__ . ' Template Error');
-            $grid = 'feed';
+            $grid = 'standard';
         }
         // ob_start();
         // This makes $item available inside the included file
-        return include Manifest::path() . 'templates/' . $grid . '-grid.php';
+        return include Manifest::path() . 'templates/grid/' . $grid . '.php';
         // return ob_get_clean();
     }
 

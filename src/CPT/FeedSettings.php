@@ -19,6 +19,16 @@ class FeedSettings extends BaseMetaBox {
                 type: 'number',
                 default: 6 ,
             ),
+
+            new \Qck\FeedEngine\Core\Options\OptionEntry(
+                key: 'title',
+                label: 'Feed Label',
+                type: 'textarea',
+                description: "If left empty and grid label is enabled, will use feed title",
+                default: null,
+                
+            ),
+
             new \Qck\FeedEngine\Core\Options\OptionEntry(
                 key: 'orderby',
                 label: 'Item order',
@@ -54,7 +64,7 @@ class FeedSettings extends BaseMetaBox {
                 key: 'manual_ids',
                 label: 'Custom Placeholder',
                 type: 'custom',
-                default: [],
+                default: null,
                 html: new \Qck\FeedEngine\Pages\Components\PostSearch
             ),
 

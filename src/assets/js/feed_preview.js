@@ -14,10 +14,10 @@ document.addEventListener( 'DOMContentLoaded' , function() {
 
 function gather_meta_data(elementName) {
     const data = {};
-    jQuery( 'input[name^="' + elementName + '"]' ).each( function() {
+    jQuery( 'select[name^="' + elementName + '"], input[name^="' + elementName + '"]' ).each( function() {
         const input = jQuery( this );
         let value;
-        const type = jQuery( this ).attr('type');
+        const type = jQuery( this ).prop("nodeName") == "SELECT" ? 'select' : jQuery( this ).attr('type');
         switch (type) {
 
             case 'checkbox':
@@ -28,6 +28,18 @@ function gather_meta_data(elementName) {
                     value = input.val();
                     break;
                 }
+
+                
+            case 'select':
+                input.children('option').each( function() {
+                    if( jQuery( this ).prop('selected') ) {
+                        value = jQuery( this ).val();
+                        
+                    }
+                });
+                console.log('select value');
+                console.log(value);
+                break;
 
             case 'hidden':
                 if(jQuery(this).hasClass('qckfe-image-id') && input.val() != '') {

@@ -53,7 +53,7 @@ class Checkbox extends Element implements SettingsInterface {
 
     
     public function sanitize( $option_value ) {
-        \Qck\FeedEngine\Core\Debug::logDump( $option_value, __METHOD__ . ' ## ' . $this::class . ' | $option_value');
+        // \Qck\FeedEngine\Core\Debug::logDump( $option_value, __METHOD__ . ' ## ' . $this::class . ' | $option_value');
         // return rest_sanitize_boolean($option_value );
         return ( '1' === (string) $option_value || true === $option_value );
     }

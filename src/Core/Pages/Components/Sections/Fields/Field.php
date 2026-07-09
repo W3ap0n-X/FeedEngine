@@ -120,7 +120,7 @@ class Field {
     public function sanitize( $options ) {
         $_options = $options;
         $elements = $this->elements;
-        \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__ . ' ## ' . $this::class . '  ' . $this->option_name);
+        // \Qck\FeedEngine\Core\Debug::logDump($options, __METHOD__ . ' ## ' . $this::class . '  ' . $this->option_name);
         if(is_array($options)){
             foreach ( $options as $key => $value ) {
                 $element         = $elements[ $key ];

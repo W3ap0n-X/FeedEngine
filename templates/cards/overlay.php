@@ -16,32 +16,30 @@ $source = !empty($features['badges']) && in_array('source', $features['badges'] 
 
 $heading = in_array('heading', $features) ? '<span class="qckfe-card-title">' . esc_html( $item->title ) . '</span>'  : '';
 $excerpt = in_array('excerpt', $features) ? '<span class="qckfe-card-excerpt">' . wp_trim_excerpt('' , $item->id ) . '</span>'  : '<a href="' . $url . '" class="qckfe-card-link">Read More</a>';
-$image = in_array('image', $features) ? '<div class="qckfe-card-media"><img src="' . esc_url( $item->image_url ) . '" alt=""></div>'  : '';
+$image = in_array('image', $features) ? '<div class="qckfe-card-media" style="background-image: url(' . esc_url( $item->image_url ) . ');"></div>'  : '';
 $overlay = in_array('overlay', $features) ? '<div class="qckfe-card-overlay"></div>'  : '';
 
 
 $output = <<<HTML
-
-    <div class="qckfe-card">
-
-        {$image}
-        
-        <div class="qckfe-card-content">
-            <div class="qckfe-card-badges">
-                {$source}
-                {$group}
-                {$type}
-                {$category}
-                {$tag}
-            </div>
-            {$heading}
-            
-            {$excerpt}
+<div class="qckfe-card qckfe-overlay-card">
+    {$image}
+    
+    <div class="qckfe-card-content">
+        <div class="qckfe-card-badges">
+            {$source}
+            {$group}
+            {$type}
+            {$category}
+            {$tag}
         </div>
-        {$overlay}
+        {$heading}
+        
+        {$excerpt}
     </div>
     
-
+     
+    {$overlay}
+</div>
 HTML;
 
 // $output = \Qck\FeedEngine\Core\Debug::easyDump( $item, ' $item') . $output;

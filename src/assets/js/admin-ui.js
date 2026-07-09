@@ -9,6 +9,15 @@
         console.log(prefix + " Admin-ui JS Loaded");
         // THE FIX: Use $form consistently
         if(prefix){
+            // * collapsable fields
+            $(document).on('click', '.' + settings.prefix + '-field-collapsible>.' + settings.prefix + '-field-label', function(e) {
+                let $parent = $(this).closest('.' + settings.prefix + '-field-collapsible');
+                // let $content = $parent.children('.' + settings.prefix + '-field-content');
+                $parent.toggleClass('collapsed');
+            });
+
+
+
             /*  
             * *****  REPEATER FIELDS  *****
             */
@@ -254,6 +263,9 @@
                 $parent.find('.' + settings.prefix + '-image-preview').hide();
                 $(this).hide();
             });
+
+
+            
 
         }
     });
